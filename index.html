@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LSF — Mon Parcours Visuel</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5ede0;--bg-card:#fdf6ec;--bg-card2:#ede0cc;--bg-side:#e8d5bc;--txt:#2c1f0e;--muted:#7a5c3a;--light:#b8956a;--a:#8b4513;--a2:#c47d3a;--a3:#d4a96a;--bdr:rgba(139,69,19,.15);--bdr2:rgba(139,69,19,.3);--sh:rgba(92,51,13,.12);--sh2:rgba(92,51,13,.22);--streak:#e07b2a;--bdgbg:#f0e0c8;--grain:.04;--tog:#d4b896}
+[data-theme="dark"]{--bg:#1a1108;--bg-card:#231808;--bg-card2:#2e2010;--bg-side:#1e1409;--txt:#f0e0c8;--muted:#c9a87a;--light:#8a6a45;--a:#c47d3a;--a2:#e09a50;--a3:#a06030;--bdr:rgba(196,125,58,.15);--bdr2:rgba(196,125,58,.3);--sh:rgba(0,0,0,.35);--sh2:rgba(0,0,0,.55);--streak:#e8923a;--bdgbg:#2a1c0a;--grain:.06;--tog:#3a2510}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;letter-spacing:.01em;background:var(--bg);color:var(--txt);min-height:100vh;transition:background .4s,color .4s;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:var(--grain);pointer-events:none;z-index:9999}
+.wrap{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
+.side{background:var(--bg-side);border-right:1px solid var(--bdr2);padding:28px 20px;display:flex;flex-direction:column;gap:22px;position:sticky;top:0;height:100vh;overflow-y:auto;transition:background .4s}
+.logo{font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:900;color:var(--a);line-height:1.1}
+.logo small{display:block;font-family:'Nunito',sans-serif;font-size:.6rem;font-weight:400;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-top:4px}
+.streak-box{background:var(--bg-card);border:1px solid var(--bdr2);border-radius:14px;padding:16px;text-align:center;box-shadow:0 4px 14px var(--sh)}
+.flame{font-size:2rem;display:block;animation:flicker 2s ease-in-out infinite alternate}
+@keyframes flicker{0%{transform:scaleY(1) rotate(-2deg)}50%{transform:scaleY(1.08) rotate(1deg)}100%{transform:scaleY(.96) rotate(-1deg)}}
+.streak-n{font-family:'Nunito',sans-serif;font-size:2.2rem;font-weight:900;color:var(--streak);line-height:1;margin-top:2px}
+.streak-lbl{font-family:'Nunito',sans-serif;font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.streak-days{display:flex;justify-content:center;gap:4px;margin-top:10px}
+.sd{width:26px;height:26px;border-radius:50%;border:2px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-family:'Nunito',sans-serif;color:var(--light)}
+.sd.done{background:var(--streak);border-color:var(--streak);color:#fff}
+.sd.today{border-color:var(--a2);color:var(--a2)}
+.gprog{background:var(--bg-card);border:1px solid var(--bdr);border-radius:12px;padding:13px}
+.prow{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.plbl{font-family:'Nunito',sans-serif;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.ppct{font-family:'Nunito',sans-serif;font-weight:700;font-size:.95rem;color:var(--a2)}
+.ptrack{height:5px;background:var(--bdr);border-radius:99px;overflow:hidden}
+.pfill{height:100%;background:linear-gradient(90deg,var(--a),var(--a2));border-radius:99px;transition:width .8s}
+.nav-title{font-family:'Nunito',sans-serif;font-size:.58rem;text-transform:uppercase;letter-spacing:.15em;color:var(--light);margin-bottom:6px}
+.nav-list{display:flex;flex-direction:column;gap:5px}
+.nav-btn{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:9px;border:1px solid transparent;background:transparent;cursor:pointer;color:var(--muted);font-family:'Nunito Sans',sans-serif;font-size:.92rem;text-align:left;transition:all .2s;width:100%}
+.nav-btn:hover{background:var(--bg-card);border-color:var(--bdr);color:var(--txt)}
+.nav-btn.open{background:var(--bg-card);border-color:var(--bdr2);color:var(--txt)}
+.nav-btn .nbadge{font-family:'Nunito',sans-serif;font-size:.52rem;background:var(--bdgbg);color:var(--a);padding:2px 6px;border-radius:20px;margin-left:auto;flex-shrink:0}
+.nav-btn .chev{font-size:.7rem;transition:transform .3s;color:var(--light);flex-shrink:0}
+.nav-btn.open .chev{transform:rotate(90deg)}
+.bdg-nav{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:9px;border:1px solid var(--bdr);background:var(--bg-card);cursor:pointer;color:var(--muted);font-family:'Nunito Sans',sans-serif;font-size:.92rem;text-align:left;transition:all .2s;width:100%}
+.bdg-nav:hover{border-color:var(--a2);color:var(--a2)}
+.theme-row{display:flex;align-items:center;gap:10px;margin-top:auto}
+.tog-track{width:44px;height:22px;background:var(--tog);border-radius:99px;cursor:pointer;position:relative;border:1px solid var(--bdr2);flex-shrink:0}
+.tog-thumb{position:absolute;top:2px;left:2px;width:16px;height:16px;background:var(--a);border-radius:50%;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+[data-theme="dark"] .tog-thumb{transform:translateX(22px)}
+.tog-lbl{font-family:'Nunito',sans-serif;font-size:.58rem;color:var(--muted)}
+.main{padding:28px 32px;overflow-y:auto}
+.main-top{padding-bottom:18px;border-bottom:1px solid var(--bdr);margin-bottom:22px;display:flex;align-items:center;justify-content:space-between}
+.main-title{font-family:'Nunito',sans-serif;font-size:1.6rem;font-weight:900;color:var(--txt)}
+.main-sub{font-size:.9rem;color:var(--muted);margin-top:3px}
+.bdg-pill{display:flex;align-items:center;gap:7px;background:var(--bdgbg);border:1px solid var(--bdr);border-radius:99px;padding:6px 14px;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;font-size:.6rem;color:var(--muted)}
+.bdg-pill:hover{border-color:var(--a2);color:var(--a2)}
+.levels-list{display:flex;flex-direction:column;gap:10px}
+.acc-item{border:1px solid var(--bdr);border-radius:15px;overflow:hidden;transition:border-color .25s,box-shadow .25s}
+.acc-item.open{border-color:var(--bdr2);box-shadow:0 4px 20px var(--sh)}
+.acc-head{display:flex;align-items:center;gap:14px;padding:17px 20px;cursor:pointer;background:var(--bg-card);transition:background .2s;user-select:none;-webkit-tap-highlight-color:transparent}
+.acc-head:hover{background:var(--bg-card2)}
+.acc-emoji{font-size:1.5rem;flex-shrink:0;pointer-events:none}
+.acc-info{flex:1;pointer-events:none}
+.acc-code{font-family:'Nunito',sans-serif;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--light);margin-bottom:2px}
+.acc-name{font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;color:var(--txt)}
+.acc-right{display:flex;align-items:center;gap:8px;flex-shrink:0;pointer-events:none}
+.acc-pct{font-family:'Nunito',sans-serif;font-size:.62rem;color:var(--a2)}
+.acc-mini{width:55px;height:4px;background:var(--bdr);border-radius:99px;overflow:hidden}
+.acc-mini-f{height:100%;background:linear-gradient(90deg,var(--a),var(--a2));border-radius:99px;transition:width .5s}
+.acc-chev{font-size:.8rem;color:var(--light);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.acc-item.open .acc-chev{transform:rotate(180deg)}
+.acc-body{display:none;padding:0 20px 20px;background:var(--bg-card)}
+.acc-item.open .acc-body{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.obj-box{background:var(--bg-card2);border-radius:9px;padding:11px 15px;margin-bottom:14px;font-size:.92rem;color:var(--muted);line-height:1.5;border-left:3px solid var(--a2)}
+.dur-tag{display:inline-flex;align-items:center;gap:5px;background:var(--bdgbg);border:1px solid var(--bdr);border-radius:99px;padding:3px 10px;font-family:'Nunito',sans-serif;font-size:.55rem;color:var(--muted);margin-bottom:6px}
+.focus-sm{display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid var(--a);color:var(--a);border-radius:8px;padding:7px 14px;font-family:'Nunito',sans-serif;font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;cursor:pointer;transition:all .2s;margin-top:10px;margin-bottom:18px}
+.focus-sm:hover{background:var(--a);color:#fff}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:13px}
+.card{background:var(--bg);border:1px solid var(--bdr);border-radius:12px;padding:16px;transition:all .2s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--a),var(--a2));opacity:0;transition:opacity .3s}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 18px var(--sh2);border-color:var(--bdr2)}
+.card:hover::before{opacity:1}
+.card.full{grid-column:1/-1}
+.cico{font-size:1.3rem;display:block;margin-bottom:7px}
+.ctit{font-family:'Nunito',sans-serif;font-size:.98rem;font-weight:700;color:var(--txt);margin-bottom:6px}
+.cbod{font-size:.88rem;color:var(--muted);line-height:1.5}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.tag{font-family:'Nunito',sans-serif;font-size:.52rem;padding:2px 7px;border-radius:99px;background:var(--bg-card2);color:var(--a);border:1px solid var(--bdr)}
+.sbox{background:var(--bg-card2);border-radius:8px;padding:10px 12px;margin-top:8px;font-family:'Nunito',sans-serif;font-size:.65rem;line-height:1.9;color:var(--muted);border:1px solid var(--bdr)}
+.sbox b{color:var(--a2)}
+.err-list{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.err-item{padding:9px 11px;border-radius:8px;border-left:3px solid var(--a3);background:var(--bg-card2)}
+.err-p{font-family:'Nunito',sans-serif;font-size:.55rem;text-transform:uppercase;letter-spacing:.06em;color:var(--a3);margin-bottom:3px}
+.err-f{font-size:.86rem;color:var(--muted);line-height:1.4}
+/* vocab search */
+.vsearch{width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--bdr2);background:var(--bg-card2);color:var(--txt);font-family:'Nunito Sans',sans-serif;font-size:.9rem;margin-bottom:10px;outline:none;transition:border-color .2s}
+.vsearch:focus{border-color:var(--a2)}
+.vcols{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:4px;max-height:340px;overflow-y:auto;padding-right:4px}
+.vcols::-webkit-scrollbar{width:4px}
+.vcols::-webkit-scrollbar-track{background:var(--bdr)}
+.vcols::-webkit-scrollbar-thumb{background:var(--a3);border-radius:99px}
+/* checklist */
+.cl{display:flex;flex-direction:column;gap:7px;margin-top:5px}
+.ci{display:flex;align-items:flex-start;gap:9px;padding:7px 8px;border-radius:7px;cursor:pointer;transition:background .15s;-webkit-tap-highlight-color:transparent}
+.ci:hover{background:var(--bg-card2)}
+.ci:active{opacity:.7}
+.cb{width:19px;height:19px;border-radius:5px;border:2px solid var(--bdr2);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;background:var(--bg-card2);margin-top:1px;pointer-events:none}
+.cb.on{background:var(--a);border-color:var(--a);animation:pop .25s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{0%{transform:scale(.6)}100%{transform:scale(1)}}
+.cb.on::after{content:'✓';color:#fff;font-size:.68rem;font-weight:bold}
+.ctxt{font-size:.9rem;color:var(--muted);line-height:1.35;pointer-events:none}
+.ctxt.done{text-decoration:line-through;color:var(--light)}
+.xpbar{margin-top:11px}
+.xrow{display:flex;justify-content:space-between;margin-bottom:4px}
+.xlbl{font-family:'Nunito',sans-serif;font-size:.56rem;text-transform:uppercase;letter-spacing:.07em;color:var(--light)}
+.xval{font-family:'Nunito',sans-serif;font-size:.6rem;color:var(--a2)}
+.xtrack{height:4px;background:var(--bdr);border-radius:99px;overflow:hidden}
+.xfill{height:100%;background:linear-gradient(90deg,var(--a3),var(--a2));border-radius:99px;transition:width .6s cubic-bezier(.34,1.56,.64,1)}
+.vlist{display:flex;flex-direction:column;gap:7px;margin-top:7px}
+.vitem{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:9px;background:var(--bg-card2);border:1px solid var(--bdr);text-decoration:none;color:var(--muted);transition:all .2s;font-size:.86rem}
+.vitem:hover{border-color:var(--a2);color:var(--a2);background:var(--bg-card);transform:translateX(3px)}
+.varr{margin-left:auto;font-size:.68rem;opacity:.6;flex-shrink:0}
+.vitem-special{border-color:var(--a3) !important}
+.vitem-special:hover{border-color:var(--a2) !important}
+/* ressources box */
+.res-box{background:var(--bg-card2);border:1px solid var(--bdr2);border-radius:10px;padding:12px 14px;margin-top:8px}
+.res-title{font-family:'Nunito',sans-serif;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--a2);margin-bottom:8px}
+.res-link{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:8px;background:var(--bg-card);border:1px solid var(--bdr);text-decoration:none;color:var(--muted);font-size:.84rem;transition:all .2s;margin-bottom:5px}
+.res-link:hover{border-color:var(--a2);color:var(--a2);transform:translateX(2px)}
+.res-link:last-child{margin-bottom:0}
+/* focus overlay */
+.fov{display:none;position:fixed;inset:0;background:var(--bg);z-index:1000;align-items:center;justify-content:center;flex-direction:column;padding:40px;transition:background .4s}
+.fov.on{display:flex}
+.fclose{position:absolute;top:18px;right:18px;background:var(--bg-card);border:1px solid var(--bdr);border-radius:8px;padding:7px 13px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;transition:all .2s}
+.fclose:hover{border-color:var(--a);color:var(--a)}
+.finner{max-width:500px;width:100%;text-align:center}
+.femoji{font-size:3.2rem;display:block;margin-bottom:14px}
+.ftitle{font-family:'Nunito',sans-serif;font-size:1.9rem;font-weight:900;color:var(--txt);margin-bottom:10px}
+.fdesc{font-size:1rem;color:var(--muted);line-height:1.6;margin-bottom:24px;background:var(--bg-card);padding:13px 16px;border-radius:11px;border:1px solid var(--bdr)}
+.ftimer{font-family:'Nunito',sans-serif;font-size:4.5rem;font-weight:900;color:var(--a);line-height:1;margin-bottom:14px}
+.fbtns{display:flex;gap:8px;justify-content:center}
+.fb{background:var(--a);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-family:'Nunito Sans',sans-serif;font-size:1rem;cursor:pointer;transition:all .2s}
+.fb:hover{background:var(--a2);transform:scale(1.02)}
+.fb.sec{background:transparent;border:1px solid var(--bdr2);color:var(--muted)}
+.fb.sec:hover{border-color:var(--a);color:var(--a)}
+.bg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:11px;margin-top:10px}
+.bg-item{background:var(--bg-card);border:1px solid var(--bdr);border-radius:12px;padding:15px 11px;text-align:center;transition:all .25s;position:relative}
+.bg-item.ok{border-color:var(--a2);box-shadow:0 0 0 2px var(--a2)}
+.bg-item.locked{opacity:.38;filter:grayscale(.6)}
+.bg-ico{font-size:1.8rem;display:block;margin-bottom:6px}
+.bg-name{font-family:'Nunito',sans-serif;font-size:.76rem;font-weight:700;color:var(--txt);line-height:1.2;margin-bottom:3px}
+.bg-desc{font-size:.68rem;color:var(--muted);line-height:1.3}
+.bg-ok{font-family:'Nunito',sans-serif;font-size:.5rem;text-transform:uppercase;color:var(--a2);margin-top:4px;display:block}
+.bg-lock{position:absolute;top:6px;right:6px;font-size:.6rem;opacity:.4}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--a);color:#fff;padding:10px 17px;border-radius:10px;font-family:'Nunito Sans',sans-serif;font-size:.95rem;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:99999;transform:translateY(60px);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* STRUCTURES DE PHRASES */
+.struct-list{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.struct-row{background:var(--bg-card2);border-radius:11px;padding:13px 15px;border:1px solid var(--bdr);transition:border-color .2s}
+.struct-row:hover{border-color:var(--bdr2)}
+.struct-name{font-family:'Nunito',sans-serif;font-size:1rem;font-weight:900;color:var(--a);margin-bottom:10px;display:flex;align-items:center;gap:7px;letter-spacing:.01em}
+.struct-name::before{content:'▸';color:var(--a2);font-size:.85rem;flex-shrink:0}
+.struct-tokens{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
+.struct-token{font-family:'Nunito',sans-serif;font-size:.78rem;padding:5px 11px;border-radius:8px;background:var(--bg);border:2px solid var(--bdr2);color:var(--txt);font-weight:700;white-space:nowrap;letter-spacing:.01em}
+.struct-arrow{font-size:1.1rem;color:var(--a2);flex-shrink:0;font-weight:900;margin:0 2px}
+.struct-card{grid-column:1/-1}
+@media(max-width:680px){.wrap{grid-template-columns:1fr}.side{position:relative;height:auto}.main{padding:18px}.cgrid{grid-template-columns:1fr}}
+/* NOTES */
+.notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:4px}
+.note-card{background:var(--bg-card);border:1px solid var(--bdr);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s}
+.note-card:hover{border-color:var(--bdr2)}
+.note-head{display:flex;align-items:center;gap:10px}
+.note-emoji{font-size:1.4rem}
+.note-label{font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;color:var(--txt)}
+.note-code{font-family:'Nunito',sans-serif;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--light);margin-top:1px}
+.note-textarea{width:100%;min-height:160px;background:var(--bg);border:1px solid var(--bdr2);border-radius:9px;padding:12px;font-family:'Nunito Sans',sans-serif;font-size:.95rem;color:var(--txt);resize:vertical;outline:none;line-height:1.6;transition:border-color .2s}
+.note-textarea:focus{border-color:var(--a2)}
+.note-textarea::placeholder{color:var(--light);font-style:italic}
+.note-footer{display:flex;align-items:center;justify-content:space-between}
+.note-saved{font-family:'Nunito',sans-serif;font-size:.55rem;color:var(--a2);opacity:0;transition:opacity .4s;letter-spacing:.06em}
+.note-saved.show{opacity:1}
+.note-clear{font-family:'Nunito',sans-serif;font-size:.52rem;text-transform:uppercase;letter-spacing:.06em;color:var(--light);background:transparent;border:1px solid var(--bdr);border-radius:6px;padding:3px 8px;cursor:pointer;transition:all .2s}
+.note-clear:hover{border-color:var(--a3);color:var(--a3)}
+.note-global{background:var(--bg-card);border:1px solid var(--bdr2);border-radius:14px;padding:18px;margin-bottom:16px}
+.note-global-title{font-family:'Nunito',sans-serif;font-size:1.1rem;font-weight:700;color:var(--txt);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.note-global-area{width:100%;min-height:100px;background:var(--bg);border:1px solid var(--bdr2);border-radius:9px;padding:12px;font-family:'Nunito Sans',sans-serif;font-size:.95rem;color:var(--txt);resize:vertical;outline:none;line-height:1.6;transition:border-color .2s}
+.note-global-area:focus{border-color:var(--a2)}
+.note-global-area::placeholder{color:var(--light);font-style:italic}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside class="side">
+    <div class="logo">LSF<small>Mon Parcours Visuel</small></div>
+    <div class="streak-box">
+      <span class="flame">🔥</span>
+      <div class="streak-n" id="sN">7</div>
+      <div class="streak-lbl">Jours d'affilée</div>
+      <div class="streak-days" id="sDays"></div>
+    </div>
+    <div class="gprog">
+      <div class="prow"><span class="plbl">Progression totale</span><span class="ppct" id="gPct">0%</span></div>
+      <div class="ptrack"><div class="pfill" id="gBar" style="width:0%"></div></div>
+    </div>
+    <div>
+      <div class="nav-title">Niveaux</div>
+      <div class="nav-list" id="navList"></div>
+    </div>
+    <div class="theme-row">
+      <div class="tog-track" id="togBtn" tabindex="0" role="button" aria-label="Changer thème"><div class="tog-thumb"></div></div>
+      <span class="tog-lbl" id="togLbl">Mode clair</span>
+    </div>
+  </aside>
+  <main class="main" id="mainArea">
+    <div class="main-top">
+      <div><div class="main-title">🌱 Mon Parcours LSF</div><div class="main-sub">Clique sur un niveau pour déplier son contenu</div></div>
+      <button class="bdg-pill" id="bdgBtn">🏅 <span id="bdgTxt">0 badges</span></button>
+    </div>
+    <div class="levels-list" id="lvlList"></div>
+  </main>
+</div>
+<div class="fov" id="fov">
+  <button class="fclose" id="fClose">✕ Quitter</button>
+  <div class="finner">
+    <span class="femoji" id="fEmoji">🎯</span>
+    <div class="ftitle" id="fTitle"></div>
+    <div class="fdesc" id="fDesc"></div>
+    <div class="ftimer" id="fTimer">20:00</div>
+    <div class="fbtns"><button class="fb" id="fStart">▶ Démarrer</button><button class="fb sec" id="fReset">↺ Reset</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── RESSOURCES GLOBALES ──────────────────────────────────────────────────────
+const RESSOURCES = [
+  {t:'🔍 DicoElix — Dictionnaire vidéo LSF',u:'https://dico.elix-lsf.fr/',special:true},
+  {t:'📺 Chaîne AdSignes (YouTube)',u:'https://www.youtube.com/@ADSignes/videos',special:true},
+];
+
+// ── DATA 1000 SIGNES ─────────────────────────────────────────────────────────
+const LVL = [
+  {
+    emoji:'🌱',code:'A1',name:'Les Bases',months:'Mois 1–2',
+    obj:'Se présenter, dire son état, décrire objets et personnes simples, comprendre des échanges lents.',
+    vocab:[
+      // 👤 Identité & questions (30)
+      'Moi','Toi','Lui','Elle','Qui','Quoi','Où','Quand','Comment','Pourquoi',
+      'Nom','Prénom','Âge','Ville','Pays','Maison','Famille','Mère','Père','Frère',
+      'Sœur','Ami','Personne','Monde','Avec','Sans','Aussi','Ensemble','Seul','Plusieurs',
+      // 😊 États simples (30)
+      'Content','Triste','Fatigué','Malade','Heureux','Fâché','Surpris','Calme','Ennuyé','Peur',
+      'Doute','Bon','Mauvais','Beau','Grand','Petit','Facile','Difficile',
+      'Possible','Impossible','Bien','Pas bien','Oui','Non','Peut-être',
+      'Merci','Bonjour','Au revoir','Excusé','Désolé',
+      // 📅 Temps & fréquence (25)
+      "Aujourd'hui",'Hier','Demain','Maintenant','Avant','Après','Jour','Nuit',
+      'Matin','Soir','Semaine','Mois','Année','Toujours','Jamais','Parfois',
+      'Souvent','Rarement','Bientôt','Plus tard','Longtemps','Rapidement','Lentement','Temps','Minute',
+      // 📦 Objets quotidiens (50)
+      'Porte','Fenêtre','Chaise','Table','Lit','Livre','Téléphone','Ordinateur',
+      'Sac','Chaussure','Vêtement','Lunettes','Clé','Eau','Nourriture','Boisson',
+      'Pain','Fruit','Légume','Aliment','Voiture','Bus','Train','Rue','École',
+      'Magasin','Bureau','Argent','Parc','Jardin','Salle','Chambre','Télévision',
+      'Cahier','Stylo','Clavier','Écran','Montre','Photo','Cadeau','Journal',
+      // 🔤 Actions simples (40)
+      'Aller','Venir','Voir','Écouter','Dire','Parler','Faire','Regarder','Écrire','Lire',
+      'Prendre','Donner','Ouvrir','Fermer','Manger','Boire','Acheter','Vendre',
+      'Demander','Répondre','Comprendre','Apprendre','Marcher','Courir','S\'asseoir',
+      'Se lever','Dormir','Jouer','Travailler','Étudier','Penser','Attendre',
+      'Trouver','Chercher','Montrer','Aider','Chanter','Danser','Oublier','Se souvenir',
+      // 🗣️ Expressions utiles (35)
+      'Je comprends','Je ne comprends pas','Encore','Très bien','D\'accord',
+      'Pas d\'accord','Attends','Regarde','Répète','Lentement','Plus vite',
+      'Ici','Là','Devant','Derrière','À côté','Gauche','Droite',
+      'Plus','Moins','Même','Autre','Un peu','Beaucoup','Terminé','Commencer',
+      'S\'il te plaît','Je veux','Je ne veux pas','Je dois','Je peux',
+      'Vite','Doucement','Ensemble','Séparé',
+    ],
+    structs:[['Se présenter','PRÉNOM + NOM + ÂGE + VILLE + PAYS + STATUT'],['État','SUJET + ÉTAT + intensité faciale'],['Objet','OBJET + CARACTÉRISTIQUE + ACTION + POSITION'],['Personne','PERSONNE + GENRE + ÂGE + CHEVEUX + PARTICULARITÉ + VÊTEMENT']],
+    expr:[
+      'Oui, complètement','Non, pas du tout','Je suis d\x27accord','Pas d\x27accord du tout',
+      'Je comprends / je vois','Je ne comprends pas','Encore une fois','Peut-être',
+      'Bien sûr','Évidemment','Probablement','Impossible','C\x27est possible','Tout à fait',
+      'Pas vraiment','Ni l\x27un ni l\x27autre','À moitié','Complètement','Déjà','Plus tard',
+      'Bientôt','Parfois','Très / énormément','Un peu','Trop',
+      'Exactement','FINI (action accomplie)','PLUS (intensité)','OUI tête forte → validation',
+      'AH BON ? → surprise','PAS GRAVE → relâchement','Poing fermé → émotion forte',
+      'Bras tendus → grandeur ou importance','Mouvement circulaire → répétition',
+      'Attends un instant','Dis-moi plus','Peux-tu répéter ?','Parle plus lentement',
+      'Je ne suis pas sûr','Tu veux dire… ?','Qu\x27est-ce que tu veux dire ?',
+      'Ça peut aider','Je te suggère','Je te propose','D\x27accord, continuons',
+      'Est-ce correct ?','Plus','Moins','Encore','Plus vite',
+    ],
+    errs:[{p:'Mot à mot français',f:'Restructurer : Objet → Action → Caractéristique'},{p:'Expression faciale oubliée',f:'Pratiquer devant miroir 5 min/jour'},{p:'Geste trop petit',f:'Filmer et ajuster l\'amplitude'}],
+    duree:'15–20 min/exercice + 20 min vidéos (dimanche)',
+    checks:['Me filmer en train de me présenter','Signer les couleurs de 5 objets','Décrire 3 membres de ma famille','Pratiquer 5 min devant miroir','Regarder 20 min de vidéos LSF'],
+    vids:[
+      {t:'🎬 Alphabet LSF A-B-C (AdSignes)',u:'https://www.youtube.com/watch?v=aqhfCZLMItE'},
+      {t:'🎬 Apprendre à dire prénom & âge (AdSignes)',u:'https://www.youtube.com/watch?v=JFDtOVT6E1M'},
+      {t:'🎬 Formules de politesse LSF (AdSignes)',u:'https://www.youtube.com/watch?v=jss6dfZGJw8'},
+      {t:'🎬 Présentations & salutations',u:'https://www.youtube.com/watch?v=JCpHnQ7Bwy4'},
+      {t:'🎬 Vocabulaire famille et objets',u:'https://www.youtube.com/watch?v=IFCcn0ro_SY'},
+      {t:'🎬 Chiffres & alphabet LSF',u:'https://www.youtube.com/watch?v=sK3NyDGAO48'},
+      {t:'🎬 Objets et couleurs',u:'https://www.youtube.com/watch?v=defJsB_CJmo'},
+    ]
+  },
+  {
+    emoji:'🌿',code:'A2',name:'Vie Quotidienne',months:'Mois 3–4',
+    obj:'Conversations simples, décrire lieux et personnes, demander prix et direction, expliquer un problème.',
+    vocab:[
+      // 🧭 Lieux & directions (40)
+      'À gauche','À droite','En face','Près','Loin','Ici','Là-bas','Devant','Derrière','À côté',
+      'Intersection','Centre','Quartier','Bâtiment','Restaurant','Café','Hôpital','Pharmacie',
+      'Appartement','Gare','Station','Arrêt','Route','Pont','Monument','Musée','Théâtre','Piscine',
+      // 👥 Relations sociales (30)
+      'Copain','Copine','Voisin','Collègue','Professeur','Étudiant','Élève','Patron','Employé','Client',
+      'Mari','Femme','Fils','Fille','Oncle','Tante','Cousin','Cousine','Beau-père','Belle-mère',
+      'Groupe','Visiteur','Hôte','Ami proche','Ami lointain','Communauté','Relation','Réunion','Rencontre','Discussion',
+      // 🛠️ Actions & routines (40)
+      'Se réveiller','Se lever','Se doucher','Se laver','Se brosser','Cuisiner','Sortir','Entrer',
+      'Monter','Descendre','Tomber','Rire','Pleurer','Pleuvoir','Neiger','Chanter','Danser',
+      'Recevoir','Envoyer','Nettoyer','Organiser','Préparer','Réserver','Annuler','Appeler',
+      'Télécharger','Imprimer','Visiter','Utiliser','Raconter','Encourager','Féliciter','Supporter','Conseiller',
+      // 🎭 Émotions complexes (30)
+      'Ennuyé','Fier','Honte','Jaloux','Mal à l\'aise','Enthousiaste','Déçu','Choqué','Effrayé','Énervé',
+      'Paisible','Agité','Soulagé','Déterminé','Frustré','Curieux','Ambitieux','Passionné','Amusé','Indifférent',
+      'Timide','Courageux','Stressé','Relaxé','Dynamique','Tendu','Satisfait','Apathique','Motivé','Engagé',
+      // 📍 Connecteurs & adverbes (30)
+      'Partout','Nulle part','Ensuite','Puis','Mais','Ou','Et','Donc','Parce que','Si',
+      'Alors','Ainsi','Comme','Malgré','Pourtant','Trop','Assez','Tout','Aucun','Chaque',
+      'Simultanément','Déjà','Bientôt','Plusieurs','C\'est correct','C\'est faux',
+      'Je sais','Sans doute','Certainement','Je propose',
+    ],
+    structs:[['Commander','OBJET + QUANTITÉ + PRIX + ACTION'],['Lieu','SCÈNE + SUJET + ACTION + CARACTÉRISTIQUE'],['Direction','LIEU + CÔTÉ + DISTANCE + DÉPLACEMENT']],
+    expr:[
+      'Je n\x27ai rien compris','Explique encore','Ce que je veux dire…','En bref…',
+      'Donc…','En fait…','À vrai dire…','Pour être clair…',
+      'Excuse-moi','Je m\x27excuse','Merci beaucoup','Je te remercie sincèrement',
+      'Pardon / désolé','Tu as raison','Je suis convaincu','Je suis sceptique',
+      'Je reconnais mon erreur','Accepter une critique','Refuser poliment','Je suis fier de toi',
+      'Tolérer / accepter une situation','Encourager quelqu\x27un','Consoler quelqu\x27un',
+      'Reconnaitre un point de vue','ÇA DÉPEND',
+      'Cercle = relation / connexion','Spirale = complexité ou progression',
+      'Échelle = progression / montée','Pont = lien ou connexion','Mur = barrière / blocage',
+      'Croiser les bras = blocage','Main qui s\x27éloigne = rejet','Bras qui s\x27écartent = divergence',
+      'Main ouverte sur paume = accueil','Ligne horizontale = stabilité',
+      'Ligne verticale = force / évidence','Main qui monte puis descend = fluctuation',
+      'Deux mains qui se rapprochent = rapprochement d\x27idées',
+      'Pointage puis rotation = changement de perspective',
+      'Regard + mouvement = contexte',
+      'Mains qui se croisent = point commun',
+      'Trace de ligne en l\x27air = cheminement d\x27idée',
+      'Mains qui se rapprochent puis écartent = comparaison',
+      'Positions haut/bas = hiérarchie','Mains parallèles = alignement',
+      'Main qui touche cœur = émotion intense','Bras croisés = fermeture / désaccord',
+      'Mains ouvertes = invitation','Inclinaison = doute','Pointage + cercle = idée',
+    ],
+    errs:[{p:'Référents spatiaux perdus',f:'Installer la scène AVANT de narrer'},{p:'Classificateur mal choisi',f:'Pratiquer chaque classificateur isolément'},{p:'Pauses trop longues',f:'Signer approximatif mais fluide'}],
+    duree:'20 min/situation + 20 min vidéos natifs',
+    checks:['Simuler une commande au restaurant','Décrire le trajet jusqu\'au parc','Décrire une personne dans la rue','Pratiquer 3 classificateurs','Regarder une scène de vie LSF'],
+    vids:[
+      {t:'🎬 Verbes et actions LSF (AdSignes)',u:'https://www.youtube.com/watch?v=n_IGYWes4hs'},
+      {t:'🎬 Restaurant et achats LSF',u:'https://www.youtube.com/watch?v=cN7caHK2sso'},
+      {t:'🎬 Demander sa direction',u:'https://www.youtube.com/watch?v=10SK2LBMhA8'},
+      {t:'🎬 Décrire une personne',u:'https://www.youtube.com/watch?v=rz3jw0_XXoc'},
+      {t:'🎬 Décrire un lieu simple',u:'https://www.youtube.com/watch?v=laTuEg45iqU'},
+    ]
+  },
+  {
+    emoji:'🌳',code:'B1',name:'Début d\'Autonomie',months:'Mois 5–6',
+    obj:'Narration complète 3–5 min, scènes complexes, anecdotes, comparaisons, opinion simple.',
+    vocab:[
+      // 📚 Concepts abstraits (40)
+      'Idée','Opinion','Savoir','Probabilité','Hypothèse','Proposition','Conclusion','Résultat',
+      'Cause','Conséquence','Avantage','Inconvénient','Solution','Problème','Projet','Décision',
+      'Stratégie','Objectif','Choix','Succès','Échec','Certitude','Argument','Débat',
+      'Analyse','Synthèse','Perspective','Vision','Engagement','Inspiration',
+      'Intuition','Raison','Motivation','Priorité','Critique','Contexte','Impact','Effet','Évidence','Option',
+      // 📖 Narration & descriptions (40)
+      'Décrire scène','Personnage','Intrigue','Contexte','Transition','Détail','Atmosphère',
+      'Relation sociale','Interaction','Décor','Réaction','Émotion complexe','Changement',
+      'Point de vue','Narration','Résumé','Introduction','Développement','Illustration',
+      'Observation','Interprétation','Comparaison','Contraste','Corrélation','Séquence',
+      'Flashback','Anticipation','Fiction','Métaphore','Symbolisme',
+      // 👥 Interaction humaine (30)
+      'Discuter','Argumenter','Clarifier','Reformuler','Comprendre implicite',
+      'Demander précision','Dire sincèrement','Nuancer','Accorder','Désaccord',
+      'Accord partiel','Interrompre poliment','Reprendre parole','Changer sujet',
+      'Observer','Synchroniser rythme','Marquer pause','Consoler','Dissuader',
+      // 🧠 Actions temporelles (20)
+      'Marcher vite','Courir loin','Attraper','Lâcher','Tomber soudain','Se relever',
+      'Perdre qqch','Retrouver','D\'abord','Ensuite enfin','À cause de','Grâce à',
+      'Il y a longtemps','Récemment','Plus grand que','Plus petit que','Différent','Similaire','Même','Soudain',
+    ],
+    structs:[['Scène','SCÈNE GLOBALE + SUJET + ACTION + OBJETS + RELATIONS + AMBIANCE'],['Anecdote','CONTEXTE + SUJET + ACTION1 + ACTION2 + RÉACTION + CONCLUSION'],['Opinion','MOI + PENSER + RAISON + EXEMPLE']],
+    expr:[
+      'ÇA M\x27A SAOULÉ','J\x27AI CAPTÉ DIRECT','C\x27EST ABUSÉ',
+      'C\x27est surprenant / dommage','C\x27est illogique / intéressant',
+      'C\x27est perturbant / encourageant','C\x27est complexe / étrange',
+      'C\x27est frustrant / impressionnant','C\x27est inspirant / incroyable',
+      'Je veux préciser que…',
+      'Parce que / donc / cependant / malgré',
+      'Bien que / non seulement… mais aussi…',
+      'Ceci dit / en revanche / par exemple',
+      'En résumé / pour conclure / en d\x27autres termes',
+      'Ainsi / ensuite / puis / si alors',
+      'D\x27un point de vue… / ce qui implique…',
+      'Pour clarifier / au contraire / à ce propos',
+      'Je préfère dire…','Arrêtons-nous là',
+      'Ce n\x27est pas ce que je voulais dire',
+      'Corps reculé = surprise / choc',
+      'Doigts étendus + ouverture = développement idée',
+      'Bras en spirale = progression complexe',
+      'Corps penché avant = anticipation / tension',
+      'Mains en coupe = séparation d\x27idées',
+      'Index qui tapote la tempe = idée claire',
+      'Mains qui tournent autour = idée cyclique',
+      'Main qui mime un cadre = concept cadré',
+      'Évolution graduelle (ligne ascendante)',
+      'Point de rupture (ligne cassée)',
+      'Idée qui se forme (paume ouverte)',
+      'Connection entre deux idées (pont visuel)',
+      'Doute qui augmente (mains oscillant)',
+      'Clarté soudaine (paume ouverte + lumière)',
+      'Tension émotionnelle (serrer mains)',
+      'Relâchement / détente (mains qui s\x27écartent)',
+      'Rôle shift débutant : 2 personnages',
+      'Placement spatial narration simple',
+      'Satisfaction profonde (main sur cœur)',
+      'Curiosité intense (regard + penchement)',
+      'Bras croisés = désaccord',
+    ],
+    errs:[{p:'Espace narratif incohérent',f:'Visualiser la scène avant de signer'},{p:'Role shift trop théâtral',f:'Calibrer l\'intensité sur les natifs'},{p:'Dépendance vocabulaire',f:'Apprendre les signes iconiques'}],
+    duree:'20–30 min narration + 20 min observation',
+    checks:['Raconter une anecdote 3 min filmée','Décrire une image complexe','Comparer 2 objets en LSF','Pratiquer le rôle shift à 2 perso.','Observer un storytelling LSF natif'],
+    vids:[
+      {t:'🎬 Histoire & culture sourde (AdSignes)',u:'https://www.youtube.com/watch?v=atIqvPB2I8c'},
+      {t:'🎬 Décrire une scène complexe',u:'https://www.youtube.com/watch?v=IqelM_tBHU0'},
+      {t:'🎬 Storytelling 3–5 min LSF',u:'https://www.youtube.com/watch?v=t4aThZY_zDA'},
+      {t:'🎬 Raconter une anecdote',u:'https://www.youtube.com/watch?v=laTuEg45iqU'},
+    ]
+  },
+  {
+    emoji:'🌲',code:'B2',name:'Argumentation',months:'Mois 7–8',
+    obj:'Storytelling immersif, argumentation, images multi-actions, débattre, raconter 5–7 min.',
+    vocab:[
+      // 🎭 Métaphores & expressions culturelles (40)
+      'Relation (cercle mains)','Évolution (spirale)','Conflit (choc visuel)','Accord (poignée visuelle)',
+      'Désaccord (bras croisés)','Ironie (sourire + décalage spatial)','Sarcasme (micro-expression)','Implicite (pause + regard)',
+      'Sous-entendu (direction yeux)','Rumeur (mains en écho)','Tension (corps incliné)','Nuance (petits gestes faciaux)',
+      'Opinion forte visuelle','Opinion nuancée','Hypothèse visuelle','Suggestion visuelle','Rejet visuel','Acceptation visuelle',
+      'Doute visuel','Certitude visuelle','Confiance visuelle','Scepticisme visuel','Ambiguïté visuelle','Contradiction visuelle',
+      // 📺 Concepts sociaux & culturels (30)
+      'Société','Culture','Identité','Communauté','Valeurs','Normes','Histoire','Tradition',
+      'Innovation','Modernité','Technologie','Réseau','Public','Privé','Institution','Éducation',
+      'Politique','Économie','Environnement','Santé','Éthique','Justice','Liberté','Droits',
+      'Responsabilité','Solidarité','Diversité','Inclusion','Exclusion','Égalité',
+      // 🧠 Abstractions avancées (30)
+      'Paradoxe','Multidimensionnel','Interconnecté','Intuition','Argument implicite',
+      'Complexité visuelle','Effet cumulatif','Interaction sociale','Dynamique','Système',
+      'Structure','Processus','Méthodologie','Contextualisation','Reconstruction',
+      'Évaluation','Hypothèse multiple','Plausibilité','Séquence critique','Intervention',
+      'Comparaison complexe','Contraste nuancé','Transition logique','Discours argumenté',
+      'Contre-argument','Réfutation','Clarification subtile','Nuance extrême','Proposition raisonnée','Alternative engagée',
+    ],
+    structs:[['Opinion','SUJET + OPINION + RAISON + EXEMPLE + CONCLUSION'],['Débat','ARG1 + MAIS + ARG2 + MON POINT DE VUE'],['Narration','SCÈNE + SUJET + ACTIONS + RELATIONS + ÉMOTION']],
+    expr:[
+      'ÇA N\x27A AUCUN SENS','C\x27EST FLUO','RETOURNÉ LA SITUATION',
+      'Storytelling immersif 5–7 min','Débattre sur un sujet simple',
+      'Expliquer problème complexe + solution',
+      'Ironie / humour discret',
+      'Validation / intensité via visage et posture',
+      'Connecteurs visuels : cause, conséquence, opposition',
+      'Discours structuré : intro → développement → conclusion',
+      'Métaphores avancées : mains qui s\x27écartent pour comparer',
+      'Bras en spirale = progression complexe',
+      'Corps penché = anticipation / tension',
+      'Index + geste pointage = nuance / analyse critique',
+      'Main qui mime un cadre = concept abstrait',
+      'Rôle shift avancé : 3 personnages',
+      'Expression faciale : intensité / ironie légère',
+      'Classificateurs combinés pour plusieurs objets',
+      'Balancement corps = doute / hésitation',
+      'Pointeur + recul = analyse critique',
+      'Cercle mains = relation','Balancement corps = nuance',
+      'Transition visuelle fluide entre scènes',
+      'Comparaisons : mains qui se rapprochent / écartent',
+      'Inclusion (mouvement circulaire proche) / Exclusion (mouvement loin)',
+      'Opposition visuelle : duo de mouvements opposés',
+      'Main qui touche cœur = émotion forte',
+      'Reprise idée : mouvement circulaire lent',
+      'Expansion idée : doigts tendus + ouverture',
+      'Transformation : paume ouverte puis refermée',
+    ],
+    errs:[{p:'Discours trop linéaire',f:'Penser en scènes visuelles'},{p:'Sous-utilisation non-manuel',f:'Filmer son visage seul'},{p:'Surcharge classificateurs',f:'Utiliser le plus iconique'}],
+    duree:'30 min narration + 20 min observation',
+    checks:['Débattre seul 5 min filmé','Raconter expérience en 7 min','Décrire image avec 5+ actions','Filmer uniquement son visage','Imiter un débat LSF en ligne'],
+    vids:[
+      {t:'🎬 Débattre en LSF',u:'https://www.youtube.com/watch?v=kyuD8YcTWdE'},
+      {t:'🎬 Cause, conséquence, nuance',u:'https://www.youtube.com/watch?v=10SK2LBMhA8'},
+      {t:'🎬 Chansignes — Haut les Mains',u:'https://www.autonomia.org/article/haut-les-mains-une-chaine-youtube-de-chansons-en-langue-des-signes-francaise'},
+      {t:'🎬 Vlogs de youtubeurs sourds',u:'https://www.apprendreaecouter.com/category/youtubeurs-sourds/'},
+    ]
+  },
+  {
+    emoji:'🌟',code:'B2+',name:'Fluidité',months:'Mois 9–10',
+    obj:'Descriptions implicites et nuancées, improvisation, humour subtil, concepts abstraits.',
+    vocab:[
+      // Adverbes nuancés (20)
+      'Probablement','Évidemment','Naturellement','Fréquemment','Occasionnellement','Rarement',
+      'Immédiatement','Graduellement','Progressivement','Absolument','Relativement','Partiellement',
+      'Complètement','Précisément','Généralement','Fondamentalement','Strictement','Théoriquement','Pratiquement','Simultanément',
+      // Structures discursives (20)
+      'Cause → effet','Problème → solution','Comparaison → contraste','Définition → exemple',
+      'Récit → interprétation','Argumentation logique','Débat équilibré','Opinion nuancée',
+      'Transition interne','Conclusion naturelle','Introduction claire','Résumé final',
+      'Illustrer idée','Justifier point','Clarifier doute','Confronter perspectives',
+      'Synthèse visuelle','Séquence narrative','Point visuel clé','Flux narratif',
+      // Subtilités cognitives (20)
+      'Nuance','Subtil','Complexe','Clair','Flou','Direct','Indirect','Contradiction',
+      'Consistance','Divergence','Convergence','Sujet principal','Sujet secondaire',
+      'Rappel','Clarification nécessaire','Doute raisonnable','Alternative logique',
+      'Hypothèse probable','Hypothèse moins probable','Conclusion logique',
+      // Expressivité avancée (20)
+      'Paradoxe','Ironie / Sarcasme','Second degré','Humour subtil','Jeu de mots visuel',
+      'Ambiguïté / Double sens','Analyser / Décortiquer','Spontané / Instinctif',
+      'Exagérer / Minimiser','Symbolique / Métaphorique','Intensité émotionnelle / Gradation',
+      'Doute / Hésitation','Confiance / Assurance','Interaction / Réciprocité',
+      'Implicite / Explicite','Rythme / Pause / Tempo','Regard / Mimique / Gestuelle',
+      'Improviser / Adapter','Perspective / Point de vue','Relation complexe',
+    ],
+    structs:[['Analyse','SCÈNE + SUJET1 + SUJET2 + ACTIONS + ÉMOTION + HUMOUR'],['Critique','SITUATION + ANALYSE + NUANCE + POURQUOI'],['Impro','DÉCLENCHER → RÉAGIR → DÉVELOPPER']],
+    expr:[
+      'C\x27EST SUBTIL','IRONIE','HUMOUR CULTUREL',
+      'Transformation : paume ouverte puis refermée',
+      'Cercle mains = relation','Balancement = doute',
+      'Pointeur + recul = analyse',
+      'Relâchement non-manuel pour montrer contraste',
+      'Obstacles invisibles (poings bas)',
+      'Bloqué dans une pensée (murs visuels)',
+      'Improviser récit visuel complet',
+      'Adaptation au rythme interlocuteur',
+      'Pause naturelle entre idées',
+      'Rythme narratif fluide',
+      'Timing des expressions faciales',
+      'Gestion de l\x27espace signatif',
+      'Synchronisation regard + geste',
+      'Corps = support narratif',
+      'Variation d\x27intensité visuelle',
+      'Humour implicite dans narration',
+    ],
+    errs:[{p:'Trop scolaire',f:'Copier exactement le rythme des natifs'},{p:'Manque de spontanéité',f:'Improviser 30 sec sur image aléatoire'},{p:'Fatigue non-manuel',f:'Endurance 5→10→20 min'}],
+    duree:'30–40 min narration/impro + 20 min natifs',
+    checks:['Improviser 2 min image aléatoire','Raconter avec humour implicite','Décrire relation entre 3 personnes','Filmer 10 min et analyser rythme','Vlog sourd sans sous-titres'],
+    vids:[
+      {t:'🎬 Vlogs de youtubeurs sourds',u:'https://www.apprendreaecouter.com/category/youtubeurs-sourds/'},
+      {t:'🎬 Contenu créatif humoristique',u:'https://www.youtube.com/watch?v=kyuD8YcTWdE'},
+    ]
+  },
+  {
+    emoji:'⭐',code:'C1',name:'Maîtrise',months:'Mois 11–12',
+    obj:'Fluidité totale, narration multi-scènes 10–20 min, rôle shift imbriqué, métaphores complexes, spontanéité.',
+    vocab:[
+      // Concepts hi-niveau (25)
+      'Paradoxe culturel','Ambiguïté profonde','Implicite culturel','Ironie complexe','Humour culturel sourd',
+      'Métaphore logique','Symbole visuel','Perspective critique','Paradigme','Théorisation',
+      'Transcendance','Convergence','Divergence','Déconstruire','Recontextualiser',
+      'Métareprésentation','Pragmatique visuelle','Interaction complexe','Polysémie visuelle','Discours multidimensionnel',
+      'Cadre conceptuel','Approche systémique','Pensée holistique','Distinction conceptuelle','Autoréférence',
+      // Techniques avancées (25)
+      'Ironie subtile visuelle','Sarcasme culturel','Humour implicite','Métaphore multiple','Scénario imbriqué',
+      'Narration convergente','Narration divergente','Rôle shift imbriqué','Iconicité complexe','Non-manuel avancé',
+      'Variation rythmique','Expression nuancée','Synthèse en direct','Résumé critique','Interprétation relative',
+      'Adaptation interlocuteur','Compréhension globale','Structure narrative fluide','Transition complexe','Fluidité spontanée',
+      'Interaction optimisée','Coordination visuelle','Analyse visuelle critique','Réponse improvisée','Discours immersif complet',
+    ],
+    structs:[['Narration','SCÈNE + SUJET1 + SUJET2 + ACTIONS + ÉMOTION + IRONIE + COMMENTAIRE'],['Rôle shift','changer de perspective DANS un rôle shift déjà en cours'],['Métaphore','signe visuel + développement spatial + résolution']],
+    expr:[
+      'Narration multi-scènes (10–20 min)',
+      'Analyser symboliquement une image / lieu',
+      'Débattre sur sujet complexe',
+      'Raconter blague avec timing visuel correct',
+      'Ironie pure, humour implicite',
+      'Ironie subtile (micro-expression + décalage spatial)',
+      'Expressions faciales pour sarcasme',
+      'Validation / intensité via visage et posture avancée',
+      'Non-manuel complexe pour émotions subtiles',
+      'Multi-rôle shift imbriqué',
+      'Métaphores visuelles imbriquées : bras en double spirale',
+      'Inclinaison + geste pointage = nuance / sous-entendu',
+      'Classificateurs combinés pour scènes multiples',
+      'Adaptation interlocuteur : rythme et espace',
+      'Rôle shift pour humour / surprise / suspense',
+      'Balancement corps / mains = suspense / tension narrative',
+      'Cercle / spirale / ligne pour relations complexes',
+      'Mouvements non-linéaires pour simultanéité',
+      'Déploiement spontané des métaphores complexes',
+      'Rôle shift imbriqué + intensité faciale extrême',
+    ],
+    errs:[{p:'Dépendance français signé',f:'Penser DIRECTEMENT en scènes visuelles'},{p:'Défaillance non-manuel long',f:'Endurance 5→10→20 min sans pause'},{p:'Mauvaise adaptation interlocuteur',f:'Analyser interactions réelles filmées'}],
+    duree:'40 min narration/impro + 20 min natifs + interactions réelles',
+    checks:['Narration 10 min multi-scènes filmée','Raconter blague avec bon timing','Débattre 7 min sujet complexe','Improvisation 5 min concept abstrait','Interaction réelle avec locuteur LSF'],
+    vids:[
+      {t:'🎬 Vlogs immersifs naturels',u:'https://www.apprendreaecouter.com/category/youtubeurs-sourds/'},
+      {t:'🎬 Interviews et débats LSF',u:'https://www.culturesourde.fr/langue-des-signes/progresser-lsf/'},
+      {t:'🎬 Storytelling multi-scènes',u:'https://www.youtube.com/watch?v=laTuEg45iqU'},
+    ]
+  }
+];
+
+
+// ── GRAMMAIRE LSF ────────────────────────────────────────────────────────────
+const GRAMMAR = [
+  {
+    emoji:'🎬',
+    title:'Transferts Personnel & Situationnel',
+    desc:'Le cœur de la narration LSF : incarner un personnage ou montrer une scène vue de l\x27extérieur',
+    videos:[
+      {t:'Transfert personnel (avancé)',u:'https://www.youtube.com/watch?v=lcC_t9zNGVo'},
+      {t:'Transfert personnel + situationnel (intro)',u:'https://www.youtube.com/watch?v=Vmhptt6JqoI'},
+      {t:'Transfert situationnel + proformes',u:'https://www.youtube.com/watch?v=htaYoSrVjqY'},
+      {t:'Transfert situationnel (partie 2)',u:'https://www.youtube.com/watch?v=mIx2dDTWbaM'},
+      {t:'Raconter sa journée avec transfert',u:'https://www.youtube.com/watch?v=AVoYzS9Th3Q'},
+    ],
+    lessons:[
+      '🎭 TRANSFERT PERSONNEL = devenir le personnage. Question clé : "Est-ce que JE SUIS dans la peau de cette personne ?" Si oui → transfert personnel.',
+      '👁️ Orientation = identité. Question : "Mon corps est tourné vers qui ? Mon regard va vers qui ?" Corps gauche = personnage A, corps droit = personnage B.',
+      '💬 Quand utiliser le personnel ? Question : "Est-ce que je dois montrer une ÉMOTION, un DIALOGUE, ou une PENSÉE ?" Si oui → transfert personnel.',
+      '🎬 TRANSFERT SITUATIONNEL = caméra externe. Question : "Est-ce que je montre la scène VUE DE L\x27EXTÉRIEUR (déplacements, positions) ?" Si oui → situationnel.',
+      '🖐️ Proformes (classificateurs). Question : "Quelle forme de main représente le mieux cet objet/personne ?" Index = personne debout, main plate = véhicule.',
+      '📍 Cohérence spatiale. Question AVANT de signer : "Où j\x27ai placé cet élément au début ?" Il doit rester au même endroit tout le long de la narration.',
+      '❌ Erreur fréquente : rester narrateur externe. Question à te poser : "Est-ce que je RACONTE ou est-ce que je MONTRE/INCARNE ?" Tu dois MONTRER.',
+      '🏗️ Structure narrative. Questions dans l\x27ordre : 1) "Où et quand ?" (contexte), 2) "Qui est où ?" (placement), 3) "Que se passe-t-il ?" (action).',
+      '🔄 Multi-personnages. Question à chaque changement : "Est-ce que j\x27ai clairement changé mon orientation corporelle + mon expression faciale ?"',
+      '⚡ Fluidité vs perfection. Question : "Est-ce que mon transfert est VIVANT même si imparfait, ou MORT même si techniquement correct ?" Vise vivant.',
+      '🎯 Auto-diagnostic. Question après t\x27être filmé : "Si je regarde ma vidéo sans le son, est-ce que je VOIS la scène se dérouler ?" Si non → retravailler.',
+      '💡 Exercice quotidien. Question : "Aujourd\x27hui, quelle petite scène puis-je raconter en transfert ?" Ex : commander un café, croiser quelqu\x27un.',
+    ]
+  },
+  {
+    emoji:'⏰',
+    title:'Temporalité en LSF',
+    desc:'Le temps est spatial : passé = derrière, présent = neutre, futur = devant. Pas de conjugaison classique.',
+    videos:[
+      {t:'Temporalité partie 3 (présent/passé/futur)',u:'https://youtu.be/QMaD_V6NB74'},
+    ],
+    lessons:[
+      '🧭 Temps = espace. Question clé : "Est-ce que j\x27ai POSÉ le repère temporel dans l\x27espace AVANT de commencer ma phrase ?" Sinon → confusion.',
+      '⏮️ Passé = derrière. Question : "Est-ce que je parle de quelque chose qui est DÉJÀ arrivé ?" Si oui → geste vers l\x27arrière (épaule/dos).',
+      '⏯️ Présent = neutre. Question : "Est-ce que je parle de MAINTENANT, de l\x27habitude, du général ?" Si oui → zone neutre devant le torse.',
+      '⏭️ Futur = devant. Question : "Est-ce que je parle de quelque chose qui VA arriver ?" Si oui → geste vers l\x27avant, loin devant le corps.',
+      '📌 Ordre LSF. Question AVANT chaque phrase : "Ai-je mis le TEMPS en premier ?" Structure : [TEMPS] + sujet + action + complément.',
+      '🔁 Persistance temporelle. Question : "Ai-je déjà posé le repère temporel au début ?" Si oui → pas besoin de le répéter, il reste actif.',
+      '❌ Erreur fréquente : répéter le temps. Question : "Est-ce que je redis HIER à chaque phrase alors que j\x27ai déjà dit HIER au début ?" Si oui → arrête.',
+      '⏱️ Temps vs durée. Question : "Je réponds à QUAND (hier/demain) ou à COMBIEN DE TEMPS (2h/longtemps) ?" Ce sont deux concepts différents.',
+      '📐 Formule de base. Question avant de signer : "Ai-je bien : [TEMPS] [SUJET] [ACTION] [COMPLÉMENT] ?" Ex : HIER / MOI / CINÉMA / ALLER.',
+      '🎭 Contexte visuel d\x27abord. Question : "Est-ce que mon interlocuteur sait QUAND avant que je lui dise QUOI ?" Le cerveau a besoin du cadre temporel.',
+      '🔀 Navigation multi-temporelle. Question à chaque saut dans le temps : "Ai-je MARQUÉ le changement de temps (geste + expression) ?" Sinon → confusion.',
+      '😮 Expression faciale = nuance. Question : "Mon visage montre-t-il si c\x27est une CERTITUDE, une HYPOTHÈSE, un SOUVENIR lointain ?" Sourcils + regard.',
+      '🚫 Pas de conjugaison française. Question piège : "Suis-je en train de penser en français et traduire ?" Arrête. Pense : [TEMPS] + [verbe non conjugué].',
+      '💪 Test de maîtrise. Question : "Puis-je raconter ma journée en posant MATIN/MIDI/SOIR une seule fois, puis enchaîner 5 actions sans répéter ?"',
+      '🧠 Pense spatial, pas abstrait. Question finale : "Est-ce que je VOIS le temps comme une LIGNE dans l\x27espace (derrière→devant) ?" C\x27est ça la LSF.',
+    ]
+  },
+];
+
+const BDGS=[
+  // 🌟 Premiers pas
+  {id:'first',    emoji:'👋',name:'Premier Signe',    desc:'1ère case cochée',          cond:'any'},
+  {id:'t5',       emoji:'✏️', name:'Débutant',         desc:'5 tâches accomplies',        cond:'t5'},
+  {id:'t20',      emoji:'📋',name:'Appliqué',          desc:'20 tâches accomplies',       cond:'t20'},
+  {id:'t50',      emoji:'📚',name:'Studieux',          desc:'50 tâches accomplies',       cond:'t50'},
+  // 🔥 Streaks
+  {id:'s3',       emoji:'🕯️', name:'Flamme Naissante', desc:'Streak de 3 jours',          cond:'s3'},
+  {id:'s7',       emoji:'🔥',name:'Flamme 7j',         desc:'Streak de 7 jours',          cond:'s7'},
+  {id:'s14',      emoji:'⚡',name:'Électrique',         desc:'Streak de 14 jours',         cond:'s14'},
+  {id:'s30',      emoji:'🏆',name:'Légendaire',         desc:'Streak de 30 jours',         cond:'s30'},
+  {id:'s60',      emoji:'👑',name:'Roi de la régularité',desc:'Streak de 60 jours',       cond:'s60'},
+  // 📖 Vocabulaire
+  {id:'v10s',     emoji:'🌀',name:'10 Signes',          desc:'10 signes cochés',           cond:'vs10'},
+  {id:'v50s',     emoji:'💬',name:'50 Signes',          desc:'50 signes cochés',           cond:'vs50'},
+  {id:'v100s',    emoji:'🗣️', name:'100 Signes',         desc:'100 signes cochés',          cond:'vs100'},
+  {id:'v250s',    emoji:'📖',name:'250 Signes',          desc:'250 signes cochés',          cond:'vs250'},
+  {id:'v500s',    emoji:'🧠',name:'500 Signes',          desc:'500 signes cochés',          cond:'vs500'},
+  {id:'v1000s',   emoji:'🌊',name:'1000 Signes',         desc:'Tous les signes maîtrisés',  cond:'vs1000'},
+  // ✋ Expressions
+  {id:'e10',      emoji:'🤙',name:'Gesticulateur',      desc:'10 expressions cochées',     cond:'e10'},
+  {id:'e50',      emoji:'🎭',name:'Expressif',           desc:'50 expressions cochées',     cond:'e50'},
+  {id:'e100',     emoji:'🎪',name:'Comédien LSF',        desc:'100 expressions cochées',    cond:'e100'},
+  // 🎬 Vidéos
+  {id:'v5vid',    emoji:'▶️', name:'Curieux',            desc:'5 vidéos regardées',         cond:'v5'},
+  {id:'v10vid',   emoji:'👁️', name:'Œil Vif',            desc:'10 vidéos regardées',        cond:'v10'},
+  {id:'v30vid',   emoji:'📺',name:'Téléspectateur LSF',  desc:'30 vidéos regardées',        cond:'v30'},
+  {id:'v50vid',   emoji:'🎬',name:'Cinéphile LSF',        desc:'50 vidéos regardées',        cond:'v50'},
+  // 🎯 Progression par niveau
+  {id:'a1_half',  emoji:'🌱',name:'Pousse A1',           desc:'50% du niveau A1',           cond:'h0'},
+  {id:'a1',       emoji:'🌿',name:'Racines A1',           desc:'A1 entièrement complété',    cond:'l0'},
+  {id:'a2_half',  emoji:'🌿',name:'Pousse A2',           desc:'50% du niveau A2',           cond:'h1'},
+  {id:'a2',       emoji:'🌳',name:'Feuilles A2',          desc:'A2 entièrement complété',    cond:'l1'},
+  {id:'b1_half',  emoji:'🌳',name:'Pousse B1',           desc:'50% du niveau B1',           cond:'h2'},
+  {id:'b1',       emoji:'🌲',name:'Arbre B1',             desc:'B1 entièrement complété',    cond:'l2'},
+  {id:'b2_half',  emoji:'🌲',name:'Pousse B2',           desc:'50% du niveau B2',           cond:'h3'},
+  {id:'b2',       emoji:'🌟',name:'Forêt B2',             desc:'B2 entièrement complété',    cond:'l3'},
+  {id:'b2p_half', emoji:'🌟',name:'Pousse B2+',          desc:'50% du niveau B2+',          cond:'h4'},
+  {id:'b2p',      emoji:'⭐',name:'Étoile B2+',           desc:'B2+ entièrement complété',   cond:'l4'},
+  {id:'c1_half',  emoji:'⭐',name:'Pousse C1',            desc:'50% du niveau C1',           cond:'h5'},
+  {id:'c1',       emoji:'💫',name:'Maître LSF',           desc:'C1 entièrement complété',    cond:'l5'},
+  // 💎 Spéciaux
+  {id:'halfway',  emoji:'🎯',name:'Mi-Chemin',            desc:'50% de tout le parcours',    cond:'g50'},
+  {id:'all',      emoji:'💎',name:'Perfectionniste',      desc:'Tout le parcours complété',  cond:'all'},
+  {id:'notes1',   emoji:'📝',name:'Carnet Ouvert',        desc:'Première note écrite',       cond:'note1'},
+  {id:'combo',    emoji:'🚀',name:'Triple Combo',         desc:'Tâche + signe + expression le même jour',cond:'combo'},
+  {id:'speed',    emoji:'⚡',name:'Sprint',               desc:'10 cases cochées en 1 session',cond:'sess10'},
+];
+
+let S={theme:'light',streak:7,checks:{},vids:0,badges:{},open:-1};
+
+async function load(){
+  try{
+    let loaded = false;
+    // 1. Essayer window.storage (Claude.ai — données persistantes)
+    if(window.storage && window.storage.get){
+      try{
+        const r = await window.storage.get('lsf_v16');
+        if(r && r.value){
+          S = Object.assign(S, JSON.parse(r.value));
+          loaded = true;
+        }
+      }catch(e){ /* clé absente = premier lancement */ }
+    }
+    // 2. Toujours essayer localStorage en complément
+    if(!loaded){
+      const data = localStorage.getItem('lsf_v16');
+      if(data) S = Object.assign(S, JSON.parse(data));
+    }
+  }catch(e){ console.log('Load error:',e); }
+}
+async function save(){
+  try{
+    const data = JSON.stringify(S);
+    // Écrire dans localStorage TOUJOURS (navigateur local)
+    try{ localStorage.setItem('lsf_v16', data); }catch(e){}
+    // Écrire dans window.storage TOUJOURS si disponible (Claude.ai)
+    if(window.storage && window.storage.set){
+      try{ await window.storage.set('lsf_v16', data); }catch(e){}
+    }
+  }catch(e){ console.log('Save error:',e); }
+}
+
+function ck(li,ti){return 't_'+li+'_'+ti;}
+function vk(li,vi){return 'v_'+li+'_'+vi;}
+function ek(li,ei){return 'e_'+li+'_'+ei;}
+function lDone(li){return LVL[li].checks.filter((_,ti)=>S.checks[ck(li,ti)]).length;}
+function lTot(li){return LVL[li].checks.length;}
+function vDone(li){return LVL[li].vocab.filter((_,vi)=>S.checks[vk(li,vi)]).length;}
+function vTot(li){return LVL[li].vocab.length;}
+function eDone(li){return LVL[li].expr.filter((_,ei)=>S.checks[ek(li,ei)]).length;}
+function eTot(li){return LVL[li].expr.length;}
+function lPct(li){const td=lDone(li),tt=lTot(li),vd=vDone(li),vt=vTot(li),ed=eDone(li),et=eTot(li);const total=tt+vt+et;return total?Math.round((td+vd+ed)/total*100):0;}
+function gPct(){let d=0,t=0;LVL.forEach((_,i)=>{d+=lDone(i)+vDone(i)+eDone(i);t+=lTot(i)+vTot(i)+eTot(i);});return t?Math.round(d/t*100):0;}
+
+// Notes de niveaux — clé dédiée (comme lsf_spiritual_notes)
+let LEVEL_NOTES = {};
+
+async function loadLevelNotes(){
+  try{
+    let loaded = false;
+    if(window.storage && window.storage.get){
+      try{
+        const r = await window.storage.get('lsf_level_notes');
+        if(r && r.value){ LEVEL_NOTES = JSON.parse(r.value); loaded = true; }
+      }catch(e){}
+    }
+    if(!loaded){
+      const d = localStorage.getItem('lsf_level_notes');
+      if(d) LEVEL_NOTES = JSON.parse(d);
+    }
+  }catch(e){ console.log('loadLevelNotes error:',e); }
+}
+
+async function saveLevelNote(li, value){
+  LEVEL_NOTES[li] = value;
+  try{
+    const json = JSON.stringify(LEVEL_NOTES);
+    try{ localStorage.setItem('lsf_level_notes', json); }catch(e){}
+    if(window.storage && window.storage.set){
+      try{ await window.storage.set('lsf_level_notes', json); }catch(e){}
+    }
+  }catch(e){ console.log('saveLevelNote error:',e); }
+}
+
+let toastT;
+function showToast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2800);}
+
+function totalVocabDone(){let d=0;LVL.forEach((_,i)=>d+=vDone(i));return d;}
+function totalExprDone(){let d=0;LVL.forEach((_,i)=>d+=eDone(i));return d;}
+function totalTasksDone(){let d=0;LVL.forEach((_,i)=>d+=lDone(i));return d;}
+
+function syncBadges(){
+  const prev=Object.values(S.badges).filter(Boolean).length;
+  const tvd=totalVocabDone(), ted=totalExprDone(), ttd=totalTasksDone();
+  const gp=gPct();
+
+  BDGS.forEach(b=>{
+    if(S.badges[b.id])return;
+    let ok=false;
+    // Premiers pas
+    if(b.cond==='any')  ok=Object.values(S.checks).some(Boolean);
+    if(b.cond==='t5')   ok=ttd>=5;
+    if(b.cond==='t20')  ok=ttd>=20;
+    if(b.cond==='t50')  ok=ttd>=50;
+    // Streaks
+    if(b.cond==='s3')   ok=S.streak>=3;
+    if(b.cond==='s7')   ok=S.streak>=7;
+    if(b.cond==='s14')  ok=S.streak>=14;
+    if(b.cond==='s30')  ok=S.streak>=30;
+    if(b.cond==='s60')  ok=S.streak>=60;
+    // Vocabulaire
+    if(b.cond==='vs10')   ok=tvd>=10;
+    if(b.cond==='vs50')   ok=tvd>=50;
+    if(b.cond==='vs100')  ok=tvd>=100;
+    if(b.cond==='vs250')  ok=tvd>=250;
+    if(b.cond==='vs500')  ok=tvd>=500;
+    if(b.cond==='vs1000') ok=tvd>=1000;
+    // Expressions
+    if(b.cond==='e10')  ok=ted>=10;
+    if(b.cond==='e50')  ok=ted>=50;
+    if(b.cond==='e100') ok=ted>=100;
+    // Vidéos
+    if(b.cond==='v5')   ok=S.vids>=5;
+    if(b.cond==='v10')  ok=S.vids>=10;
+    if(b.cond==='v30')  ok=S.vids>=30;
+    if(b.cond==='v50')  ok=S.vids>=50;
+    // Niveaux 50%
+    if(b.cond.startsWith('h')){const i=parseInt(b.cond[1]);ok=lPct(i)>=50;}
+    // Niveaux 100%
+    if(b.cond.startsWith('l')&&!b.cond.startsWith('l.')){const i=parseInt(b.cond[1]);ok=lDone(i)===lTot(i)&&vDone(i)===vTot(i)&&eDone(i)===eTot(i);}
+    // Spéciaux
+    if(b.cond==='g50')   ok=gp>=50;
+    if(b.cond==='all')   ok=LVL.every((_,i)=>lDone(i)===lTot(i)&&vDone(i)===vTot(i)&&eDone(i)===eTot(i));
+    if(b.cond==='note1') ok=!!(S.hasNote);
+    if(b.cond==='combo') ok=!!(S.combo);
+    if(b.cond==='sess10')ok=!!(S.sess>=10);
+    if(ok)S.badges[b.id]=true;
+  });
+
+  const after=Object.values(S.badges).filter(Boolean).length;
+  if(after>prev){
+    const newBadges=BDGS.filter(b=>S.badges[b.id]).slice(-1);
+    if(newBadges.length)showToast('🏅 Badge : '+newBadges[0].name+' '+newBadges[0].emoji);
+  }
+  const n=Object.values(S.badges).filter(Boolean).length;
+  const el=document.getElementById('bdgTxt');if(el)el.textContent=n+' badge'+(n>1?'s':'');
+}
+
+function renderStreak(){
+  document.getElementById('sN').textContent=S.streak;
+  const days=['L','M','M','J','V','S','D'];
+  const today=new Date().getDay(),ti=today===0?6:today-1;
+  document.getElementById('sDays').innerHTML=days.map((d,i)=>`<div class="sd${i<ti?' done':i===ti?' today':''}">${d}</div>`).join('');
+}
+function renderGlobal(){const p=gPct();document.getElementById('gPct').textContent=p+'%';document.getElementById('gBar').style.width=p+'%';}
+
+function buildNav(){
+  const nav=document.getElementById('navList');nav.innerHTML='';
+  // Bouton Grammaire
+  const gb=document.createElement('button');gb.className='bdg-nav';gb.textContent='📚 Grammaire LSF';
+  gb.addEventListener('click',showGrammar);nav.appendChild(gb);
+  LVL.forEach((lvl,li)=>{
+    const btn=document.createElement('button');btn.className='nav-btn'+(S.open===li?' open':'');
+    btn.innerHTML=`${lvl.emoji} ${lvl.code} — ${lvl.name}<span class="nbadge">${lvl.months}</span><span class="chev">›</span>`;
+    btn.addEventListener('click',()=>toggleLevel(li));nav.appendChild(btn);
+  });
+  const bb=document.createElement('button');bb.className='bdg-nav';bb.textContent='🏅 Mes Badges';
+  bb.addEventListener('click',showBadges);nav.appendChild(bb);
+  const sb=document.createElement('button');sb.className='bdg-nav';sb.textContent='💎 Spirituel';
+  sb.addEventListener('click',showSpiritual);nav.appendChild(sb);
+}
+
+function toggleLevel(li){
+  S.open=S.open===li?-1:li;save();renderLevels();buildNav();
+  if(S.open===li){setTimeout(()=>{const el=document.getElementById('acc'+li);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},80);}
+}
+
+function renderLevels(){S.view='levels';save();
+  const area=document.getElementById('mainArea');
+  area.innerHTML=`<div class="main-top"><div><div class="main-title">🌱 Mon Parcours LSF</div><div class="main-sub">Clique sur un niveau pour déplier son contenu</div></div><button class="bdg-pill" id="bdgBtn">🏅 <span id="bdgTxt">0 badges</span></button></div><div class="levels-list" id="lvlList"></div>`;
+  document.getElementById('bdgBtn').addEventListener('click',showBadges);
+  syncBadges();
+  const list=document.getElementById('lvlList');
+  LVL.forEach((lvl,li)=>{
+    const isOpen=S.open===li;
+    const item=document.createElement('div');item.className='acc-item'+(isOpen?' open':'');item.id='acc'+li;
+    const head=document.createElement('div');head.className='acc-head';
+    const total=lDone(li)+vDone(li)+eDone(li),totalMax=lTot(li)+vTot(li)+eTot(li);
+    head.innerHTML=`<span class="acc-emoji">${lvl.emoji}</span><div class="acc-info"><div class="acc-code">${lvl.months}</div><div class="acc-name">${lvl.code} — ${lvl.name}</div></div><div class="acc-right"><span class="acc-pct" id="ap${li}">${total}/${totalMax}</span><div class="acc-mini"><div class="acc-mini-f" id="amf${li}" style="width:${lPct(li)}%"></div></div><span class="acc-chev">▾</span></div>`;
+    head.addEventListener('click',()=>toggleLevel(li));item.appendChild(head);
+    const body=document.createElement('div');body.className='acc-body';
+    if(isOpen)fillBody(body,lvl,li);
+    item.appendChild(body);list.appendChild(item);
+  });
+}
+
+function el(tag,cls,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html)e.innerHTML=html;return e;}
+
+function fillBody(body,lvl,li){
+  body.appendChild(el('div','obj-box','🎯 '+lvl.obj));
+  body.appendChild(el('div','dur-tag','⏱ '+lvl.duree));
+  const fb=el('button','focus-sm','🎯 Mode Focus — Tâche du jour');
+  fb.addEventListener('click',()=>openFocus(li));body.appendChild(fb);
+  const grid=el('div','cgrid');grid.style.marginTop='6px';body.appendChild(grid);
+
+  // Checklist tâches
+  const done=lDone(li),tot=lTot(li),pct=Math.round(done/tot*100);
+  const cc=el('div','card');
+  cc.innerHTML=`<span class="cico">✅</span><div class="ctit">Checklist du jour</div><div class="cl">${lvl.checks.map((t,ti)=>{const on=!!S.checks[ck(li,ti)];return`<div class="ci" data-type="t" data-li="${li}" data-ti="${ti}"><div class="cb${on?' on':''}" id="cb_t_${li}_${ti}"></div><span class="ctxt${on?' done':''}" id="ct_t_${li}_${ti}">${t}</span></div>`;}).join('')}</div><div class="xpbar"><div class="xrow"><span class="xlbl">Tâches</span><span class="xval" id="xv_t_${li}">${done}/${tot}</span></div><div class="xtrack"><div class="xfill" id="xf_t_${li}" style="width:${pct}%"></div></div></div>`;
+  cc.querySelectorAll('.ci').forEach(ci=>ci.addEventListener('click',()=>toggleCheck('t',parseInt(ci.dataset.li),parseInt(ci.dataset.ti))));
+  grid.appendChild(cc);
+
+  // Vocab checklist avec recherche
+  const vdone=vDone(li),vtot=vTot(li),vpct=Math.round(vdone/vtot*100);
+  const vc=el('div','card full');
+  const vocId='vcl'+li;
+  vc.innerHTML=`<span class="cico">📖</span><div class="ctit">Les ${vtot} signes à maîtriser — ${lvl.code}</div><div class="cbod" style="margin-bottom:8px;font-size:.82rem">Coche chaque signe une fois maîtrisé · Utilise <a href="https://dico.elix-lsf.fr/" target="_blank" rel="noopener" style="color:var(--a2);text-decoration:none">DicoElix</a> pour voir la vidéo du signe 🎬</div><input class="vsearch" id="vs${li}" placeholder="🔍 Rechercher un signe..." type="text"><div class="vcols" id="${vocId}">${lvl.vocab.map((v,vi)=>{const on=!!S.checks[vk(li,vi)];return`<div class="ci" data-type="v" data-li="${li}" data-ti="${vi}"><div class="cb${on?' on':''}" id="cb_v_${li}_${vi}"></div><span class="ctxt${on?' done':''}" id="ct_v_${li}_${vi}">${v}</span></div>`;}).join('')}</div><div class="xpbar"><div class="xrow"><span class="xlbl">Signes maîtrisés</span><span class="xval" id="xv_v_${li}">${vdone}/${vtot}</span></div><div class="xtrack"><div class="xfill" id="xf_v_${li}" style="width:${vpct}%"></div></div></div>`;
+  vc.querySelectorAll('.ci').forEach(ci=>ci.addEventListener('click',()=>toggleCheck('v',parseInt(ci.dataset.li),parseInt(ci.dataset.ti))));
+  // Filtre de recherche
+  const si=vc.querySelector('#vs'+li);
+  si.addEventListener('input',()=>{
+    const q=si.value.toLowerCase();
+    vc.querySelectorAll('#'+vocId+' .ci').forEach(row=>{
+      row.style.display=row.querySelector('.ctxt').textContent.toLowerCase().includes(q)?'':'none';
+    });
+  });
+  grid.appendChild(vc);
+
+  // Structures
+  const sc=el('div','card struct-card');
+  const structRows=lvl.structs.map(([name,pattern])=>{
+    // Détecter le séparateur (+ ou →)
+    const sep = pattern.includes('→') ? '→' : '+';
+    const tokens = pattern.split(sep).map(t=>t.trim()).filter(Boolean);
+    const arrowChar = '→';
+    const tokHtml = tokens.map((t,i)=>{
+      const arrow = i<tokens.length-1 ? `<span class="struct-arrow">${arrowChar}</span>` : '';
+      return `<span class="struct-token">${t}</span>${arrow}`;
+    }).join('');
+    return`<div class="struct-row"><div class="struct-name">${name}</div><div class="struct-tokens">${tokHtml}</div></div>`;
+  }).join('');
+  sc.innerHTML=`<span class="cico">🏗️</span><div class="ctit">Structures de phrases</div><div class="struct-list">${structRows}</div>`;
+  grid.appendChild(sc);
+  // Expressions checklist
+  const edone=eDone(li),etot=eTot(li),epct=Math.round(edone/etot*100);
+  const ec=el('div','card');
+  ec.innerHTML=`<span class="cico">✋</span><div class="ctit">Expressions & Métaphores à maîtriser</div><div class="cbod" style="margin-bottom:8px;font-size:.82rem">Coche chaque expression une fois pratiquée :</div><div class="cl">${lvl.expr.map((e,ei)=>{const on=!!S.checks[ek(li,ei)];return`<div class="ci" data-type="e" data-li="${li}" data-ti="${ei}"><div class="cb${on?' on':''}" id="cb_e_${li}_${ei}"></div><span class="ctxt${on?' done':''}" id="ct_e_${li}_${ei}">${e}</span></div>`;}).join('')}</div><div class="xpbar"><div class="xrow"><span class="xlbl">Expressions maîtrisées</span><span class="xval" id="xv_e_${li}">${edone}/${etot}</span></div><div class="xtrack"><div class="xfill" id="xf_e_${li}" style="width:${epct}%"></div></div></div>`;
+  ec.querySelectorAll('.ci').forEach(ci=>ci.addEventListener('click',()=>toggleCheck('e',parseInt(ci.dataset.li),parseInt(ci.dataset.ti))));
+  grid.appendChild(ec);
+  // Erreurs
+  const errc=el('div','card');errc.innerHTML=`<span class="cico">⚠️</span><div class="ctit">Erreurs fréquentes</div><div class="err-list">${lvl.errs.map(e=>`<div class="err-item"><div class="err-p">❌ ${e.p}</div><div class="err-f">✅ ${e.f}</div></div>`).join('')}</div>`;grid.appendChild(errc);
+
+  // Vidéos + ressources
+  const vidc=el('div','card');
+  vidc.innerHTML=`<span class="cico">🎬</span><div class="ctit">Vidéos recommandées</div><div class="vlist">${lvl.vids.map((v,vi)=>`<a class="vitem" href="${v.u}" target="_blank" rel="noopener" data-vi="${vi}">${v.t}<span class="varr">↗</span></a>`).join('')}</div><div class="res-box"><div class="res-title">📌 Ressources essentielles (tous niveaux)</div>${RESSOURCES.map(r=>`<a class="res-link" href="${r.u}" target="_blank" rel="noopener">${r.t} <span style="margin-left:auto;font-size:.65rem;opacity:.6">↗</span></a>`).join('')}</div>`;
+  vidc.querySelectorAll('.vitem').forEach(a=>a.addEventListener('click',()=>{S.vids=(S.vids||0)+1;syncBadges();save();}));
+  vidc.querySelectorAll('.res-link').forEach(a=>a.addEventListener('click',()=>{S.vids=(S.vids||0)+1;syncBadges();save();}));
+  grid.appendChild(vidc);
+
+  // Carte notes pour ce niveau — données lues depuis S.levelNotes
+  const notec=el('div','card');
+  notec.style.gridColumn='1/-1';
+  const levelNoteData = LEVEL_NOTES[li] || '';
+  
+  notec.innerHTML=`
+    <span class="cico">📝</span>
+    <div class="ctit">Mes notes sur ${lvl.code}</div>
+    <div class="cbod" style="margin-bottom:8px;font-size:.82rem">Ce qui est difficile, les signes qui te posent problème, ce que tu dois améliorer…</div>
+    <textarea id="level_note_area_${li}" class="note-global-area" style="min-height:120px;margin-top:8px" placeholder="Prends des notes ici…">${levelNoteData}</textarea>
+    <div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-top:8px">
+      <span id="level_note_saved_${li}" class="note-saved">✓ Enregistré</span>
+      <button id="level_note_clear_${li}" class="note-clear">Effacer</button>
+    </div>`;
+  grid.appendChild(notec);
+  
+  // Event listeners — notec.querySelector car body n'est pas encore dans le DOM ici
+  const noteArea = notec.querySelector('#level_note_area_'+li);
+  const savedLbl = notec.querySelector('#level_note_saved_'+li);
+  const clearBtn = notec.querySelector('#level_note_clear_'+li);
+
+  if(noteArea){
+    let timer;
+    noteArea.addEventListener('input', ()=>{
+      clearTimeout(timer);
+      timer = setTimeout(async ()=>{
+        await saveLevelNote(li, noteArea.value);
+        if(savedLbl){ savedLbl.classList.add('show'); setTimeout(()=>savedLbl.classList.remove('show'), 2000); }
+      }, 800);
+    });
+  }
+  
+  if(clearBtn){
+    clearBtn.addEventListener('click', async ()=>{
+      if(!noteArea.value || confirm('Effacer les notes pour '+lvl.code+' ?')){
+        noteArea.value = '';
+        await saveLevelNote(li, '');
+        if(savedLbl){ savedLbl.classList.add('show'); setTimeout(()=>savedLbl.classList.remove('show'), 2000); }
+      }
+    });
+  }
+}
+
+async function toggleCheck(type,li,ti){
+  // Session tracker
+  S.sess = (S.sess||0)+1;
+  // Combo tracker : on note qu'on a coché au moins 1 de chaque type aujourd'hui
+  const today = new Date().toDateString();
+  if(!S.comboDay) S.comboDay={};
+  S.comboDay[today] = S.comboDay[today]||{t:false,v:false,e:false};
+  S.comboDay[today][type] = true;
+  if(S.comboDay[today].t && S.comboDay[today].v && S.comboDay[today].e) S.combo=true;
+  const k=type==='v'?vk(li,ti):type==='e'?ek(li,ti):ck(li,ti);
+  S.checks[k]=!S.checks[k];
+  const cb=document.getElementById('cb_'+type+'_'+li+'_'+ti);
+  const ct=document.getElementById('ct_'+type+'_'+li+'_'+ti);
+  if(cb)cb.className='cb'+(S.checks[k]?' on':'');
+  if(ct)ct.className='ctxt'+(S.checks[k]?' done':'');
+  const td=lDone(li),tt=lTot(li),tpct=Math.round(td/tt*100);
+  const xvt=document.getElementById('xv_t_'+li),xft=document.getElementById('xf_t_'+li);
+  if(xvt)xvt.textContent=td+'/'+tt;if(xft)xft.style.width=tpct+'%';
+  const vd=vDone(li),vt=vTot(li),vpct=Math.round(vd/vt*100);
+  const xvv=document.getElementById('xv_v_'+li),xfv=document.getElementById('xf_v_'+li);
+  if(xvv)xvv.textContent=vd+'/'+vt;if(xfv)xfv.style.width=vpct+'%';
+  const ed=eDone(li),et=eTot(li),epct2=Math.round(ed/et*100);
+  const xve=document.getElementById('xv_e_'+li),xfe=document.getElementById('xf_e_'+li);
+  if(xve)xve.textContent=ed+'/'+et;if(xfe)xfe.style.width=epct2+'%';
+  const total=td+vd+ed,totalMax=tt+vt+et,totalPct=Math.round(total/totalMax*100);
+  const ap=document.getElementById('ap'+li),amf=document.getElementById('amf'+li);
+  if(ap)ap.textContent=total+'/'+totalMax;if(amf)amf.style.width=totalPct+'%';
+  if(S.checks[k]){if(type==='v')showToast('📖 Signe maîtrisé ! ✊');else if(type==='e')showToast('✋ Expression maîtrisée ! 🔥');else showToast('✅ Tâche accomplie 💪');}
+  syncBadges();renderGlobal();buildNav();await save();
+}
+
+
+async function showGrammar(){
+  S.view='grammar';
+  
+  // Charger les notes de grammaire
+  let grammarNotes = '';
+  let grammarBlockNotes = {};
+  try {
+    if(window.storage && window.storage.get){
+      try{
+        const r = await window.storage.get('lsf_grammar_notes');
+        if(r && r.value) grammarNotes = r.value;
+        const rb = await window.storage.get('lsf_grammar_block_notes');
+        if(rb && rb.value) grammarBlockNotes = JSON.parse(rb.value);
+      }catch(storageErr){
+        const data = localStorage.getItem('lsf_grammar_notes');
+        if(data) grammarNotes = data;
+        const dataB = localStorage.getItem('lsf_grammar_block_notes');
+        if(dataB) grammarBlockNotes = JSON.parse(dataB);
+      }
+    } else {
+      const data = localStorage.getItem('lsf_grammar_notes');
+      if(data) grammarNotes = data;
+      const dataB = localStorage.getItem('lsf_grammar_block_notes');
+      if(dataB) grammarBlockNotes = JSON.parse(dataB);
+    }
+  } catch(e){console.log('LoadGrammarNotes error:',e);}
+  
+  const area=document.getElementById('mainArea');
+  area.innerHTML=`
+    <div class="main-top">
+      <div>
+        <div class="main-title">📚 Grammaire LSF</div>
+        <div class="main-sub">Les concepts grammaticaux essentiels pour maîtriser la LSF</div>
+      </div>
+      <button class="bdg-pill" id="backBtn">← Retour</button>
+    </div>
+    
+    <div class="note-global" style="margin-bottom:20px">
+      <div class="note-global-title">📝 Mes notes de grammaire</div>
+      <textarea class="note-global-area" id="note_grammar" placeholder="Tes observations sur les transferts, la temporalité, les questions que tu te poses, les erreurs que tu fais souvent, tes astuces personnelles…" style="min-height:120px">${grammarNotes}</textarea>
+      <div style="display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:6px">
+        <span class="note-saved" id="saved_grammar">✓ Enregistré</span>
+        <button class="note-clear" id="clear_grammar">Effacer</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      ${GRAMMAR.map((block,bi)=>{
+        const blockNotes = grammarBlockNotes['block_'+bi] || '';
+        return`
+          <div class="card" style="grid-column:1/-1">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+              <span style="font-size:2rem">${block.emoji}</span>
+              <div>
+                <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;color:var(--txt)">${block.title}</div>
+                <div style="font-size:.88rem;color:var(--muted);margin-top:3px">${block.desc}</div>
+              </div>
+            </div>
+            
+            <div style="background:var(--bg-card2);border-radius:10px;padding:14px;margin-bottom:12px">
+              <div style="font-family:'Space Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--a2);margin-bottom:10px">🧠 Leçons clés</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                ${block.lessons.map(l=>`<div style="font-size:.88rem;color:var(--txt);line-height:1.5;padding-left:10px;position:relative">
+                  <span style="position:absolute;left:-2px;color:var(--a2)">▸</span>${l}
+                </div>`).join('')}
+              </div>
+            </div>
+            
+            <div style="background:var(--bg-card2);border-radius:10px;padding:12px;margin-bottom:12px;border:1px solid var(--bdr)">
+              <div style="font-family:'Space Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--a2);margin-bottom:8px">📝 Mes notes sur ce concept</div>
+              <textarea class="note-textarea" id="block_note_${bi}" placeholder="Tes observations, difficultés, questions sur ce concept grammatical…" style="min-height:100px;width:100%;background:var(--bg);border:1px solid var(--bdr2);border-radius:8px;padding:10px;font-family:'Crimson Pro',serif;font-size:.88rem;color:var(--txt);resize:vertical;outline:none;line-height:1.5">${blockNotes}</textarea>
+              <div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-top:6px">
+                <span class="note-saved" id="saved_block_${bi}" style="font-family:'Space Mono',monospace;font-size:.52rem;color:var(--a2);opacity:0;transition:opacity .4s">✓ Enregistré</span>
+                <button class="note-clear" id="clear_block_${bi}" style="font-family:'Space Mono',monospace;font-size:.5rem;text-transform:uppercase;letter-spacing:.06em;color:var(--light);background:transparent;border:1px solid var(--bdr);border-radius:5px;padding:2px 7px;cursor:pointer;transition:all .2s">Effacer</button>
+              </div>
+            </div>
+            
+            <div style="font-family:'Space Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--light);margin-bottom:8px">🎬 Vidéos</div>
+            <div class="vlist">
+              ${block.videos.map(v=>`<a class="vitem" href="${v.u}" target="_blank" rel="noopener">${v.t}<span class="varr">↗</span></a>`).join('')}
+            </div>
+          </div>`;
+      }).join('')}
+    </div>`;
+  
+  // Note grammaire
+  const grammarArea = document.getElementById('note_grammar');
+  let grammarTimer;
+  grammarArea.addEventListener('input', () => {
+    clearTimeout(grammarTimer);
+    grammarTimer = setTimeout(async ()=>{
+      await saveGrammarNotes(grammarArea.value);
+      flashSaved('grammar');
+    }, 800);
+  });
+  document.getElementById('clear_grammar').addEventListener('click', async ()=>{
+    if(!grammarArea.value || confirm('Effacer les notes de grammaire ?')){
+      grammarArea.value='';
+      await saveGrammarNotes('');
+      flashSaved('grammar');
+    }
+  });
+  
+  // Notes par bloc grammatical
+  GRAMMAR.forEach((block, bi) => {
+    const ta = document.getElementById('block_note_'+bi);
+    if(!ta) return;
+    let t;
+    ta.addEventListener('input', ()=>{
+      clearTimeout(t);
+      t = setTimeout(async ()=>{
+        grammarBlockNotes['block_'+bi] = ta.value;
+        await saveGrammarBlockNotes(grammarBlockNotes);
+        const saved = document.getElementById('saved_block_'+bi);
+        if(saved){ saved.style.opacity='1'; setTimeout(()=>saved.style.opacity='0', 2000); }
+      }, 800);
+    });
+    const clearBtn = document.getElementById('clear_block_'+bi);
+    if(clearBtn){
+      clearBtn.addEventListener('click', async ()=>{
+        if(!ta.value || confirm('Effacer les notes de ce concept ?')){
+          ta.value=''; grammarBlockNotes['block_'+bi]='';
+          await saveGrammarBlockNotes(grammarBlockNotes);
+          const saved = document.getElementById('saved_block_'+bi);
+          if(saved){ saved.style.opacity='1'; setTimeout(()=>saved.style.opacity='0', 2000); }
+        }
+      });
+    }
+  });
+  
+  document.getElementById('backBtn').addEventListener('click',()=>{renderLevels();buildNav();});
+  // Track vidéos
+  area.querySelectorAll('.vitem').forEach(a=>{
+    a.addEventListener('click',()=>{S.vids=(S.vids||0)+1;syncBadges();save();});
+  });
+  save();
+}
+
+function showBadges(){
+  S.view='badges';
+  const area=document.getElementById('mainArea');
+  const n=Object.values(S.badges).filter(Boolean).length;
+
+  const cats=[
+    {label:'🌟 Premiers pas',  ids:['first','t5','t20','t50']},
+    {label:'🔥 Régularité',    ids:['s3','s7','s14','s30','s60']},
+    {label:'📖 Vocabulaire',   ids:['v10s','v50s','v100s','v250s','v500s','v1000s']},
+    {label:'✋ Expressions',   ids:['e10','e50','e100']},
+    {label:'🎬 Vidéos',        ids:['v5vid','v10vid','v30vid','v50vid']},
+    {label:'🎯 Niveaux',       ids:['a1_half','a1','a2_half','a2','b1_half','b1','b2_half','b2','b2p_half','b2p','c1_half','c1']},
+    {label:'💎 Spéciaux',      ids:['halfway','all','notes1','combo','speed']},
+  ];
+
+  const bdgMap = {};
+  BDGS.forEach(b=>bdgMap[b.id]=b);
+
+  let html=`<div class="main-top"><div><div class="main-title">🏅 Mes Badges</div><div class="main-sub">${n} badge${n>1?'s':''} débloqué${n>1?'s':''} sur ${BDGS.length}</div></div><button class="bdg-pill" id="backBtn">← Retour</button></div>`;
+
+  cats.forEach(cat=>{
+    html+=`<div style="margin-bottom:22px"><div style="font-family:Nunito,sans-serif;font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--light);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--bdr)">${cat.label}</div><div class="bg-grid">`;
+    cat.ids.forEach(id=>{
+      const b=bdgMap[id];if(!b)return;
+      const ok=!!S.badges[b.id];
+      html+=`<div class="bg-item ${ok?'ok':'locked'}">${!ok?'<span class="bg-lock">🔒</span>':''}<span class="bg-ico">${b.emoji}</span><div class="bg-name">${b.name}</div><div class="bg-desc">${b.desc}</div>${ok?'<span class="bg-ok">✓ Débloqué</span>':''}</div>`;
+    });
+    html+=`</div></div>`;
+  });
+
+  html+=`</div>`;
+  area.innerHTML=html;
+  document.getElementById('backBtn').addEventListener('click',()=>{renderLevels();buildNav();});
+  save();
+}
+
+
+async function showNotes(){S.view='notes';save();
+  // Charger les notes sauvegardées
+  let noteData = {};
+  try {
+    // Essayer window.storage d'abord
+    let loaded = false;
+    if(window.storage && window.storage.get){
+      try{
+        const r = await window.storage.get('lsf_notes');
+        if(r && r.value){ noteData = JSON.parse(r.value); loaded = true; }
+      }catch(e){}
+    }
+    if(!loaded){
+      const data = localStorage.getItem('lsf_notes');
+      if(data) noteData = JSON.parse(data);
+    }
+  } catch(e){console.log('LoadNotes error:',e);}
+
+  const area = document.getElementById('mainArea');
+  area.innerHTML = `
+    <div class="main-top">
+      <div>
+        <div class="main-title">📝 Mes Notes de Niveaux</div>
+        <div class="main-sub">Tes difficultés, points à retravailler, observations par niveau…</div>
+      </div>
+      <button class="bdg-pill" id="backBtn">← Retour</button>
+    </div>
+    <div class="note-global">
+      <div class="note-global-title">🗒️ Notes générales</div>
+      <textarea class="note-global-area" id="note_global" placeholder="Ce que tu veux noter globalement : ton rythme, tes ressentis, tes prochains objectifs…">${noteData['global']||''}</textarea>
+      <div style="display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:6px">
+        <span class="note-saved" id="saved_global">✓ Enregistré</span>
+        <button class="note-clear" id="clear_global">Effacer</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;margin-top:4px" id="notesContainer"></div>`;
+
+  document.getElementById('backBtn').addEventListener('click',()=>{renderLevels();buildNav();});
+
+  // Note globale
+  const globalArea = document.getElementById('note_global');
+  let globalTimer;
+  globalArea.addEventListener('input', () => {
+    clearTimeout(globalTimer);
+    globalTimer = setTimeout(async ()=>{
+      noteData['global'] = globalArea.value;
+      await saveNotes(noteData);
+      flashSaved('global');
+    }, 800);
+  });
+  document.getElementById('clear_global').addEventListener('click', async ()=>{
+    if(!globalArea.value || confirm('Effacer les notes générales ?')){
+      globalArea.value=''; noteData['global']='';
+      await saveNotes(noteData); flashSaved('global');
+    }
+  });
+
+  // Notes par niveau
+  const container = document.getElementById('notesContainer');
+  LVL.forEach((lvl, li) => {
+    const key = 'lvl_'+li;
+    const noteBlock = document.createElement('div');
+    noteBlock.className = 'note-global';
+    noteBlock.style.marginBottom = '16px';
+    noteBlock.innerHTML = `
+      <div class="note-global-title">
+        <span style="font-size:1.3rem;margin-right:8px">${lvl.emoji}</span>
+        ${lvl.code} — ${lvl.name}
+        <span style="font-family:'Space Mono',monospace;font-size:.6rem;color:var(--light);margin-left:8px">${lvl.months}</span>
+      </div>
+      <textarea class="note-global-area" id="note_level_${li}" placeholder="Ce qui est difficile dans ${lvl.code}… Les signes qui te posent problème… Ce que tu dois améliorer… Tes observations…" style="min-height:100px">${noteData[key]||''}</textarea>
+      <div style="display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:6px">
+        <span class="note-saved" id="saved_level_${li}">✓ Enregistré</span>
+        <button class="note-clear" id="clear_level_${li}">Effacer</button>
+      </div>`;
+    container.appendChild(noteBlock);
+
+    const ta = document.getElementById('note_level_'+li);
+    let t;
+    ta.addEventListener('input', ()=>{
+      clearTimeout(t);
+      t = setTimeout(async ()=>{
+        noteData[key] = ta.value;
+        await saveNotes(noteData);
+        flashSaved('level_'+li);
+      }, 800);
+    });
+    document.getElementById('clear_level_'+li).addEventListener('click', async ()=>{
+      if(!ta.value || confirm('Effacer les notes pour '+lvl.code+' ?')){
+        ta.value=''; noteData[key]='';
+        await saveNotes(noteData); flashSaved('level_'+li);
+      }
+    });
+  });
+}
+
+
+async function saveNotes(data){
+  try{
+    const json = JSON.stringify(data);
+    try{ localStorage.setItem('lsf_notes', json); }catch(e){}
+    if(window.storage && window.storage.set){
+      try{ await window.storage.set('lsf_notes', json); }catch(e){}
+    }
+    // Badge note
+    const hasContent = Object.values(data).some(v=>v && v.trim().length>0);
+    if(hasContent && !S.hasNote){ S.hasNote=true; syncBadges(); await save(); }
+  }catch(e){console.log('SaveNotes error:',e);}
+}
+
+
+async function showSpiritual(){
+  S.view='spiritual'; save();
+  
+  // Load saved spiritual notes
+  let spiritualData = {note1:'', note2:'', note3:''};
+  try {
+    let loaded = false;
+    if(window.storage && window.storage.get){
+      try{
+        const r = await window.storage.get('lsf_spiritual_notes');
+        if(r && r.value){ spiritualData = JSON.parse(r.value); loaded = true; }
+      }catch(e){}
+    }
+    if(!loaded){
+      const data = localStorage.getItem('lsf_spiritual_notes');
+      if(data) spiritualData = JSON.parse(data);
+    }
+  } catch(e){console.log('LoadSpiritual error:',e);}
+
+  const area = document.getElementById('mainArea');
+  area.innerHTML = `
+    <div class="main-top">
+      <div>
+        <div class="main-title">💎 Spirituel</div>
+        <div class="main-sub">Vidéos LSF, liens pour ta foi et tes notes personnelles</div>
+      </div>
+      <button class="bdg-pill" id="backBtn">← Retour</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;max-width:900px;margin:0 auto">
+      
+      <!-- Vidéo -->
+      <div class="card" style="grid-column:1/-1">
+        <span class="cico">🎬</span>
+        <div class="ctit">Vidéo LSF — Message spirituel</div>
+        <video controls style="width:100%;border-radius:10px;margin-top:10px;background:#000">
+          <source src="spiritual_video.mp4" type="video/mp4">
+          Ton navigateur ne supporte pas la vidéo.
+        </video>
+      </div>
+
+      <!-- Liens utiles -->
+      <div class="card" style="grid-column:1/-1">
+        <span class="cico">🔗</span>
+        <div class="ctit">Liens utiles</div>
+        <div class="vlist" style="margin-top:10px">
+          <a class="vitem" href="https://dico.elix-lsf.fr/dictionnaire/T%C3%A9moins%20de%20J%C3%A9hovah" target="_blank" rel="noopener">
+            📖 Dictionnaire Elix — Témoins de Jéhovah
+            <span class="varr">↗</span>
+          </a>
+          <a class="vitem" href="https://www.jw.org/fsl/" target="_blank" rel="noopener">
+            💎 JW.org en LSF (Français Signé)
+            <span class="varr">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Notes spirituelles 1 -->
+      <div class="note-global">
+        <div class="note-global-title">✨ Mes réflexions spirituelles</div>
+        <textarea class="note-global-area" id="sp_note_1" placeholder="Tes réflexions spirituelles, ce que l'apprentissage de la LSF t'apporte au-delà de la langue, tes connexions avec la communauté sourde…" style="min-height:160px">${spiritualData.note1||''}</textarea>
+        <div style="display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:6px">
+          <span class="note-saved" id="saved_sp1">✓ Enregistré</span>
+          <button class="note-clear" id="clear_sp1">Effacer</button>
+        </div>
+      </div>
+
+      <!-- Notes spirituelles 2 -->
+      <div class="note-global">
+        <div class="note-global-title">🙏 Prières & intentions</div>
+        <textarea class="note-global-area" id="sp_note_2" placeholder="Tes prières, intentions, versets ou passages qui t'inspirent dans ton parcours LSF…" style="min-height:140px">${spiritualData.note2||''}</textarea>
+        <div style="display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:6px">
+          <span class="note-saved" id="saved_sp2">✓ Enregistré</span>
+          <button class="note-clear" id="clear_sp2">Effacer</button>
+        </div>
+      </div>
+
+      <!-- Notes spirituelles 3 -->
+      <div class="note-global">
+        <div class="note-global-title">💡 Inspirations & objectifs</div>
+        <textarea class="note-global-area" id="sp_note_3" placeholder="Tes inspirations, tes objectifs spirituels liés à la LSF, les moments forts de ton apprentissage…" style="min-height:140px">${spiritualData.note3||''}</textarea>
+        <div style="display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:6px">
+          <span class="note-saved" id="saved_sp3">✓ Enregistré</span>
+          <button class="note-clear" id="clear_sp3">Effacer</button>
+        </div>
+      </div>
+
+    </div>`;
+
+  document.getElementById('backBtn').addEventListener('click',()=>{renderLevels();buildNav();});
+
+  async function saveSpiritualNotes(){
+    try{
+      const json = JSON.stringify(spiritualData);
+      try{ localStorage.setItem('lsf_spiritual_notes', json); }catch(e){}
+      if(window.storage && window.storage.set){
+        try{ await window.storage.set('lsf_spiritual_notes', json); }catch(e){}
+      }
+    }catch(e){console.log('SaveSpiritual error:',e);}
+  }
+
+  // Note 1
+  const sp1 = document.getElementById('sp_note_1');
+  let t1;
+  sp1.addEventListener('input',()=>{ clearTimeout(t1); t1=setTimeout(async()=>{ spiritualData.note1=sp1.value; await saveSpiritualNotes(); flashSaved('sp1'); },800); });
+  document.getElementById('clear_sp1').addEventListener('click',async()=>{ if(!sp1.value||confirm('Effacer cette note ?')){ sp1.value=''; spiritualData.note1=''; await saveSpiritualNotes(); flashSaved('sp1'); } });
+
+  // Note 2
+  const sp2 = document.getElementById('sp_note_2');
+  let t2;
+  sp2.addEventListener('input',()=>{ clearTimeout(t2); t2=setTimeout(async()=>{ spiritualData.note2=sp2.value; await saveSpiritualNotes(); flashSaved('sp2'); },800); });
+  document.getElementById('clear_sp2').addEventListener('click',async()=>{ if(!sp2.value||confirm('Effacer cette note ?')){ sp2.value=''; spiritualData.note2=''; await saveSpiritualNotes(); flashSaved('sp2'); } });
+
+  // Note 3
+  const sp3 = document.getElementById('sp_note_3');
+  let t3;
+  sp3.addEventListener('input',()=>{ clearTimeout(t3); t3=setTimeout(async()=>{ spiritualData.note3=sp3.value; await saveSpiritualNotes(); flashSaved('sp3'); },800); });
+  document.getElementById('clear_sp3').addEventListener('click',async()=>{ if(!sp3.value||confirm('Effacer cette note ?')){ sp3.value=''; spiritualData.note3=''; await saveSpiritualNotes(); flashSaved('sp3'); } });
+
+  save();
+}
+async function saveGrammarNotes(data){
+  try{
+    try{ localStorage.setItem('lsf_grammar_notes', data); }catch(e){}
+    if(window.storage && window.storage.set){
+      try{ await window.storage.set('lsf_grammar_notes', data); }catch(e){}
+    }
+  }catch(e){console.log('SaveGrammarNotes error:',e);}
+}
+
+
+async function saveGrammarBlockNotes(data){
+  try{
+    const json = JSON.stringify(data);
+    try{ localStorage.setItem('lsf_grammar_block_notes', json); }catch(e){}
+    if(window.storage && window.storage.set){
+      try{ await window.storage.set('lsf_grammar_block_notes', json); }catch(e){}
+    }
+  }catch(e){console.log('SaveGrammarBlockNotes error:',e);}
+}
+
+function flashSaved(id){
+  const el = document.getElementById('saved_'+id);
+  if(!el) return;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 2000);
+}
+
+let tSec=1200,tRun=false,tIv=null;
+function openFocus(li){
+  const lvl=LVL[li];const task=lvl.checks.find((_,ti)=>!S.checks[ck(li,ti)])||lvl.checks[0];
+  document.getElementById('fEmoji').textContent=lvl.emoji;document.getElementById('fTitle').textContent=lvl.code+' — '+lvl.name;
+  document.getElementById('fDesc').textContent=task;tSec=1200;tRun=false;clearInterval(tIv);
+  document.getElementById('fStart').textContent='▶ Démarrer';updTimer();document.getElementById('fov').classList.add('on');
+}
+function closeFocus(){clearInterval(tIv);tRun=false;document.getElementById('fov').classList.remove('on');}
+function updTimer(){const m=String(Math.floor(tSec/60)).padStart(2,'0'),s=String(tSec%60).padStart(2,'0');document.getElementById('fTimer').textContent=m+':'+s;}
+function startTimer(){
+  if(tRun){clearInterval(tIv);tRun=false;document.getElementById('fStart').textContent='▶ Reprendre';}
+  else{tRun=true;document.getElementById('fStart').textContent='⏸ Pause';tIv=setInterval(()=>{if(tSec<=0){clearInterval(tIv);tRun=false;showToast('🎉 20 min de LSF — Incroyable !');closeFocus();return;}tSec--;updTimer();},1000);}
+}
+function resetTimer(){clearInterval(tIv);tRun=false;tSec=1200;updTimer();document.getElementById('fStart').textContent='▶ Démarrer';}
+
+async function toggleTheme(){S.theme=S.theme==='light'?'dark':'light';document.documentElement.setAttribute('data-theme',S.theme);document.getElementById('togLbl').textContent=S.theme==='dark'?'Mode sombre':'Mode clair';await save();}
+
+async function init(){
+  await load();
+  document.documentElement.setAttribute('data-theme',S.theme||'light');
+  document.getElementById('togLbl').textContent=S.theme==='dark'?'Mode sombre':'Mode clair';
+  document.getElementById('togBtn').addEventListener('click',toggleTheme);
+  document.getElementById('fClose').addEventListener('click',closeFocus);
+  document.getElementById('fStart').addEventListener('click',startTimer);
+  document.getElementById('fReset').addEventListener('click',resetTimer);
+  await loadLevelNotes();
+  renderStreak();renderGlobal();buildNav();
+  // Restaurer la dernière vue
+  if(S.view==='badges') showBadges();
+  else if(S.view==='notes') showNotes();
+  else if(S.view==='grammar') showGrammar();
+  else if(S.view==='spiritual') showSpiritual();
+  else renderLevels();
+}
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
