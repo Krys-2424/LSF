@@ -292,6 +292,191 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .stat-n{font-family:'Nunito',sans-serif;font-size:1.6rem;font-weight:900;color:var(--a2)}
 .stat-lbl{font-size:.64rem;color:var(--muted);margin-top:2px;line-height:1.4}
 
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE — adapté tel / tablette / ordi / TV
+   ═══════════════════════════════════════════════════════════ */
+
+/* Bouton hamburger flottant (mobile uniquement) */
+.menu-btn{display:none;position:fixed;top:12px;left:12px;z-index:1000;background:var(--bg-card);border:1px solid var(--bdr2);border-radius:10px;width:42px;height:42px;font-size:1.3rem;cursor:pointer;color:var(--txt);align-items:center;justify-content:center;box-shadow:0 3px 12px var(--sh2);-webkit-tap-highlight-color:transparent;transition:all .2s}
+.menu-btn:hover{border-color:var(--a2);color:var(--a2)}
+.menu-btn:active{transform:scale(.94)}
+.side-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:998;animation:fadeIn .25s ease}
+.side-overlay.on{display:block}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ── GRANDS ÉCRANS / TV (≥1600px) ─────────────────────────── */
+@media(min-width:1600px){
+  .wrap{grid-template-columns:320px 1fr;max-width:1800px;margin:0 auto}
+  .main{padding:36px 48px;font-size:1.05rem}
+  .main-title{font-size:1.9rem}
+  .main-sub{font-size:1rem}
+  .cgrid{grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+  .parc-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+  .logo{font-size:1.7rem}
+  .streak-n{font-size:2.5rem}
+}
+
+/* ── ÉCRAN STANDARD ORDI (1200–1599px) ─ rien à changer */
+
+/* ── PETIT ORDI / GRANDE TABLETTE (1024–1199px) ──────────── */
+@media(max-width:1199px){
+  .wrap{grid-template-columns:240px 1fr}
+  .main{padding:24px 26px}
+  .side{padding:22px 16px;gap:18px}
+  .cgrid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+}
+
+/* ── TABLETTE (768–1023px) ───────────────────────────────── */
+@media(max-width:1023px){
+  .wrap{grid-template-columns:220px 1fr}
+  .main{padding:22px 22px}
+  .side{padding:20px 14px;gap:16px}
+  .logo{font-size:1.3rem}
+  .main-title{font-size:1.4rem}
+  .main-sub{font-size:.85rem}
+  .cgrid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:11px}
+  .parc-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .acc-mini{width:42px}
+}
+
+/* ── MOBILE & PETITE TABLETTE (≤767px) ───────────────────── */
+@media(max-width:767px){
+  /* La sidebar devient un drawer coulissant */
+  .wrap{grid-template-columns:1fr;display:block}
+  .side{
+    position:fixed;
+    top:0;left:0;
+    width:280px;
+    max-width:85vw;
+    height:100vh;
+    z-index:999;
+    transform:translateX(-100%);
+    transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .4s;
+    box-shadow:4px 0 24px rgba(0,0,0,.25);
+    padding:22px 18px;
+    gap:16px;
+  }
+  .side.open{transform:translateX(0)}
+  .menu-btn{display:flex}
+
+  /* Main occupe toute la largeur, padding-top pour laisser la place au bouton ☰ */
+  .main{padding:16px 14px;overflow-y:visible}
+  .main-top{
+    flex-direction:row;
+    flex-wrap:wrap;
+    align-items:flex-start;
+    gap:10px;
+    padding:0 0 14px 54px;
+    margin-bottom:16px;
+    min-height:42px;
+  }
+  .main-title{font-size:1.15rem;line-height:1.2}
+  .main-sub{font-size:.78rem;margin-top:4px}
+
+  /* Cartes en pleine largeur */
+  .cgrid{grid-template-columns:1fr;gap:10px}
+  .parc-grid{grid-template-columns:1fr;gap:10px}
+  .card{padding:14px}
+  .card.full{grid-column:1}
+
+  /* Accordéons compacts */
+  .acc-head{padding:14px 14px;gap:11px}
+  .acc-emoji{font-size:1.3rem}
+  .acc-name{font-size:.92rem}
+  .acc-code{font-size:.55rem}
+  .acc-mini{width:38px}
+  .acc-pct{font-size:.58rem}
+  .acc-body{padding:0 14px 16px}
+  .obj-box{font-size:.85rem;padding:10px 12px}
+
+  /* Stats en 2 colonnes */
+  .stat-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .stat-box{padding:11px}
+  .stat-n{font-size:1.3rem}
+
+  /* Vocab plus dense */
+  .vcols{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));max-height:280px}
+
+  /* Badge pill plus petit */
+  .bdg-pill{padding:5px 10px;font-size:.55rem}
+
+  /* Focus overlay ajusté */
+  .fov{padding:24px 18px}
+  .ftitle{font-size:1.4rem}
+  .fdesc{font-size:.88rem;padding:11px 13px}
+  .ftimer{font-size:3.4rem}
+  .femoji{font-size:2.6rem}
+  .fb{padding:11px 22px;font-size:.92rem}
+
+  /* Signa & analyse gestuelle */
+  .signa-layout{grid-template-columns:1fr;gap:12px}
+  .sn-msgs{min-height:220px;max-height:280px}
+  .smsg-bub{font-size:.82rem;max-width:88%}
+  .gtabs{flex-wrap:wrap}
+  .cam-wrap{aspect-ratio:1/1}
+
+  /* FAQ */
+  .faq-q{padding:11px 12px;gap:8px}
+  .faq-q-txt{font-size:.78rem}
+  .faq-q-ico{width:24px;height:24px;font-size:.85rem}
+  .faq-ans-in{padding:0 12px 11px 44px;font-size:.75rem}
+
+  /* Badges */
+  .bg-grid{grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:9px}
+  .bg-item{padding:12px 9px}
+  .bg-ico{font-size:1.5rem}
+  .bg-name{font-size:.7rem}
+
+  /* Toast */
+  .toast{bottom:14px;right:14px;left:14px;text-align:center;font-size:.88rem;padding:10px 14px}
+}
+
+/* ── PETIT MOBILE (≤400px) ──────────────────────────────── */
+@media(max-width:400px){
+  .main{padding:14px 11px}
+  .main-title{font-size:1rem}
+  .main-sub{font-size:.72rem}
+  .acc-head{padding:12px 11px;gap:9px}
+  .acc-name{font-size:.86rem}
+  .acc-mini{display:none}
+  .card{padding:12px}
+  .stat-grid{grid-template-columns:repeat(2,1fr);gap:7px}
+  .stat-n{font-size:1.15rem}
+  .stat-lbl{font-size:.58rem}
+  .ftimer{font-size:2.8rem}
+  .ftitle{font-size:1.2rem}
+  .fbtns{flex-direction:column;width:100%}
+  .fb{width:100%}
+  .vcols{grid-template-columns:repeat(2,1fr)}
+  .bg-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ── ORIENTATION PAYSAGE MOBILE (hauteur faible) ─────────── */
+@media(max-height:500px) and (max-width:900px){
+  .side{padding:14px 14px;gap:12px}
+  .streak-box{padding:10px}
+  .flame{font-size:1.5rem}
+  .streak-n{font-size:1.6rem}
+  .fov{padding:18px}
+  .ftimer{font-size:2.5rem;margin-bottom:8px}
+  .femoji{font-size:2rem;margin-bottom:8px}
+  .ftitle{font-size:1.2rem;margin-bottom:6px}
+  .fdesc{margin-bottom:14px;font-size:.82rem}
+}
+
+/* ── Accessibilité tactile : zones de tap ≥40px ──────────── */
+@media(hover:none) and (pointer:coarse){
+  .nav-btn,.bdg-nav{min-height:42px}
+  .acc-head{min-height:56px}
+  .ci{min-height:38px}
+  .tog-track{width:50px;height:26px}
+  .tog-thumb{width:20px;height:20px}
+  [data-theme="dark"] .tog-thumb{transform:translateX(24px)}
+  .sn-chip{padding:6px 11px}
+  .fb{min-height:44px}
+}
+
 </style>
 </head>
 <body>
@@ -325,6 +510,8 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
     <div class="levels-list" id="lvlList"></div>
   </main>
 </div>
+<button class="menu-btn" id="menuBtn" aria-label="Ouvrir le menu">☰</button>
+<div class="side-overlay" id="sideOv"></div>
 <div class="fov" id="fov">
   <button class="fclose" id="fClose">✕ Quitter</button>
   <div class="finner">
@@ -1612,6 +1799,22 @@ async function init(){
   document.getElementById('fClose').addEventListener('click',closeFocus);
   document.getElementById('fStart').addEventListener('click',startTimer);
   document.getElementById('fReset').addEventListener('click',resetTimer);
+  // ── Drawer mobile ─────────────────────────────────────
+  const side=document.querySelector('.side');
+  const ov=document.getElementById('sideOv');
+  const mb=document.getElementById('menuBtn');
+  const closeDrawer=()=>{side.classList.remove('open');ov.classList.remove('on')};
+  const openDrawer=()=>{side.classList.add('open');ov.classList.add('on')};
+  if(mb)mb.addEventListener('click',openDrawer);
+  if(ov)ov.addEventListener('click',closeDrawer);
+  // Fermer le drawer quand on clique un élément de nav (mobile)
+  side.addEventListener('click',(e)=>{
+    if(window.innerWidth>767)return;
+    const t=e.target.closest('.nav-btn,.bdg-nav');
+    if(t)setTimeout(closeDrawer,150);
+  });
+  // Fermer le drawer si on agrandit l'écran
+  window.addEventListener('resize',()=>{if(window.innerWidth>767)closeDrawer()});
   await loadLevelNotes();
   renderStreak();renderGlobal();buildNav();
   // Restaurer la dernière vue
