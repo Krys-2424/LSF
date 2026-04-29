@@ -186,6 +186,112 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .note-global-area:focus{border-color:var(--a2)}
 .note-global-area::placeholder{color:var(--light);font-style:italic}
 
+
+/* ─── NOUVELLES VUES ─────────────────────────────────────── */
+.signa-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media(max-width:860px){.signa-layout{grid-template-columns:1fr}}
+.sp{background:var(--bg-card);border:1px solid var(--bdr);border-radius:13px;overflow:hidden}
+.sp-head{padding:11px 15px;background:linear-gradient(135deg,#1b3d2a,#0a4d2d);display:flex;align-items:center;gap:9px}
+.sp-head-ico{width:32px;height:32px;background:rgba(74,222,128,.18);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.sp-head h3{font-family:'Nunito',sans-serif;font-size:.84rem;font-weight:900;color:#fff;margin:0}
+.sp-head p{font-size:.6rem;color:rgba(255,255,255,.55);margin:2px 0 0}
+.sn-msgs{overflow-y:auto;padding:11px;display:flex;flex-direction:column;gap:7px;min-height:260px;max-height:320px}
+.smsg{display:flex;gap:7px;align-items:flex-end;animation:fadeUp .2s ease}
+.smsg.user{flex-direction:row-reverse}
+.smsg-bub{max-width:82%;padding:8px 12px;border-radius:13px;font-size:.8rem;line-height:1.6}
+.smsg.ai  .smsg-bub{background:var(--bg-card2);border:1px solid var(--bdr);border-bottom-left-radius:3px;color:var(--txt)}
+.smsg.user .smsg-bub{background:linear-gradient(135deg,#0a4d2d,#146434);color:#fff;border-bottom-right-radius:3px}
+.smsg-ico{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0}
+.smsg.ai  .smsg-ico{background:linear-gradient(135deg,#0a4d2d,#146434)}
+.smsg.user .smsg-ico{background:var(--bg-card2);border:1px solid var(--bdr)}
+.sn-chips{display:flex;flex-wrap:wrap;gap:5px;padding:7px 11px;border-top:1px solid var(--bdr)}
+.sn-chip{padding:3px 9px;background:var(--bg-card2);border:1px solid var(--bdr2);border-radius:99px;font-family:'Nunito',sans-serif;font-size:.62rem;font-weight:700;color:var(--a);cursor:pointer;transition:all .2s;white-space:nowrap}
+.sn-chip:hover{background:#0a4d2d;color:#fff;border-color:#0a4d2d}
+.sn-input-row{display:flex;gap:6px;padding:7px 11px;border-top:1px solid var(--bdr)}
+.sn-ta{flex:1;border:1px solid var(--bdr);background:var(--bg-card2);color:var(--txt);font-family:'Nunito Sans',sans-serif;font-size:.8rem;resize:none;outline:none;max-height:72px;border-radius:7px;padding:6px 9px;line-height:1.5;transition:border-color .2s}
+.sn-ta:focus{border-color:#4ade80}
+.sn-send{width:30px;height:30px;border-radius:7px;border:none;background:linear-gradient(135deg,#0a4d2d,#146434);color:#fff;font-size:.8rem;cursor:pointer;flex-shrink:0;transition:transform .2s}
+.sn-send:hover{transform:scale(1.1)}
+.typing-d{display:inline-flex;gap:3px;padding:7px 10px;background:var(--bg-card2);border:1px solid var(--bdr);border-radius:11px;border-bottom-left-radius:3px}
+.typing-d span{width:3px;height:3px;background:var(--a2);border-radius:50%;animation:td .9s ease-in-out infinite}
+.typing-d span:nth-child(2){animation-delay:.2s}.typing-d span:nth-child(3){animation-delay:.4s}
+@keyframes td{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+/* Analyse gestuelle */
+.gtabs{display:flex;gap:5px;padding:8px 11px;border-bottom:1px solid var(--bdr)}
+.gtab{padding:4px 11px;border-radius:99px;border:1.5px solid var(--bdr2);background:var(--bg-card2);font-family:'Nunito',sans-serif;font-size:.64rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s}
+.gtab.active{background:#0a4d2d;color:#fff;border-color:#0a4d2d}
+.gpane{padding:11px;display:none}.gpane.active{display:block}
+.cam-wrap{position:relative;background:#111;border-radius:9px;overflow:hidden;aspect-ratio:4/3}
+.cam-wrap video,.cam-wrap canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cam-wrap canvas{pointer-events:none}
+.cam-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:rgba(0,0,0,.65)}
+.cam-lbl{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);color:#fff;font-family:'Nunito',sans-serif;font-size:.58rem;font-weight:700;padding:2px 9px;border-radius:99px;pointer-events:none}
+/* Sélecteur de signe — custom input */
+.sign-target-row{padding:9px 11px;border-bottom:1px solid var(--bdr);background:var(--bg-card2)}
+.sign-preset-btns{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
+.sign-b{padding:3px 9px;background:var(--bg-card);border:1.5px solid var(--bdr2);border-radius:99px;font-family:'Nunito',sans-serif;font-size:.64rem;font-weight:700;color:var(--txt);cursor:pointer;transition:all .2s}
+.sign-b:hover{border-color:#4ade80}.sign-b.active{background:#0a4d2d;color:#fff;border-color:#0a4d2d}
+.sign-custom-row{display:flex;gap:6px;align-items:center}
+.sign-custom-in{flex:1;padding:5px 10px;background:var(--bg-card);border:1.5px solid var(--bdr2);border-radius:8px;font-family:'Nunito Sans',sans-serif;font-size:.78rem;color:var(--txt);outline:none;transition:border-color .2s}
+.sign-custom-in:focus{border-color:#4ade80}
+.sign-custom-btn{padding:5px 12px;border-radius:8px;border:none;background:#0a4d2d;color:#fff;font-family:'Nunito',sans-serif;font-size:.66rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s}
+.sign-custom-btn:hover{background:#146434}
+.sign-target-display{font-family:'Nunito',sans-serif;font-size:.62rem;color:var(--muted);margin-top:5px}
+.sign-target-display strong{color:var(--a2)}
+.gest-res{background:var(--bg-card);border:1px solid var(--bdr);border-radius:9px;padding:11px;margin-top:7px;display:none}
+.gest-res.show{display:block;animation:fadeUp .3s ease}
+.gr-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.gr-score-bar{height:4px;background:var(--bdr);border-radius:99px;overflow:hidden;margin:3px 0}
+.gr-score-fill{height:100%;border-radius:99px;transition:width 1s ease}
+.gr-detail{font-size:.73rem;color:var(--muted);line-height:1.6;margin-top:5px}
+.gr-tip{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.18);border-radius:7px;padding:7px 10px;font-size:.72rem;color:var(--txt);line-height:1.6;margin-top:6px}
+.elix-matches{border-top:1px solid var(--bdr);margin-top:10px;padding-top:10px}
+.elix-match-item{display:flex;align-items:center;gap:9px;padding:7px 10px;background:var(--bg-card2);border:1.5px solid var(--bdr);border-radius:8px;text-decoration:none;color:var(--muted);font-size:.78rem;transition:all .2s;margin-bottom:4px}
+.elix-match-item:hover{border-color:var(--a2);color:var(--a2);transform:translateX(2px)}
+.upload-zone{border:2px dashed var(--bdr2);border-radius:9px;padding:20px 12px;text-align:center;cursor:pointer;transition:all .2s}
+.upload-zone:hover,.upload-zone.drag{border-color:#4ade80;background:rgba(74,222,128,.04)}
+.upload-zone h4{font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:800;color:var(--txt);margin:5px 0 3px}
+.upload-zone p{font-size:.65rem;color:var(--muted)}
+.det-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.25);border-radius:99px;padding:2px 8px;font-family:'Nunito',sans-serif;font-size:.56rem;font-weight:700;color:#4ade80}
+.det-badge::before{content:'';width:4px;height:4px;background:#4ade80;border-radius:50%;animation:dblink 1s ease-in-out infinite}
+@keyframes dblink{0%,100%{opacity:.3}50%{opacity:1}}
+/* Parcours */
+.parc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:11px}
+.parc-card{background:var(--bg-card);border:1px solid var(--bdr);border-radius:13px;padding:15px;cursor:pointer;transition:all .2s}
+.parc-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px var(--sh2);border-color:var(--bdr2)}
+.phrase-item{padding:9px 12px;background:var(--bg-card2);border:1px solid var(--bdr);border-radius:8px;margin-bottom:5px;transition:border-color .2s}
+.phrase-item:hover{border-color:var(--bdr2)}
+.phrase-fr{font-family:'Nunito',sans-serif;font-size:.76rem;font-weight:700;color:var(--txt);margin-bottom:3px}
+.phrase-lsf{font-size:.7rem;color:var(--a2);font-style:italic;line-height:1.5}
+.phrase-note{font-size:.66rem;color:var(--muted);margin-top:3px}
+/* FAQ */
+.faq-cat{font-family:'Nunito',sans-serif;font-size:.58rem;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:var(--a2);padding:5px 0 3px;margin-top:8px}
+.faq-item{background:var(--bg-card);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;transition:border-color .2s;margin-bottom:5px}
+.faq-item.open{border-color:var(--a2)}
+.faq-q{display:flex;align-items:center;gap:9px;padding:12px 14px;cursor:pointer;user-select:none}
+.faq-q-ico{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.95rem;background:var(--bg-card2);flex-shrink:0}
+.faq-q-txt{flex:1;font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:800;color:var(--txt);line-height:1.4}
+.faq-chev{font-size:.62rem;color:var(--muted);transition:transform .25s}
+.faq-item.open .faq-chev{transform:rotate(180deg)}
+.faq-ans{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-item.open .faq-ans{max-height:500px}
+.faq-ans-in{padding:0 14px 13px 51px;font-size:.78rem;color:var(--muted);line-height:1.8}
+.faq-ans-in strong{color:var(--txt)}
+.faq-ans-in ul,.faq-ans-in ol{margin:5px 0 0 13px;display:flex;flex-direction:column;gap:2px}
+.faq-ans-in a{color:var(--a2);font-weight:700;text-decoration:none}
+/* À propos */
+.tl-row{display:flex;gap:13px;padding-bottom:16px}
+.tl-dot{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.tl-circle{width:11px;height:11px;border-radius:50%;margin-top:4px}
+.tl-line{width:2px;flex:1;background:var(--bdr2);margin-top:3px}
+.tl-content p{font-size:.8rem;color:var(--txt);line-height:1.6;margin-top:2px}
+.tl-yr{font-family:'Nunito',sans-serif;font-size:.66rem;font-weight:800}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+@media(max-width:680px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-box{background:var(--bg-card);border:1px solid var(--bdr);border-radius:11px;padding:14px;text-align:center}
+.stat-n{font-family:'Nunito',sans-serif;font-size:1.6rem;font-weight:900;color:var(--a2)}
+.stat-lbl{font-size:.64rem;color:var(--muted);margin-top:2px;line-height:1.4}
+
 </style>
 </head>
 <body>
@@ -876,6 +982,15 @@ function buildNav(){
   bb.addEventListener('click',showBadges);nav.appendChild(bb);
   const sb=document.createElement('button');sb.className='bdg-nav';sb.textContent='💎 Spirituel';
   sb.addEventListener('click',showSpiritual);nav.appendChild(sb);
+  const snb=document.createElement('button');snb.className='bdg-nav';
+  snb.style.cssText='background:linear-gradient(135deg,#1b3d2a,#0a4d2d);color:#4ade80;border-color:rgba(74,222,128,.3);font-weight:800';
+  snb.innerHTML='🤟 Signa IA';snb.addEventListener('click',showSignaIA);nav.appendChild(snb);
+  const pb=document.createElement('button');pb.className='bdg-nav';pb.textContent='🎯 Parcours thématiques';
+  pb.addEventListener('click',showParcours);nav.appendChild(pb);
+  const fb=document.createElement('button');fb.className='bdg-nav';fb.textContent='❓ FAQ';
+  fb.addEventListener('click',showFAQ);nav.appendChild(fb);
+  const ab=document.createElement('button');ab.className='bdg-nav';ab.textContent='ℹ️ À propos';
+  ab.addEventListener('click',showApropos);nav.appendChild(ab);
 }
 
 function toggleLevel(li){
@@ -1504,8 +1619,1086 @@ async function init(){
   else if(S.view==='notes') showNotes();
   else if(S.view==='grammar') showGrammar();
   else if(S.view==='spiritual') showSpiritual();
+  else if(S.view==='signa') showSignaIA();
+  else if(S.view==='parcours') showParcours();
+  else if(S.view==='faq') showFAQ();
+  else if(S.view==='apropos') showApropos();
   else renderLevels();
 }
+
+// ════════════════════════════════════════════════════════
+//  SIGNA IA — Knowledge base
+// ════════════════════════════════════════════════════════
+const LSF_KB=[
+  /* ── GRAMMAIRE ──────────────────────────────────────── */
+  {k:['parametre','chereme','5 param','configuration','orientation','emplacement','mouvement','expression faciale'],
+   r:`5 <strong>paramètres</strong> de chaque signe :<br>🖐️ <strong>Configuration</strong> — forme de la main (30+ handshapes)<br>🔄 <strong>Orientation</strong> — direction de la paume<br>📍 <strong>Emplacement</strong> — zone du corps ou de l'espace<br>➡️ <strong>Mouvement</strong> — trajectoire, répétition, tension<br>😊 <strong>Expression faciale</strong> — composante grammaticale obligatoire<br><br>Changer un seul paramètre change le sens. Ex : APPRENDRE vs VOLER différent par l'emplacement.`},
+  {k:['expression faciale','visage','sourcil','mimique','non-manuel'],
+   r:`Le visage est <strong>grammaticalement obligatoire</strong> :<br>🤨 Sourcils levés → question fermée (oui/non)<br>😠 Sourcils froncés → question ouverte (qui, où, quand, comment)<br>🙅 Tête qui secoue → négation<br>🫡 Tête hochée → affirmation<br>💋 Bouche → intensifie ou modifie certains signes<br><br>Signer sans expression = parler sans intonation.`},
+  {k:['grammaire','sov','ordre phrase','topicalisation','structure'],
+   r:`Structure grammaticale LSF :<br>• Ordre <strong>Sujet → Objet → Verbe</strong> (SOV)<br>• <strong>Topicalisation</strong> : le thème en tête de phrase<br>• Pas de verbe "être" — le prédicat peut être un adjectif seul<br>• Négation : tête qui secoue + NON en fin<br><br>Ex : "Je mange la pomme" → <em>MOI POMME MANGER</em>`},
+  {k:['transfert','personnel','situationnel','narration','raconter'],
+   r:`Les <strong>transferts</strong>, cœur de la narration :<br>🎭 <strong>Personnel</strong> — vous incarnez le personnage<br>🎬 <strong>Situationnel</strong> — vue externe, caméra de cinéaste<br>🖐️ <strong>Objet</strong> — mains comme classificateurs<br><br>Ex de transfert personnel : "Le chat saute" → vous devenez le chat, vos deux doigts font les pattes qui sautent.`},
+  {k:['espace signation','referentiel','spatial','localisation','pointer'],
+   r:`L'<strong>espace de signation</strong> (zone taille→tête, épaule→épaule) est grammatical :<br>📍 Placer un élément à gauche = lui donner une adresse<br>👉 Pointer → pronom (il, elle, eux)<br>↔️ Deux éléments placés = relation entre eux possible<br><br>Les verbes directionnels "voyagent" d'une adresse à l'autre.`},
+  {k:['temporalite','temps','passe','futur','present','ligne temporelle'],
+   r:`Le temps en LSF est <strong>spatial</strong> :<br>⏮️ <strong>Passé</strong> → geste vers l'arrière (épaule)<br>⏯️ <strong>Présent</strong> → zone neutre devant le torse<br>⏭️ <strong>Futur</strong> → geste vers l'avant<br><br>Le repère temporel se pose <em>une seule fois</em> en tête de phrase, puis on enchaîne. Ex : <em>HIER MOI CINEMA ALLER FILM REGARDER</em>`},
+  {k:['classificateur','proforme','main plate','index vertical','representant'],
+   r:`Les <strong>classificateurs</strong> représentent des catégories :<br>☝️ Index vertical = personne debout<br>🤚 Main plate = véhicule ou surface<br>✌️ 2 doigts = jambes / marcher<br>🤌 Main recourbée = objet sphérique<br>🤜 Poing = véhicule compact<br><br>Ils décrivent position, déplacement et interaction dans l'espace.`},
+  {k:['intensite','tres','beaucoup','adverbe','repetition','amplitude'],
+   r:`L'intensité s'exprime par le corps :<br>• <strong>Amplitude</strong> → plus le geste est grand, plus c'est intense<br>• <strong>Répétition</strong> → signe répété 2-3× = habitude ou pluriel<br>• <strong>Expression faciale</strong> → yeux écarquillés = "énorme", bouche pincée = "peu"<br>• <strong>Tension</strong> → geste serré = certitude ou effort`},
+  /* ── SALUTATIONS ─────────────────────────────────────── */
+  {k:['bonjour','salut','comment dire bonjour'],
+   r:`👋 <strong>BONJOUR</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/bonjour" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Main ouverte (5 doigts tendus), paume vers l'avant<br>• Au niveau du front ou de la tempe<br>• Mouvement vers l'avant (comme un salut militaire ouvert)<br>💡 Variante informelle : simple agitation de la main`},
+  {k:['au revoir','adieu','partir','bonne journee'],
+   r:`👋 <strong>AU REVOIR</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/au-revoir" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Main ouverte, mouvement d'agitation latéral<br>• Accompagné d'un sourire et hochement de tête<br>💡 À BIENTÔT : signe AU REVOIR + geste vers l'avant (vers le futur)`},
+  {k:['merci','comment dire merci','gratitude'],
+   r:`🙏 <strong>MERCI</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/merci" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Main ouverte, paume vers le haut<br>• Du menton vers l'avant<br>💡 Sourire indispensable — l'expression chaleureuse fait partie du signe.`},
+  {k:['pardon','excuse','desole','sil vous plait','svp'],
+   r:`🙏 <strong>PARDON / DÉSOLÉ</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/pardon" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Poing fermé sur la poitrine, mouvement circulaire<br>• Expression contrite (sourcils baissés)<br>💡 S'IL VOUS PLAÎT : doigts joints contre le menton, mouvement vers l'avant`},
+  {k:['comment allez vous','ca va','comment tu vas'],
+   r:`😊 <strong>ÇA VA ?</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/bien" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Pointer vers l'autre + hausser les sourcils<br>• Réponse BIEN : pouce levé + sourire<br>• Réponse PAS BIEN : main qui secoue horizontalement + expression negative<br>💡 En LSF, l'expression faciale porte souvent la question`},
+  /* ── ÉMOTIONS ─────────────────────────────────────────── */
+  {k:['heureux','content','joyeux','joie'],
+   r:`😊 <strong>HEUREUX</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/heureux" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Main(s) ouverte(s), mouvement circulaire sur la poitrine<br>• Sourire franc, joues levées<br>💡 TRÈS HEUREUX : mouvement plus ample + hochement de tête`},
+  {k:['triste','tristesse','pleurer','larme'],
+   r:`😢 <strong>TRISTE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/triste" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Index et majeur descendent le long des joues (comme des larmes)<br>• Coin des lèvres vers le bas, sourcils froncés<br>💡 PLEURER : même mouvement plus rapide, yeux plissés`},
+  {k:['colere','fache','enerve','furieux'],
+   r:`😠 <strong>FÂCHÉ</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/fâché" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Mains en griffes, mouvement vers le bas ou brusque<br>• Sourcils très froncés, tension dans le visage<br>💡 L'amplitude et la vitesse augmentent avec l'intensité`},
+  {k:['peur','effraye','angoisse','avoir peur'],
+   r:`😨 <strong>PEUR</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/peur" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Mains ouvertes devant la poitrine, léger recul du corps<br>• Yeux écarquillés, bouche ouverte<br>💡 AVOIR TRÈS PEUR : corps entier qui recule, tension maximale`},
+  {k:['fatigue','epuise','las'],
+   r:`😴 <strong>FATIGUÉ</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/fatigué" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Poings tombants vers le bas, corps légèrement penché<br>• Paupières lourdes, épaules tombantes<br>💡 ÉPUISÉ : amplifier tout, corps affaissé, signe plus lent`},
+  {k:['aimer','amour','je taime'],
+   r:`❤️ <strong>AIMER</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/aimer" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Poing fermé sur le cœur (poitrine gauche)<br>• Expression douce et chaleureuse<br>💡 JE T'AIME : MOI AIMER + pointer vers l'interlocuteur`},
+  {k:['surprise','etonnement','incroyable','stupefait'],
+   r:`😲 <strong>SURPRIS</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/surpris" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Mains qui s'ouvrent brusquement devant le visage<br>• Yeux écarquillés, bouche ouverte, mouvement saccadé<br>💡 L'aspect non-manuel est essentiel`},
+  {k:['fier','fierte'],
+   r:`🦁 <strong>FIER</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/fier" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Main sur la poitrine, mouvement vers le haut<br>• Menton levé, poitrine en avant<br>💡 LA FIERTÉ se lit aussi dans la posture corporelle`},
+  {k:['honte','gêne','embarrasse'],
+   r:`😳 <strong>HONTE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/honte" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Mains qui couvrent ou effleurent les joues<br>• Rougissement mimé, regard fuyant<br>• Tête légèrement baissée`},
+  {k:['jaloux','jalousie','envieux'],
+   r:`😒 <strong>JALOUX</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/jaloux" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Doigts en forme de crochets tirés vers soi<br>• Expression de convoitise, sourcils froncés<br>💡 ENVIER : similaire mais mouvement plus doux`},
+  /* ── FAMILLE ─────────────────────────────────────────── */
+  {k:['famille'],
+   r:`👨‍👩‍👧 <strong>FAMILLE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/famille" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Les deux mains forment un cercle (index et pouces reliés)<br>• Mouvement vers l'extérieur pour "englober" le groupe<br>💡 GRANDE FAMILLE : cercle plus ample`},
+  {k:['mere','maman'],
+   r:`👩 <strong>MÈRE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/mère" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Configuration spécifique au niveau de la joue<br>💡 Les signes de parenté sont souvent liés au visage en LSF`},
+  {k:['pere','papa'],
+   r:`👨 <strong>PÈRE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/père" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Configuration au niveau du front ou de la tempe<br>💡 PÈRE et MÈRE se distinguent par l'emplacement (front vs joue)`},
+  {k:['enfant','bebe','fils','fille'],
+   r:`👶 <strong>ENFANT</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/enfant" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Bras croisés comme pour bercer un bébé<br>• Hauteur basse = petitesse<br>💡 La hauteur de la main indique l'âge ou la taille`},
+  {k:['frere','soeur','sibling','fratrie'],
+   r:`👫 <strong>FRÈRE / SŒUR</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/frère" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• FRÈRE : signe lié au masculin (souvent niveau du front)<br>• SŒUR : signe lié au féminin (niveau de la joue)<br>💡 FRÈRE AÎNÉ vs CADET : hauteur et direction diffèrent`},
+  {k:['mari','femme','couple','mariage'],
+   r:`💍 <strong>MARIAGE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/mariage" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Deux index qui se croisent ou anneau mimé<br>💡 MARI : HOMME + MARIAGE / FEMME : FEMME + MARIAGE`},
+  /* ── CORPS & SANTÉ ───────────────────────────────────── */
+  {k:['douleur','mal','avoir mal','blessure'],
+   r:`🤕 <strong>DOULEUR</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/douleur" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Deux index qui se rapprochent sans toucher, tension<br>• Pointer l'endroit douloureux + expression grimaçante<br>💡 Toujours localiser : TÊTE DOULEUR / VENTRE DOULEUR`},
+  {k:['manger','nourriture','repas','faim'],
+   r:`🍽️ <strong>MANGER</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/manger" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Doigts regroupés (O) portés vers la bouche, mouvement répété<br>💡 FAIM : main sur le ventre + mouvement descendant`},
+  {k:['boire','eau','soif'],
+   r:`🥤 <strong>BOIRE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/boire" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Main en C (comme tenir un verre), mouvement vers la bouche<br>💡 SOIF : geste de sécher la gorge + expression assoiffée`},
+  {k:['dormir','nuit','coucher','lit'],
+   r:`😴 <strong>DORMIR</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/dormir" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Tête qui s'incline sur la paume, yeux fermés<br>💡 LIT : deux mains plates horizontales (surface)`},
+  {k:['medecin','docteur','hopital','pharmacie'],
+   r:`🏥 <strong>MÉDECIN</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/médecin" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Index et majeur sur le poignet (prendre le pouls)<br>💡 HÔPITAL : croix + bâtiment / PHARMACIE : croix verte`},
+  {k:['fievre','malade','rhume','toux'],
+   r:`🤒 <strong>MALADE / FIÈVRE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/malade" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• MALADE : mains en contact avec le corps, expression souffrante<br>• FIÈVRE : main sur le front, expression de chaleur<br>• TOUX : poing devant la bouche, mouvement saccadé`},
+  {k:['medicament','pilule','comprime','allergie'],
+   r:`💊 <strong>MÉDICAMENT</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/médicament" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Petit comprimé mimé entre pouce et index, porté à la bouche<br>💡 ALLERGIE : MÉDICAMENT + réaction (visage qui gonfle) + NON`},
+  /* ── ACTIONS QUOTIDIENNES ────────────────────────────── */
+  {k:['aller','partir','se deplacer'],
+   r:`🚶 <strong>ALLER</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/aller" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Index pointant en avant, mouvement vers l'avant<br>💡 L'orientation indique la direction. ALLER À PARIS : placer PARIS dans l'espace, puis ALLER vers ce point`},
+  {k:['venir','arriver'],
+   r:`🏃 <strong>VENIR</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/venir" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Index ou main en mouvement vers soi (opposé d'ALLER)<br>💡 Les verbes de mouvement sont directionnels : la main voyage d'un point à l'autre`},
+  {k:['comprendre','clair','saisir'],
+   r:`💡 <strong>COMPRENDRE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/comprendre" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Index près de la tempe qui "claque" (s'ouvre brusquement)<br>• Expression d'illumination, yeux qui s'ouvrent<br>💡 NE PAS COMPRENDRE : même geste + tête qui secoue`},
+  {k:['parler','dire','communiquer'],
+   r:`💬 <strong>PARLER</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/parler" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Index devant la bouche, mouvement alternatif<br>💡 Le verbe est directionnel : pointer vers la personne à qui l'on parle`},
+  {k:['savoir','connaitre'],
+   r:`🧠 <strong>SAVOIR</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/savoir" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Main plate contre le front ou la tempe<br>💡 NE PAS SAVOIR : même signe + main qui s'éloigne + sourcils levés`},
+  {k:['travailler','travail','emploi'],
+   r:`💼 <strong>TRAVAILLER</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/travailler" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Poings qui tapent l'un sur l'autre, mouvement répété<br>💡 TRAVAILLER DUR : mouvement plus intense + expression concentrée`},
+  {k:['apprendre','etudier','etude'],
+   r:`🎓 <strong>APPRENDRE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/apprendre" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Doigts regroupés "prennent" quelque chose d'un livre et remontent vers le front<br>💡 ÉTUDIER : même geste répété, évoque la régularité`},
+  {k:['regarder','voir','observer'],
+   r:`👁️ <strong>VOIR</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/regarder" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Index et majeur pointent des yeux vers la cible<br>💡 La direction indique ce qu'on regarde. ME REGARDER : doigts retournés vers soi`},
+  {k:['aider','aide','soutien'],
+   r:`🤝 <strong>AIDER</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/aider" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Une main plate soulève le poing de l'autre, mouvement vers le haut<br>💡 BESOIN D'AIDE : AIDER + sourcils levés (question)`},
+  {k:['attendre','patience'],
+   r:`⏳ <strong>ATTENDRE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/attendre" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Doigts qui s'agitent lentement devant soi (impatience mimée)<br>• Expression d'attente, regard au loin<br>💡 PATIENCE : même geste mais plus lent, expression plus sereine`},
+  {k:['chercher','trouver'],
+   r:`🔍 <strong>CHERCHER</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/chercher" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Main en C devant l'œil, mouvement de balayage<br>💡 TROUVER : mouvement qui s'arrête brusquement + expression de découverte`},
+  {k:['donner','offrir','cadeau'],
+   r:`🎁 <strong>DONNER</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/donner" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Main qui va de soi vers l'autre (verbe directionnel)<br>💡 RECEVOIR : mouvement inverse, vers soi / CADEAU : DONNER + joli emballage`},
+  /* ── LIEUX & TRANSPORTS ──────────────────────────────── */
+  {k:['maison','appartement','habiter'],
+   r:`🏠 <strong>MAISON</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/maison" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Deux mains forment un toit en triangle<br>💡 APPARTEMENT : toit + étages suggérés / HABITER : MAISON + MOI`},
+  {k:['ecole','universite','classe','etudiant'],
+   r:`🏫 <strong>ÉCOLE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/école" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Configuration en B frappant légèrement l'autre paume<br>💡 UNIVERSITÉ : signe différent plus élaboré / CLASSE : espace délimité`},
+  {k:['train','metro','bus','avion','transport'],
+   r:`🚆 <strong>TRANSPORTS</strong> :<br>• TRAIN : index horizontaux qui avancent<br>• AVION : main en forme d'avion qui décolle<br>• BUS : volant mimé<br>• MÉTRO : index plonge sous la paume<br><a href="https://dico.elix-lsf.fr/dictionnaire/train" target="_blank" style="color:var(--a2)">Élix ↗</a>`},
+  {k:['gauche','droite','direction','chemin'],
+   r:`🧭 <strong>DIRECTIONS</strong> :<br>• GAUCHE : pointer ou main vers la gauche<br>• DROITE : vers la droite<br>• TOUT DROIT : main plate avançant en ligne droite<br>• DEVANT : main avançant vers l'avant<br>• DERRIÈRE : pouce vers l'arrière<br>💡 En LSF les directions sont iconiques — la main va dans la vraie direction`},
+  /* ── NOMBRES & TEMPS ─────────────────────────────────── */
+  {k:['chiffres','nombres','compter','numero'],
+   r:`🔢 <strong>CHIFFRES</strong> :<br>• 1-5 : doigts levés depuis l'index (paume vers soi)<br>• 6-9 : configurations spécifiques<br>• 10 : pouce levé avec pivot du poignet<br>• Dizaines : chiffre + mouvement latéral<br><a href="https://dico.elix-lsf.fr/dictionnaire/un" target="_blank" style="color:var(--a2)">Élix ↗</a>`},
+  {k:['heure','quelle heure','horloge','montre'],
+   r:`⏰ <strong>HEURE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/heure" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Pointer le poignet + chiffre de l'heure<br>• Question : sourcils levés<br>💡 14H30 : QUATORZE + TRENTE — pas besoin de dire "heure" en plus`},
+  {k:['semaine','mois','annee','calendrier'],
+   r:`📅 <strong>MARQUEURS TEMPORELS</strong> :<br>• AUJOURD'HUI : index vers le bas (ici et maintenant)<br>• HIER : pouce vers l'arrière sur l'épaule<br>• DEMAIN : index vers l'avant<br>• SEMAINE : main plate qui glisse<br>• MOIS : index glisse le long de l'autre index<br><a href="https://dico.elix-lsf.fr/dictionnaire/semaine" target="_blank" style="color:var(--a2)">Élix ↗</a>`},
+  /* ── QUESTIONS & RÉPONSES ────────────────────────────── */
+  {k:['pourquoi','quoi','qui','ou','quand','comment','interrogatif','question'],
+   r:`❓ <strong>MOTS INTERROGATIFS</strong> — tous avec <strong>sourcils froncés</strong> :<br>• POURQUOI : main à la tempe, doigts croisés<br>• QUOI : mains écartées, paumes vers le haut<br>• QUI : index qui pivote<br>• OÙ : index levé, mouvement oscillant<br>• QUAND : index tourne autour de l'autre<br>• COMMENT : mains ouvertes vers l'avant<br><a href="https://dico.elix-lsf.fr/dictionnaire/pourquoi" target="_blank" style="color:var(--a2)">Élix ↗</a>`},
+  {k:['combien','prix','cout','argent'],
+   r:`💰 <strong>COMBIEN / ARGENT</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/argent" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• COMBIEN : main ouverte, légère agitation + sourcils froncés<br>• ARGENT : frotter pouce contre index et majeur<br>💡 Pour un prix : pointer l'objet + COMBIEN ? (sourcils levés)`},
+  {k:['oui','vrai','daccord'],
+   r:`✅ <strong>OUI</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/oui" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Poing fermé qui hoche (comme "tête qui dit oui")<br>• Accompagné du hochement de tête<br>💡 D'ACCORD : BIEN + hochement affirmatif`},
+  {k:['non','pas','jamais','refus'],
+   r:`❌ <strong>NON</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/non" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Index et majeur tendus, mouvement latéral brusque<br>• Tête qui secoue de gauche à droite<br>💡 JAMAIS : NON amplifié + expression catégorique`},
+  /* ── COULEURS ────────────────────────────────────────── */
+  {k:['couleur','rouge','bleu','vert','jaune','blanc','noir','orange','rose'],
+   r:`🎨 <strong>COULEURS</strong> :<br>• ROUGE : frotter l'index contre les lèvres<br>• BLEU : main en B qui secoue<br>• VERT : main en G qui secoue<br>• JAUNE : main en Y qui secoue<br>• BLANC : main sur la poitrine qui s'écarte<br>• NOIR : index sur le front<br>• ORANGE : main en O (comme presser une orange)<br><a href="https://dico.elix-lsf.fr/dictionnaire/rouge" target="_blank" style="color:var(--a2)">Élix ↗</a>`},
+  /* ── MÉTÉO & NATURE ──────────────────────────────────── */
+  {k:['meteo','pluie','soleil','neige','vent','froid','chaud'],
+   r:`🌤️ <strong>MÉTÉO</strong> :<br>• SOLEIL : main en C qui s'ouvre vers le haut<br>• PLUIE : doigts qui tombent comme des gouttes<br>• NEIGE : doigts tombant doucement en tournant<br>• VENT : mains qui soufflent vers l'avant<br>• FROID : corps qui frissonne, épaules rentrées<br>• CHAUD : main qui s'éloigne du front<br><a href="https://dico.elix-lsf.fr/dictionnaire/pluie" target="_blank" style="color:var(--a2)">Élix ↗</a>`},
+  /* ── TECHNOLOGIE ─────────────────────────────────────── */
+  {k:['telephone','appel','portable','smartphone'],
+   r:`📱 <strong>TÉLÉPHONE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/téléphone" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Main en Y (pouce + auriculaire) à l'oreille<br>• APPELER : même geste + mouvement vers l'interlocuteur<br>💡 PORTABLE : signe + regarder vers le bas (écran)`},
+  {k:['ordinateur','internet','email','reseaux'],
+   r:`💻 <strong>ORDINATEUR</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/ordinateur" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Mimer le clavier avec les deux mains<br>• INTERNET : deux index qui tournent l'un autour de l'autre<br>• EMAIL : main plate de la poitrine vers l'avant<br>💡 Les signes techno évoluent — Élix se met à jour régulièrement`},
+  /* ── ARTS & LOISIRS ──────────────────────────────────── */
+  {k:['musique','chanter','danse','art'],
+   r:`🎵 <strong>MUSIQUE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/musique" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Bras qui se balance en rythme<br>• CHANTER : main devant la bouche + mouvement mélodique<br>• DANSE : deux mains miment des jambes qui dansent<br>💡 La communauté Sourde a une relation riche à la musique via les vibrations`},
+  {k:['sport','foot','basket','nager','courir'],
+   r:`⚽ <strong>SPORT</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/sport" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• Poings qui se croisent, mouvement alternatif<br>• FOOTBALL : pied qui frappe<br>• NAGER : bras qui crawlent<br>• COURIR : deux index en V qui avancent vite<br>💡 Les signes de sport sont souvent iconiques (mimer le mouvement)`},
+  {k:['livre','lire','ecrire','cahier'],
+   r:`📚 <strong>LIVRE / LIRE</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/lire" target="_blank" style="color:var(--a2)">Élix ↗</a><br>• LIVRE : deux mains plates qui s'ouvrent<br>• LIRE : index bougent sur la paume (yeux sur une page)<br>• ÉCRIRE : index mime le stylo sur la paume<br>💡 Tous iconiques — faciles à retenir !`},
+  /* ── CULTURE SOURDE & RESSOURCES ─────────────────────── */
+  {k:['culture sourde','sourd','communaute','identite','milan','1880'],
+   r:`🏛️ <strong>Culture Sourde</strong> :<br>📜 1760 — Abbé de l'Épée, 1ère école publique<br>❌ 1880 — Congrès de Milan, interdiction signée<br>✅ 1991 — Loi Fabius, reconnaissance LSF<br>🏆 2005 — Loi du 11 février, LSF langue officielle<br><br>"Sourd" (majuscule) = appartenance culturelle, pas état médical.`},
+  {k:['coda','enfant entendant','famille sourde'],
+   r:`👨‍👩‍👧 <strong>CODA</strong> (Child Of Deaf Adults) :<br>Enfants entendants de parents Sourds, souvent bilingues LSF/français dès la naissance. Ils ont joué un rôle crucial dans la transmission clandestine de la LSF entre 1880 et 1991.`},
+  {k:['implant','prothese','sourd oraliste','bilingue'],
+   r:`👂 <strong>Surdité & communication</strong> :<br>• Oraliste : communication prioritairement orale<br>• Bilingue : LSF + français<br>• Implanté cochléaire : peut coexister avec la LSF<br><br>⚠️ Un implant n'est PAS incompatible avec la Culture Sourde.`},
+  {k:['français signe','lsf vs','difference'],
+   r:`LSF ≠ Français Signé :<br>• <strong>LSF</strong> — langue naturelle avec sa propre grammaire<br>• <strong>Français Signé</strong> — adaptation artificielle suivant l'ordre français<br><br>La LSF est une langue distincte, pas une traduction gestuelle.`},
+  {k:['universel','international','asl','bsl','monde'],
+   r:`❌ La langue des signes n'est pas universelle !<br>300+ langues des signes : 🇫🇷 LSF · 🇺🇸 ASL · 🇬🇧 BSL · 🇩🇪 DGS · 🇯🇵 JSL<br><br>Un Sourd français et américain ne se comprennent pas spontanément.`},
+  {k:['ressource','elix','dictionnaire','site','lien'],
+   r:`📌 Ressources :<br>🔗 <strong><a href="https://dico.elix-lsf.fr" target="_blank" style="color:var(--a2)">Dico Élix</a></strong> — 20 500+ signes vidéo, la référence absolue<br>📺 <strong>AdSignes (YouTube)</strong> — tutoriels accessibles<br>🏫 <strong>IVT Paris</strong> — cours professionnels<br>🌐 <strong>Pisourd</strong> — forum et communauté<br>📚 <strong>Surdi.info</strong> — portail national`},
+  {k:['dactylologie','alphabet','epeler','lettre'],
+   r:`✋ La <strong>dactylologie</strong> = alphabet manuel, 26 configurations.<br><br>Utilité : épeler noms propres et mots inconnus.<br>⚠️ Ce n'est PAS de la LSF — c'est un outil d'appoint.<br><br>Exercice : épeler son prénom chaque matin (~2 semaines pour l'automatiser).`},
+  {k:['apprendre','progresser','conseil','ameliorer'],
+   r:`Pour progresser :<br>🎯 Dactylologie d'abord<br>📹 Immersion vidéo — 20 min/jour<br>🤝 Pratiquer avec des Sourds (cafés signes)<br>📱 S'enregistrer et corriger<br>🔄 20 min/jour > 3h le dimanche<br><br>Avec 2–3h/semaine : niveau A2 en ~6 mois.`},
+  {k:['presente','bonjour prénom','se presenter'],
+   r:`Se présenter :<br>1️⃣ BONJOUR<br>2️⃣ MOI + PRÉNOM [dactylologie]<br>3️⃣ MOI + ÂGE [chiffre]<br>4️⃣ MOI + HABITER + [ville]<br><br>💡 Le signe-nom (signe personnel donné par la communauté) vient après plusieurs rencontres.`},
+  {k:['__default__'],r:`Je suis <strong>Signa</strong> 🤟 — assistante LSF enrichie avec le Dico Élix.<br><br>Je connais plus de <strong>60 sujets</strong> : signes courants, grammaire, culture Sourde, famille, émotions, santé, lieux, couleurs…<br><br>💡 Exemples : <em>"Comment dire TRISTE ?"</em> · <em>"Qu'est-ce qu'un classificateur ?"</em> · <em>"Signes de météo"</em>`}
+];
+
+
+let snMsgsEl=null,snInputEl=null,snSendEl=null,snChipsEl=null;
+let snHistory=[], snTurnCount=0;
+
+function snInit(){
+  snMsgsEl=document.getElementById('sn-msgs');
+  snInputEl=document.getElementById('sn-input');
+  snSendEl=document.getElementById('sn-send');
+  snChipsEl=document.getElementById('sn-chips');
+}
+
+// ── Personnalité : variantes d'intro/outro ──────────────────
+const SN_INTROS=[
+  '','','',  // 3 vides = souvent pas d'intro
+  'Bonne question ! ','Ah oui, ','Exactement ce que je voulais aborder ! ',
+  'Je suis contente que tu demandes ça — ','Oh c\'est un super sujet, ',
+  'Alors là tu touches à quelque chose d\'important : ',
+  'Tiens, ','Ha, ça je connais bien — ','Voyons ça ensemble : ',
+];
+const SN_OUTROS=[
+  '','','','',  // souvent rien
+  '\n\n<em style="font-size:.72rem;color:var(--muted)">Tu veux que j\'approfondisse un point ?</em>',
+  '\n\n<em style="font-size:.72rem;color:var(--muted)">Est-ce que c\'est plus clair maintenant ?</em>',
+  '\n\n<em style="font-size:.72rem;color:var(--muted)">On peut pratiquer ça si tu veux !</em>',
+  '\n\n<em style="font-size:.72rem;color:var(--muted)">Dis-moi si tu veux un exemple concret.</em>',
+  '\n\n<em style="font-size:.72rem;color:var(--muted)">N\'hésite pas si tu as d\'autres questions 🤟</em>',
+];
+const SN_ENCOURAGEMENTS=[
+  'Super, continue comme ça !',
+  'T\'as l\'air de bien progresser 👍',
+  'La pratique régulière fait vraiment la différence, crois-moi.',
+  'C\'est exactement la bonne approche !',
+  'Tu poses les bonnes questions, c\'est bon signe !',
+  'Ah, je vois que tu t\'investis sérieusement !',
+];
+const SN_UNKNOWN=[
+  'Hmm, je ne suis pas sûre d\'avoir une réponse précise sur ça... Tu peux reformuler ?',
+  'Je ne couvre pas encore ce sujet, désolée ! Tu peux essayer avec d\'autres mots ?',
+  'Bonne question, mais là je cale un peu 😅 Essaie de me demander autrement !',
+  'Pas sûre de comprendre ta question — tu peux être plus précis ?',
+  'Oof, ça dépasse mes connaissances actuelles ! Mais le Dico Élix pourrait t\'aider 🔗',
+];
+
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+
+function snFindEntry(q){
+  const n=norm(q);
+  // Score chaque entrée par nombre de mots-clés matchés
+  let best=null, bestScore=0;
+  for(const e of LSF_KB){
+    if(e.k[0]==='__default__') continue;
+    let score=0;
+    for(const kw of e.k){ if(n.includes(norm(kw))) score += kw.length; } // longer kw = more specific
+    if(score>bestScore){ bestScore=score; best=e; }
+  }
+  return best;
+}
+
+function snBuildReply(q, entry){
+  snTurnCount++;
+  // Réponse introuvable
+  if(!entry){
+    const unk = pick(SN_UNKNOWN);
+    // Suggest related topics
+    const suggestions = [
+      '<button class="sn-chip" onclick="snChip(\'5 paramètres LSF\')">🖐️ Paramètres</button>',
+      '<button class="sn-chip" onclick="snChip(\'comment dire bonjour\')">👋 Bonjour</button>',
+      '<button class="sn-chip" onclick="snChip(\'grammaire LSF\')">📐 Grammaire</button>',
+    ].join(' ');
+    return `${unk}<div style="margin-top:9px;display:flex;flex-wrap:wrap;gap:5px">${suggestions}</div>`;
+  }
+
+  const intro = (snTurnCount<=2) ? '' : pick(SN_INTROS);
+  const outro = pick(SN_OUTROS);
+
+  // Contextual follow-up chips based on topic
+  const followUps = snGetFollowUps(entry.k[0]);
+  const chips = followUps.length
+    ? `<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:5px">${followUps.map(f=>`<button class="sn-chip" onclick="snChip('${f.q}')" style="font-size:.6rem">${f.label}</button>`).join('')}</div>`
+    : '';
+
+  // Occasional encouragement after a few turns
+  const encourage = (snTurnCount>0 && snTurnCount%4===0 && Math.random()>.5)
+    ? `<div style="margin-top:8px;padding:6px 10px;background:rgba(74,222,128,.08);border-radius:8px;font-size:.72rem;color:var(--a2)">✨ ${pick(SN_ENCOURAGEMENTS)}</div>`
+    : '';
+
+  return `${intro}${entry.r}${outro}${chips}${encourage}`;
+}
+
+function snGetFollowUps(key){
+  const map={
+    'bonjour':    [{label:'🙏 Merci',q:'comment dire merci'},{label:'👤 Se présenter',q:'se présenter en LSF'}],
+    'merci':      [{label:'👋 Bonjour',q:'comment dire bonjour'},{label:'🙏 Pardon',q:'comment dire pardon'}],
+    'parametre':  [{label:'😊 Expressions faciales',q:'expressions faciales LSF'},{label:'📐 Grammaire',q:'grammaire LSF'}],
+    'grammaire':  [{label:'⏱️ Temporalité',q:'temporalité en LSF'},{label:'🎭 Transferts',q:'transferts personnels LSF'}],
+    'transfert':  [{label:'📐 Grammaire',q:'grammaire LSF'},{label:'🗺️ Espace',q:'espace de signation'}],
+    'temporalite':[{label:'📐 Grammaire',q:'grammaire LSF'},{label:'🎭 Transferts',q:'transferts'}],
+    'douleur':    [{label:'🏥 Médecin',q:'signe médecin'},{label:'💊 Médicament',q:'signe médicament'}],
+    'famille':    [{label:'👩 Mère',q:'signe mère'},{label:'👨 Père',q:'signe père'},{label:'👶 Enfant',q:'signe enfant'}],
+    'apprendre':  [{label:'📚 Ressources',q:'ressources LSF'},{label:'✋ Dactylologie',q:'dactylologie'}],
+    'culture sourde':[{label:'📜 Histoire',q:'histoire LSF 1880'},{label:'👨‍👩‍👧 CODA',q:'CODA enfant sourd'}],
+    'heureux':    [{label:'😢 Triste',q:'signe triste'},{label:'😠 Fâché',q:'signe fâché'}],
+    'triste':     [{label:'😊 Heureux',q:'signe heureux'},{label:'😨 Peur',q:'signe peur'}],
+    'colere':     [{label:'😊 Heureux',q:'signe heureux'},{label:'🤝 Calme',q:'signe calme'}],
+    'classificateur':[{label:'🎭 Transferts',q:'transferts LSF'},{label:'🗺️ Espace',q:'espace de signation'}],
+    'ressource':  [{label:'🎓 Apprendre',q:'comment progresser en LSF'},{label:'✋ Dactylologie',q:'dactylologie'}],
+  };
+  const n=norm(key);
+  for(const [k,v] of Object.entries(map)){ if(n.includes(norm(k))) return v; }
+  return [];
+}
+
+// Détection d'intention : salutation, question courte, etc.
+function snDetectIntent(q){
+  const n=norm(q);
+  if(/^(salut|coucou|hello|allo|hey|bonjour signa)/.test(n)) return 'greeting';
+  if(/^(merci|thanks|super|cool|ok|oui|ouais|parfait|genial|nickel)/.test(n)) return 'thanks';
+  if(/^(non|pas vraiment|bof|pas clair|je comprends pas)/.test(n)) return 'negative';
+  if(/comment (dire|signer|faire|exprimer)/.test(n)) return 'howto';
+  if(/c.?est quoi|qu.?est.ce que|def|definition|expliquer|c.?est quoi/.test(n)) return 'definition';
+  return 'general';
+}
+
+function snSpecialReply(intent, q){
+  if(intent==='greeting') return `Coucou ! 👋 Contente de te voir ici. Tu veux apprendre un signe aujourd'hui, ou tu as une question sur la grammaire ?<div style="margin-top:9px;display:flex;flex-wrap:wrap;gap:5px"><button class="sn-chip" onclick="snChip('comment dire bonjour')">👋 Un signe</button><button class="sn-chip" onclick="snChip('grammaire LSF')">📐 La grammaire</button><button class="sn-chip" onclick="snChip('comment progresser en LSF')">🚀 Progresser</button></div>`;
+  if(intent==='thanks') return pick([
+    'Avec plaisir ! 😊 Tu as d\'autres questions ?',
+    'De rien, c\'est pour ça que je suis là ! 🤟',
+    'Génial ! Continue comme ça, la pratique régulière fait vraiment la différence.',
+    'Super ! N\'hésite pas à revenir quand tu veux.',
+    'Avec plaisir ! Tu veux essayer un autre signe ?',
+  ]);
+  if(intent==='negative') return pick([
+    'Ah, je reformule ! Tu veux que j\'explique autrement ?',
+    'Hmm, essayons différemment. Qu\'est-ce qui n\'est pas clair ?',
+    'Pas de souci ! On peut reprendre depuis le début si tu veux.',
+  ]);
+  return null;
+}
+
+// Simulation de frappe réaliste : délai proportionnel à la longueur de réponse
+function snTypingDelay(replyHtml){
+  const textLen = replyHtml.replace(/<[^>]+>/g,'').length;
+  // 15-25ms par caractère visible, borné entre 300ms et 1800ms
+  return Math.min(1800, Math.max(300, textLen * (15 + Math.random()*10)));
+}
+
+function snAddMsg(role,html,animate=true){
+  if(!snMsgsEl)snMsgsEl=document.getElementById('sn-msgs');
+  if(!snMsgsEl)return;
+  const d=document.createElement('div');
+  d.className='smsg '+role;
+  if(animate) d.style.opacity='0';
+  d.innerHTML=`<div class="smsg-ico">${role==='ai'?'🤟':'👤'}</div><div class="smsg-bub">${html}</div>`;
+  snMsgsEl.appendChild(d);
+  if(animate){
+    requestAnimationFrame(()=>{
+      d.style.transition='opacity .25s ease, transform .25s ease';
+      d.style.transform='translateY(4px)';
+      requestAnimationFrame(()=>{d.style.opacity='1';d.style.transform='translateY(0)';});
+    });
+  }
+  snMsgsEl.scrollTop=snMsgsEl.scrollHeight;
+  snHistory.push({role,html});
+}
+
+function snTyping(delay){
+  if(!snMsgsEl)snMsgsEl=document.getElementById('sn-msgs');if(!snMsgsEl)return;
+  const d=document.createElement('div');d.className='smsg ai';d.id='sn-typing';
+  d.innerHTML='<div class="smsg-ico">🤟</div><div class="typing-d"><span></span><span></span><span></span></div>';
+  snMsgsEl.appendChild(d);snMsgsEl.scrollTop=snMsgsEl.scrollHeight;
+}
+
+function snSend(){
+  snInit();if(!snInputEl)return;
+  const q=snInputEl.value.trim();if(!q)return;
+  snInputEl.value='';snInputEl.style.height='auto';
+  if(snChipsEl)snChipsEl.style.display='none';
+  snAddMsg('user',q);
+
+  // Build reply first to compute realistic delay
+  const intent=snDetectIntent(q);
+  const special=snSpecialReply(intent,q);
+  const entry=snFindEntry(q);
+  const reply = special || snBuildReply(q, entry);
+  const delay = snTypingDelay(reply);
+
+  snTyping();
+  setTimeout(()=>{
+    const t=document.getElementById('sn-typing');if(t)t.remove();
+    snAddMsg('ai',reply);
+  }, delay);
+}
+function snChip(txt){snInit();if(snInputEl)snInputEl.value=txt;snSend();}
+
+// ── MediaPipe & analyse gestuelle ──────────────────────────
+let mpLoaded=false,mpHands=null,snCamStream=null;
+let snVideo=null,snCanvas=null,snCtx=null;
+let lastLM=null,targetSign='Bonjour',detLoop=false,animFrId=null;
+
+function loadMP(){
+  return new Promise(res=>{
+    if(mpLoaded){res(true);return;}
+    let done=0,fail=false;
+    ['https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.js',
+     'https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3.1620248257/drawing_utils.js',
+     'https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1620248257/camera_utils.js'
+    ].forEach(u=>{
+      const s=document.createElement('script');s.src=u;
+      s.onload=()=>{done++;if(done===3){mpLoaded=true;res(true);}};
+      s.onerror=()=>{if(!fail){fail=true;mpLoaded=true;res(false);}};
+      document.head.appendChild(s);
+    });
+  });
+}
+async function startCam(){
+  const lbl=document.getElementById('sn-cam-lbl'),ov=document.getElementById('sn-cam-ov');
+  if(lbl){lbl.style.display='block';lbl.textContent='Accès caméra…';}
+  try{
+    snCamStream=await navigator.mediaDevices.getUserMedia({video:{width:{ideal:640},height:{ideal:480},facingMode:'user'},audio:false});
+  }catch(e){
+    const msg=e.name==='NotAllowedError'?'Permission refusée':e.name==='NotFoundError'?'Aucune caméra':e.message;
+    if(ov)ov.innerHTML=`<span style="font-size:2rem">⚠️</span><p style="color:#fff;font-size:.72rem;text-align:center;padding:0 10px">${msg}</p><button onclick="startCam()" style="padding:6px 14px;border-radius:8px;background:#0a4d2d;color:#fff;border:none;font-size:.7rem;font-weight:700;cursor:pointer;margin-top:5px">Réessayer</button>`;
+    return;
+  }
+  snVideo=document.getElementById('sn-video');snCanvas=document.getElementById('sn-canvas');snCtx=snCanvas.getContext('2d');
+  snVideo.srcObject=snCamStream;snVideo.style.display='block';
+  await snVideo.play().catch(()=>{});
+  if(ov)ov.style.display='none';
+  const ba=document.getElementById('sn-btn-analyse'),bs=document.getElementById('sn-btn-stop');
+  if(ba)ba.style.display='flex';if(bs)bs.style.display='flex';
+  if(lbl)lbl.textContent='Chargement MediaPipe…';
+  const ok=await loadMP();
+  if(!ok||typeof Hands==='undefined'){if(lbl)lbl.textContent='Caméra OK (sans squelette)';snDrawLoop();return;}
+  mpHands=new Hands({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/${f}`});
+  mpHands.setOptions({maxNumHands:2,modelComplexity:1,minDetectionConfidence:.5,minTrackingConfidence:.5});
+  mpHands.onResults(onMPRes);
+  await mpHands.initialize();
+  if(lbl)lbl.textContent='Montrez votre main 🤟';
+  detLoop=true;snDetLoop();
+}
+async function snDetLoop(){
+  while(detLoop&&snCamStream&&mpHands){
+    if(snVideo&&snVideo.readyState>=2&&!snVideo.paused){try{await mpHands.send({image:snVideo});}catch(e){}}
+    await new Promise(r=>setTimeout(r,33));
+  }
+}
+function snDrawLoop(){
+  if(!snVideo||!snCtx||!snCamStream)return;
+  if(snVideo.videoWidth>0){snCanvas.width=snVideo.videoWidth;snCanvas.height=snVideo.videoHeight;snCtx.drawImage(snVideo,0,0);}
+  animFrId=requestAnimationFrame(snDrawLoop);
+}
+function onMPRes(r){
+  if(!snCtx||!snCanvas||!r.image)return;
+  const w=r.image.width||snVideo.videoWidth||640,h=r.image.height||snVideo.videoHeight||480;
+  snCanvas.width=w;snCanvas.height=h;
+  snCtx.clearRect(0,0,w,h);snCtx.drawImage(r.image,0,0,w,h);
+  const has=r.multiHandLandmarks&&r.multiHandLandmarks.length>0;
+  const db=document.getElementById('sn-det-badge');if(db)db.style.display=has?'inline-flex':'none';
+  const lbl=document.getElementById('sn-cam-lbl');if(lbl)lbl.textContent=has?`🤟 ${r.multiHandLandmarks.length} main(s)`:'Montrez votre main…';
+  if(has){
+    lastLM=r.multiHandLandmarks[0];
+    for(const lm of r.multiHandLandmarks){
+      if(typeof drawConnectors!=='undefined'){
+        drawConnectors(snCtx,lm,HAND_CONNECTIONS,{color:'rgba(74,222,128,.65)',lineWidth:2.5});
+        drawLandmarks(snCtx,lm,{color:'#4ade80',fillColor:'#052e16',radius:4,lineWidth:1});
+      }else{
+        snCtx.fillStyle='#4ade80';
+        lm.forEach(p=>{snCtx.beginPath();snCtx.arc(p.x*w,p.y*h,5,0,Math.PI*2);snCtx.fill();});
+      }
+    }
+  }else{lastLM=null;}
+}
+function stopCam(){
+  detLoop=false;
+  if(mpHands){try{mpHands.close();}catch(e){}mpHands=null;}
+  if(animFrId){cancelAnimationFrame(animFrId);animFrId=null;}
+  if(snCamStream){snCamStream.getTracks().forEach(t=>t.stop());snCamStream=null;}
+  mpLoaded=false;
+  if(snVideo){snVideo.pause();snVideo.srcObject=null;snVideo.style.display='none';}
+  const ov=document.getElementById('sn-cam-ov');
+  if(ov){ov.style.display='flex';ov.innerHTML=`<span style="font-size:2.5rem">📷</span><button onclick="startCam()" style="padding:7px 15px;border-radius:8px;background:#0a4d2d;color:#fff;border:none;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer">Activer</button><p style="color:rgba(255,255,255,.55);font-size:.6rem;text-align:center">100% local</p>`;}
+  ['sn-btn-analyse','sn-btn-stop','sn-det-badge'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});
+  const lbl=document.getElementById('sn-cam-lbl');if(lbl)lbl.style.display='none';
+}
+function switchGTab(t){
+  document.querySelectorAll('#sn-gtabs .gtab').forEach(b=>b.classList.toggle('active',b.dataset.t===t));
+  document.querySelectorAll('#sn-gpanes .gpane').forEach(p=>p.classList.toggle('active',p.id==='gpane-'+t));
+  if(t!=='cam')stopCam();
+}
+
+// Sélection du signe à analyser (preset + custom)
+function selectSign(btn,name){
+  targetSign=name;
+  document.querySelectorAll('#sn-sign-btns .sign-b').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  const ci=document.getElementById('sn-custom-in');
+  if(ci&&btn)ci.value='';
+  updateSignTargetDisplay();
+}
+function applyCustomSign(){
+  const ci=document.getElementById('sn-custom-in');
+  if(!ci||!ci.value.trim())return;
+  targetSign=ci.value.trim();
+  document.querySelectorAll('#sn-sign-btns .sign-b').forEach(b=>b.classList.remove('active'));
+  updateSignTargetDisplay();
+  showToast(`🎯 Signe cible : ${targetSign}`);
+}
+function updateSignTargetDisplay(){
+  const d=document.getElementById('sn-target-display');
+  if(d)d.innerHTML=`Analyse en cours pour : <strong>${targetSign}</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/${encodeURIComponent(targetSign.toLowerCase())}" target="_blank" style="color:var(--a2)">voir sur Élix ↗</a>`;
+}
+
+// ── Analyse gestuelle ──────────────────────────────────────
+const SIGN_PAT={
+  'Bonjour':{check(fs,or,ht){
+    const s=(fs.index&&fs.middle&&fs.ring&&fs.pinky)?40:0,o=(or==='toward_camera'||or==='away_from_camera')?30:0,h=(ht==='head')?30:0;
+    const d=[s?'✅ Main ouverte':'❌ Ouvrez la main',o?'✅ Orientation correcte':'❌ Paume vers l’avant',h?'✅ Hauteur correcte':'⚠️ Levez la main au front'];
+    return{score:s+o+h,details:d,tips:!s?['Détendez et écartez tous les doigts']:!h?['BONJOUR se signe au niveau du front']:[]}}},
+  'Merci':{check(fs,or,ht){
+    const s=(fs.index&&fs.middle&&fs.ring&&fs.pinky)?40:0,o=(or==='up'||or==='toward_camera')?30:0,h=(ht==='head'||ht==='chest')?30:0;
+    const d=[s?'✅ Main ouverte':'❌ Ouvrez la main',o?'✅ Orientation correcte':'❌ Paume vers le haut/avant',h?'✅ Hauteur correcte':'⚠️ Du menton vers l’avant'];
+    return{score:s+o+h,details:d,tips:!s?['Imaginez tenir un plateau — main à plat']:[]}}},
+  'Oui':{check(fs,or,ht){
+    const s=(!fs.index&&!fs.middle&&!fs.ring&&!fs.pinky)?60:0,h=(ht==='chest'||ht==='head')?40:0;
+    return{score:s+h,details:[s?'✅ Poing fermé':'❌ Fermez le poing',h?'✅ Position correcte':'⚠️ Devant le visage'],tips:!s?['Replier tous les doigts fermement']:[]}}},
+  'Non':{check(fs,or,ht){
+    const s=(fs.index&&fs.middle&&!fs.ring&&!fs.pinky)?55:0,h=(ht==='chest'||ht==='head')?45:0;
+    return{score:s+h,details:[s?'✅ Index + majeur tendus':'❌ Tendez index + majeur',h?'✅ Position correcte':'⚠️ Devant le visage'],tips:!s?['Geste en V puis mouvement latéral']:[]}}},
+  'Aimer':{check(fs,or,ht){
+    const s=(!fs.index&&!fs.middle)?40:20,h=(ht==='chest')?40:0;
+    return{score:s+h,details:[s>=40?'✅ Configuration correcte':'⚠️ Main fermée',h?'✅ Sur le cœur':'❌ Main sur la poitrine gauche','💡 Expression faciale !'],tips:!h?['Ce signe est centré sur le cœur']:[]}}},
+};
+
+function fingerExt(lm,tip,pip){
+  const d=(a,b)=>Math.sqrt((a.x-b.x)**2+(a.y-b.y)**2+(a.z-b.z)**2);
+  return d(lm[tip],lm[0])>d(lm[pip],lm[0]);
+}
+function getFS(lm){return{thumb:fingerExt(lm,4,3),index:fingerExt(lm,8,6),middle:fingerExt(lm,12,10),ring:fingerExt(lm,16,14),pinky:fingerExt(lm,20,18)};}
+function getOR(lm){
+  const w=lm[0],i5=lm[5],p17=lm[17];
+  const nz=(i5.x-w.x)*(p17.y-w.y)-(i5.y-w.y)*(p17.x-w.x),ny=(i5.z-w.z)*(p17.x-w.x)-(i5.x-w.x)*(p17.z-w.z);
+  if(Math.abs(nz)>Math.abs(ny))return nz>0?'toward_camera':'away_from_camera';
+  return ny>0?'up':'down';
+}
+function getHT(lm){const y=lm[0].y;return y<.4?'head':y<.65?'chest':'low';}
+
+function runAnalysis(lm){
+  const fs=getFS(lm),or=getOR(lm),ht=getHT(lm),pat=SIGN_PAT[targetSign];
+  if(pat)return{...pat.check(fs,or,ht),or,ht,fs,_lm:lm};
+  const ext=Object.values(fs).filter(Boolean).length;
+  return{score:50,details:[`📊 Doigts étendus : ${ext}/5`,`🔄 Orientation : ${or}`,`📍 Hauteur : ${ht}`],
+         tips:['Signe non prédéfini — analyse générique. Cherchez la vidéo sur Élix pour comparer.'],or,ht,fs,_lm:lm};
+}
+
+// Élix identification
+const DICT_G=[
+  /* SALUTATIONS */
+  {w:'Bonjour',slug:'bonjour',ico:'👋',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'H'},
+  {w:'Merci',slug:'merci',ico:'🙏',g:{th:0,ix:1,mi:1,ri:1,pi:1},or:'U',ht:'H'},
+  {w:'Pardon',slug:'pardon',ico:'🙏',g:{th:0,ix:0,mi:0,ri:0,pi:0},or:'T',ht:'C'},
+  {w:'Au revoir',slug:'au-revoir',ico:'👋',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'S',ht:'H'},
+  /* RÉPONSES */
+  {w:'Oui',slug:'oui',ico:'✅',g:{th:0,ix:0,mi:0,ri:0,pi:0},or:'T',ht:'H'},
+  {w:'Non',slug:'non',ico:'❌',g:{th:0,ix:1,mi:1,ri:0,pi:0},or:'T',ht:'H'},
+  {w:'Peut-être',slug:'peut-être',ico:'🤔',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'S',ht:'C'},
+  {w:'D’accord',slug:'accord',ico:'👍',g:{th:1,ix:0,mi:0,ri:0,pi:0},or:'T',ht:'C'},
+  /* ÉMOTIONS */
+  {w:'Aimer',slug:'aimer',ico:'❤️',g:{th:0,ix:0,mi:0,ri:0,pi:0},or:'T',ht:'C'},
+  {w:'Heureux',slug:'heureux',ico:'😊',g:{th:0,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'C'},
+  {w:'Triste',slug:'triste',ico:'😢',g:{th:0,ix:1,mi:1,ri:0,pi:0},or:'D',ht:'H'},
+  {w:'Fâché',slug:'fâché',ico:'😠',g:{th:0,ix:1,mi:1,ri:1,pi:1},or:'D',ht:'H'},
+  {w:'Peur',slug:'peur',ico:'😨',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'C'},
+  {w:'Fatigué',slug:'fatigué',ico:'😴',g:{th:0,ix:0,mi:0,ri:0,pi:0},or:'D',ht:'C'},
+  {w:'Fier',slug:'fier',ico:'🦁',g:{th:0,ix:0,mi:0,ri:0,pi:0},or:'T',ht:'C'},
+  {w:'Honte',slug:'honte',ico:'😳',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'H'},
+  {w:'Surpris',slug:'surpris',ico:'😲',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'H'},
+  {w:'Calme',slug:'calme',ico:'😌',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'D',ht:'C'},
+  {w:'Jaloux',slug:'jaloux',ico:'😒',g:{th:1,ix:1,mi:0,ri:0,pi:0},or:'T',ht:'C'},
+  /* ACTIONS */
+  {w:'Parler',slug:'parler',ico:'💬',g:{th:0,ix:1,mi:0,ri:0,pi:0},or:'S',ht:'H'},
+  {w:'Comprendre',slug:'comprendre',ico:'💡',g:{th:0,ix:1,mi:0,ri:0,pi:0},or:'T',ht:'H'},
+  {w:'Apprendre',slug:'apprendre',ico:'🎓',g:{th:0,ix:1,mi:1,ri:0,pi:0},or:'T',ht:'H'},
+  {w:'Regarder',slug:'regarder',ico:'👀',g:{th:0,ix:1,mi:1,ri:0,pi:0},or:'T',ht:'H'},
+  {w:'Aider',slug:'aider',ico:'🤲',g:{th:1,ix:0,mi:0,ri:0,pi:0},or:'U',ht:'C'},
+  {w:'Manger',slug:'manger',ico:'🍽️',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'D',ht:'H'},
+  {w:'Boire',slug:'boire',ico:'🥤',g:{th:1,ix:0,mi:0,ri:0,pi:0},or:'T',ht:'H'},
+  {w:'Dormir',slug:'dormir',ico:'😴',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'S',ht:'H'},
+  {w:'Travailler',slug:'travailler',ico:'💼',g:{th:0,ix:0,mi:0,ri:0,pi:0},or:'S',ht:'C'},
+  {w:'Savoir',slug:'savoir',ico:'🧠',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'H'},
+  {w:'Chercher',slug:'chercher',ico:'🔍',g:{th:1,ix:0,mi:0,ri:0,pi:0},or:'T',ht:'H'},
+  {w:'Donner',slug:'donner',ico:'🎁',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'C'},
+  {w:'Attendre',slug:'attendre',ico:'⏳',g:{th:0,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'C'},
+  {w:'Aller',slug:'aller',ico:'🚶',g:{th:0,ix:1,mi:0,ri:0,pi:0},or:'T',ht:'C'},
+  {w:'Venir',slug:'venir',ico:'🏃',g:{th:0,ix:1,mi:0,ri:0,pi:0},or:'T',ht:'C'},
+  {w:'Lire',slug:'lire',ico:'📖',g:{th:0,ix:1,mi:1,ri:0,pi:0},or:'U',ht:'C'},
+  {w:'Écrire',slug:'écrire',ico:'✍️',g:{th:0,ix:1,mi:0,ri:0,pi:0},or:'D',ht:'C'},
+  /* PERSONNES & FAMILLE */
+  {w:'Famille',slug:'famille',ico:'👨‍👩‍👧',g:{th:1,ix:1,mi:0,ri:0,pi:0},or:'T',ht:'C'},
+  {w:'Ami',slug:'ami',ico:'🤝',g:{th:0,ix:1,mi:1,ri:0,pi:0},or:'T',ht:'C'},
+  {w:'Médecin',slug:'médecin',ico:'👨‍⚕️',g:{th:0,ix:1,mi:1,ri:0,pi:0},or:'D',ht:'C'},
+  /* DESCRIPTIONS */
+  {w:'Grand',slug:'grand',ico:'⬆️',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'S',ht:'C'},
+  {w:'Petit',slug:'petit',ico:'⬇️',g:{th:0,ix:1,mi:0,ri:0,pi:0},or:'D',ht:'L'},
+  {w:'Beau',slug:'beau',ico:'✨',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'H'},
+  {w:'Vite',slug:'vite',ico:'⚡',g:{th:0,ix:1,mi:1,ri:1,pi:1},or:'S',ht:'C'},
+  {w:'Lentement',slug:'lentement',ico:'🐢',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'D',ht:'C'},
+  {w:'Nouveau',slug:'nouveau',ico:'🆕',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'U',ht:'C'},
+  {w:'Difficile',slug:'difficile',ico:'😰',g:{th:0,ix:1,mi:1,ri:0,pi:0},or:'S',ht:'C'},
+  {w:'Facile',slug:'facile',ico:'😊',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'C'},
+  /* SANTÉ */
+  {w:'Douleur',slug:'douleur',ico:'🤕',g:{th:0,ix:1,mi:0,ri:0,pi:0},or:'S',ht:'C'},
+  {w:'Malade',slug:'malade',ico:'🤒',g:{th:0,ix:1,mi:0,ri:0,pi:0},or:'T',ht:'H'},
+  {w:'Médicament',slug:'médicament',ico:'💊',g:{th:1,ix:1,mi:0,ri:0,pi:0},or:'U',ht:'H'},
+  {w:'Hôpital',slug:'hôpital',ico:'🏥',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'C'},
+  /* LIEUX */
+  {w:'Maison',slug:'maison',ico:'🏠',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'D',ht:'C'},
+  {w:'École',slug:'école',ico:'🏫',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'C'},
+  {w:'Restaurant',slug:'restaurant',ico:'🍽️',g:{th:0,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'H'},
+  /* TECHNOLOGIE */
+  {w:'Téléphone',slug:'téléphone',ico:'📱',g:{th:1,ix:0,mi:0,ri:0,pi:1},or:'S',ht:'H'},
+  {w:'Ordinateur',slug:'ordinateur',ico:'💻',g:{th:0,ix:1,mi:1,ri:1,pi:1},or:'D',ht:'C'},
+  {w:'Internet',slug:'internet',ico:'🌐',g:{th:0,ix:1,mi:0,ri:0,pi:0},or:'T',ht:'C'},
+  /* NOURRITURE */
+  {w:'Café',slug:'café',ico:'☕',g:{th:1,ix:0,mi:0,ri:0,pi:0},or:'T',ht:'H'},
+  {w:'Pain',slug:'pain',ico:'🍞',g:{th:0,ix:1,mi:1,ri:1,pi:1},or:'D',ht:'C'},
+  {w:'Eau',slug:'eau',ico:'💧',g:{th:0,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'H'},
+  /* COULEURS */
+  {w:'Rouge',slug:'rouge',ico:'🔴',g:{th:0,ix:1,mi:0,ri:0,pi:0},or:'T',ht:'H'},
+  {w:'Bleu',slug:'bleu',ico:'🔵',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'S',ht:'C'},
+  {w:'Vert',slug:'vert',ico:'🟢',g:{th:0,ix:1,mi:0,ri:0,pi:0},or:'S',ht:'C'},
+  /* MÉTÉO */
+  {w:'Soleil',slug:'soleil',ico:'☀️',g:{th:1,ix:0,mi:0,ri:0,pi:0},or:'U',ht:'H'},
+  {w:'Pluie',slug:'pluie',ico:'🌧️',g:{th:0,ix:1,mi:1,ri:1,pi:1},or:'D',ht:'H'},
+  {w:'Froid',slug:'froid',ico:'🥶',g:{th:0,ix:0,mi:0,ri:0,pi:0},or:'S',ht:'C'},
+  {w:'Chaud',slug:'chaud',ico:'🌡️',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'H'},
+  /* SPORTS */
+  {w:'Sport',slug:'sport',ico:'⚽',g:{th:0,ix:0,mi:0,ri:0,pi:0},or:'S',ht:'C'},
+  {w:'Nager',slug:'nager',ico:'🏊',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'S',ht:'C'},
+  {w:'Courir',slug:'courir',ico:'🏃',g:{th:0,ix:1,mi:1,ri:0,pi:0},or:'T',ht:'C'},
+  /* DIVERS */
+  {w:'Argent',slug:'argent',ico:'💰',g:{th:1,ix:1,mi:0,ri:0,pi:0},or:'U',ht:'C'},
+  {w:'Livre',slug:'livre',ico:'📚',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'U',ht:'C'},
+  {w:'Musique',slug:'musique',ico:'🎵',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'S',ht:'C'},
+  {w:'Voyage',slug:'voyage',ico:'✈️',g:{th:1,ix:0,mi:0,ri:0,pi:1},or:'T',ht:'C'},
+  {w:'Voiture',slug:'voiture',ico:'🚗',g:{th:0,ix:0,mi:0,ri:0,pi:0},or:'S',ht:'C'},
+  {w:'Cadeau',slug:'cadeau',ico:'🎁',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'C'},
+  {w:'Beau',slug:'beau',ico:'✨',g:{th:1,ix:1,mi:1,ri:1,pi:1},or:'T',ht:'H'},
+];
+
+
+function orCode(or){return{toward_camera:'T',away_from_camera:'A',up:'U',down:'D',side:'S'}[or]||'?';}
+function htCode(ht){return{head:'H',chest:'C',low:'L'}[ht]||'?';}
+
+function identifySign(lm,n=3){
+  if(!lm)return[];
+  const fs=getFS(lm),oc=orCode(getOR(lm)),hc=htCode(getHT(lm));
+  const arr=[fs.thumb?1:0,fs.index?1:0,fs.middle?1:0,fs.ring?1:0,fs.pinky?1:0];
+  return DICT_G.map(d=>{
+    let s=0;['th','ix','mi','ri','pi'].forEach((k,i)=>{if(d.g[k]===arr[i])s+=10;});
+    if(d.or===oc)s+=25;if(d.ht===hc)s+=25;
+    return{...d,ms:s};
+  }).sort((a,b)=>b.ms-a.ms).slice(0,n);
+}
+
+function renderAnalysis(cid,res){
+  const el=document.getElementById(cid);if(!el)return;
+  const pct=res.score,col=pct>=70?'#22c55e':pct>=45?'#f59e0b':'#ef4444';
+  const ico=pct>=70?'🎉':pct>=45?'👍':'💪';
+  const ext=res.fs?Object.values(res.fs).filter(Boolean).length:3;
+  const params=[
+    {n:'Config.',v:(ext/5)*100},{n:'Orient.',v:['toward_camera','up'].includes(res.or)?80:50},
+    {n:'Emplace.',v:res.ht==='head'?85:res.ht==='chest'?70:40},{n:'Mouv.',v:60},{n:'Express.',v:55}
+  ];
+  const matches=identifySign(res._lm);
+  el.className='gest-res show';
+  el.innerHTML=`
+    <div class="gr-row">
+      <span style="font-size:1.6rem">${ico}</span>
+      <div style="flex:1">
+        <div style="font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:900;color:${col}">${pct>=70?'Excellent !':pct>=45?'En bonne voie':'Continue !'} — <em>${targetSign}</em></div>
+        <div class="gr-score-bar" style="width:140px;margin-top:4px"><div class="gr-score-fill" style="width:${pct}%;background:${col}"></div></div>
+        <span style="font-family:'Nunito',sans-serif;font-size:.75rem;font-weight:900;color:${col}">${pct}/100</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:7px">
+      ${params.map(p=>{const c=p.v>=65?'#22c55e':p.v>=40?'#f59e0b':'#ef4444';
+        return`<div style="background:var(--bg-card2);border:1px solid var(--bdr);border-radius:6px;padding:5px 3px;text-align:center"><div style="font-family:'Nunito',sans-serif;font-size:.46rem;font-weight:800;color:var(--muted);text-transform:uppercase">${p.n}</div><div style="height:2px;background:var(--bdr);border-radius:99px;overflow:hidden;margin:3px 0"><div style="width:${Math.round(p.v)}%;height:100%;background:${c};border-radius:99px"></div></div><div style="font-family:'Nunito',sans-serif;font-size:.52rem;font-weight:800;color:${c}">${Math.round(p.v)}%</div></div>`;}).join('')}
+    </div>
+    <div class="gr-detail">${res.details.join('<br>')}</div>
+    ${res.tips&&res.tips.length?`<div class="gr-tip"><strong>💡</strong> ${res.tips[0]}</div>`:''}
+    ${matches.length?`<div class="elix-matches">
+      <div style="font-family:'Nunito',sans-serif;font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--a2);margin-bottom:7px">📖 Signes proches dans Élix</div>
+      ${matches.map((m,i)=>{const rank=['🥇','🥈','🥉'][i],bc=m.ms>=65?'#22c55e':m.ms>=40?'#f59e0b':'#94a3b8';
+        return`<a class="elix-match-item" href="https://dico.elix-lsf.fr/dictionnaire/${encodeURIComponent(m.slug)}" target="_blank">
+          <span style="font-size:1.3rem">${m.ico}</span>
+          <div style="flex:1"><div style="font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:800">${rank} ${m.w}</div>
+          <div style="height:2px;background:var(--bdr);border-radius:99px;overflow:hidden;margin-top:3px"><div style="width:${m.ms}%;height:100%;background:${bc};border-radius:99px"></div></div>
+          <div style="font-size:.58rem;color:${bc};font-family:'Nunito',sans-serif;font-weight:700">${m.ms}% de correspondance</div></div>
+          <span style="color:var(--a2);font-size:.72rem">↗</span></a>`;}).join('')}
+    </div>`:''}`;
+  showToast('🤟 Analyse terminée !');
+}
+
+function analyseFrame(){
+  const el=document.getElementById('sn-cam-res');if(!el)return;
+  if(!lastLM){el.className='gest-res show';el.innerHTML='<div style="text-align:center;padding:14px"><span style="font-size:1.8rem">🤲</span><p style="font-family:Nunito,sans-serif;font-size:.8rem;font-weight:700;margin-top:7px;color:var(--txt)">Aucune main détectée</p><p style="font-size:.68rem;color:var(--muted);margin-top:3px">Fond contrasté et bonne lumière.</p></div>';return;}
+  renderAnalysis('sn-cam-res',runAnalysis(lastLM));
+}
+function handleFileDrop(e){e.preventDefault();const z=document.getElementById('sn-upzone');if(z)z.classList.remove('drag');const f=e.dataTransfer?.files[0];if(f&&f.type.startsWith('video/'))loadVid(f);}
+function loadVid(file){if(!file)return;const v=document.getElementById('sn-upvid');if(!v)return;v.src=URL.createObjectURL(file);v.load();const w=document.getElementById('sn-upwrap'),z=document.getElementById('sn-upzone');if(w)w.style.display='block';if(z)z.style.display='none';showToast('✅ Vidéo chargée !');}
+function resetVid(){const w=document.getElementById('sn-upwrap'),z=document.getElementById('sn-upzone'),r=document.getElementById('sn-up-res'),i=document.getElementById('sn-file-in');if(w)w.style.display='none';if(z)z.style.display='block';if(r)r.className='gest-res';if(i)i.value='';}
+async function analyseVid(){
+  const vid=document.getElementById('sn-upvid'),resEl=document.getElementById('sn-up-res');
+  if(!vid?.src||!resEl)return;
+  resEl.className='gest-res show';resEl.innerHTML='<div style="text-align:center;padding:14px"><span style="font-size:1.6rem;display:inline-block;animation:td 1s ease infinite alternate">🧠</span><p style="font-family:Nunito,sans-serif;font-size:.76rem;font-weight:700;margin-top:7px;color:var(--txt)">Analyse en cours…</p></div>';
+  const ok=await loadMP();
+  if(!ok||typeof Hands==='undefined'){setTimeout(()=>renderAnalysis('sn-up-res',{score:50,details:['⚠️ MediaPipe indisponible'],tips:['Vérifiez votre connexion internet'],or:'unknown',ht:'chest',fs:{},_lm:null}),800);return;}
+  if(vid.readyState<1)await new Promise(r=>vid.addEventListener('loadedmetadata',r,{once:true}));
+  const dur=vid.duration;if(!dur||isNaN(dur)){resEl.innerHTML='<p style="text-align:center;padding:14px;color:var(--muted);font-size:.78rem">❌ Vidéo illisible</p>';return;}
+  const cvs=document.createElement('canvas');cvs.width=320;cvs.height=240;const ctx2=cvs.getContext('2d');
+  const tmpH=new Hands({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/${f}`});
+  tmpH.setOptions({maxNumHands:1,modelComplexity:0,minDetectionConfidence:.5,minTrackingConfidence:.5});
+  await tmpH.initialize();
+  let bestRes=null,fdone=false;
+  tmpH.onResults(r=>{if(r.multiHandLandmarks?.length&&!bestRes)bestRes=runAnalysis(r.multiHandLandmarks[0]);fdone=true;});
+  for(const t of[dur*.25,dur*.5,dur*.75]){
+    fdone=false;vid.currentTime=t;
+    await new Promise(r=>vid.addEventListener('seeked',r,{once:true}));
+    ctx2.drawImage(vid,0,0,320,240);await tmpH.send({image:cvs});
+    await new Promise(r=>{const id=setInterval(()=>{if(fdone){clearInterval(id);r();}},40);setTimeout(()=>{clearInterval(id);r();},2000);});
+    if(bestRes)break;
+  }
+  tmpH.close();
+  if(!bestRes){resEl.innerHTML='<div style="text-align:center;padding:14px"><span style="font-size:1.8rem">🤲</span><p style="font-family:Nunito,sans-serif;font-size:.8rem;font-weight:700;margin-top:7px;color:var(--txt)">Aucune main détectée</p></div>';return;}
+  renderAnalysis('sn-up-res',bestRes);
+}
+
+// ── showSignaIA ─────────────────────────────────────────────
+function showSignaIA(){
+  S.view='signa';save();
+  const area=document.getElementById('mainArea');
+  area.innerHTML=`
+    <div class="main-top">
+      <div><div class="main-title">🤟 Signa IA</div><div class="main-sub">Questions LSF · Analyse gestuelle · 100% local, sans clé API</div></div>
+      <button class="bdg-pill" id="backBtn">← Retour</button>
+    </div>
+    <div class="signa-layout">
+      <!-- CHAT -->
+      <div class="sp">
+        <div class="sp-head"><div class="sp-head-ico">💬</div><div><h3>Questions LSF</h3><p>Base de connaissances · zéro serveur</p></div></div>
+        <div class="sn-msgs" id="sn-msgs">
+          <div class="smsg ai"><div class="smsg-ico">🤟</div><div class="smsg-bub">Bonjour ! Je suis <strong>Signa</strong> 👋<br>Posez-moi vos questions sur la <strong>LSF</strong> : les 5 paramètres, la grammaire, la culture Sourde, des signes spécifiques…</div></div>
+        </div>
+        <div class="sn-chips" id="sn-chips">
+          <button class="sn-chip" onclick="snChip('Quels sont les 5 paramètres de la LSF ?')">🖐️ 5 paramètres</button>
+          <button class="sn-chip" onclick="snChip('Comment se présenter en LSF ?')">👤 Se présenter</button>
+          <button class="sn-chip" onclick="snChip('Quelle est la différence entre LSF et français signé ?')">🔀 LSF vs français signé</button>
+          <button class="sn-chip" onclick="snChip('Qu est-ce que la culture Sourde ?')">🏛️ Culture Sourde</button>
+          <button class="sn-chip" onclick="snChip('Comment apprendre la LSF rapidement ?')">🚀 Apprendre vite</button>
+          <button class="sn-chip" onclick="snChip('Quelles ressources pour apprendre la LSF ?')">📚 Ressources</button>
+        </div>
+        <div class="sn-input-row">
+          <textarea id="sn-input" class="sn-ta" placeholder="Posez votre question…" rows="1"
+            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();snSend()}"
+            oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,72)+'px'"></textarea>
+          <button id="sn-send" class="sn-send" onclick="snSend()">➤</button>
+        </div>
+      </div>
+      <!-- ANALYSE GESTUELLE -->
+      <div class="sp">
+        <div class="sp-head"><div class="sp-head-ico">🎥</div><div><h3>Analyse gestuelle</h3><p>MediaPipe Hands · détection locale</p></div></div>
+        <!-- Signe cible : presets + champ libre -->
+        <div class="sign-target-row">
+          <div style="font-family:'Nunito',sans-serif;font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px">🎯 Signe à analyser</div>
+          <div class="sign-preset-btns" id="sn-sign-btns">
+            <button class="sign-b active" onclick="selectSign(this,'Bonjour')">👋 Bonjour</button>
+            <button class="sign-b" onclick="selectSign(this,'Merci')">🙏 Merci</button>
+            <button class="sign-b" onclick="selectSign(this,'Oui')">✅ Oui</button>
+            <button class="sign-b" onclick="selectSign(this,'Non')">❌ Non</button>
+            <button class="sign-b" onclick="selectSign(this,'Aimer')">❤️ Aimer</button>
+          </div>
+          <div class="sign-custom-row">
+            <input id="sn-custom-in" class="sign-custom-in" placeholder="Ou tapez n'importe quel mot…"
+              onkeydown="if(event.key==='Enter') applyCustomSign()"
+              oninput="if(this.value.trim()){document.querySelectorAll('#sn-sign-btns .sign-b').forEach(b=>b.classList.remove('active'));}">
+            <button class="sign-custom-btn" onclick="applyCustomSign()">✓ Appliquer</button>
+          </div>
+          <div class="sign-target-display" id="sn-target-display" style="margin-top:5px">Analyse en cours pour : <strong>Bonjour</strong> — <a href="https://dico.elix-lsf.fr/dictionnaire/bonjour" target="_blank" style="color:var(--a2)">voir sur Élix ↗</a></div>
+        </div>
+        <div class="gtabs" id="sn-gtabs">
+          <button class="gtab active" data-t="cam" onclick="switchGTab('cam')">📷 Caméra</button>
+          <button class="gtab" data-t="upload" onclick="switchGTab('upload')">📤 Vidéo</button>
+        </div>
+        <div id="sn-gpanes">
+          <div class="gpane active" id="gpane-cam">
+            <div class="cam-wrap">
+              <video id="sn-video" autoplay muted playsinline style="display:none"></video>
+              <canvas id="sn-canvas"></canvas>
+              <div class="cam-ov" id="sn-cam-ov">
+                <span style="font-size:2.5rem">📷</span>
+                <button onclick="startCam()" style="padding:7px 15px;border-radius:8px;background:#0a4d2d;color:#fff;border:none;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer">Activer la caméra</button>
+                <p style="color:rgba(255,255,255,.55);font-size:.6rem;text-align:center;max-width:160px">100% local — rien n'est envoyé</p>
+              </div>
+              <div class="cam-lbl" id="sn-cam-lbl" style="display:none"></div>
+            </div>
+            <div style="display:flex;gap:6px;margin-top:8px;align-items:center;flex-wrap:wrap">
+              <button id="sn-btn-analyse" style="display:none;padding:6px 13px;border-radius:8px;background:#0a4d2d;color:#fff;border:none;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer" onclick="analyseFrame()">🔍 Analyser ce geste</button>
+              <button id="sn-btn-stop" style="display:none;padding:6px 11px;border-radius:8px;background:var(--bg-card2);border:1px solid var(--bdr2);font-family:'Nunito',sans-serif;font-size:.68rem;font-weight:700;cursor:pointer;color:var(--txt)" onclick="stopCam()">✕ Arrêter</button>
+              <span id="sn-det-badge" class="det-badge" style="display:none">Mains détectées</span>
+            </div>
+            <div class="gest-res" id="sn-cam-res"></div>
+          </div>
+          <div class="gpane" id="gpane-upload">
+            <div class="upload-zone" id="sn-upzone"
+              onclick="document.getElementById('sn-file-in').click()"
+              ondragover="event.preventDefault();this.classList.add('drag')"
+              ondragleave="this.classList.remove('drag')"
+              ondrop="handleFileDrop(event)">
+              <span style="font-size:2.2rem">🎬</span><h4>Glissez votre vidéo</h4><p>ou cliquez · MP4, WebM, MOV</p>
+              <input type="file" id="sn-file-in" accept="video/*" style="display:none" onchange="loadVid(this.files[0])">
+            </div>
+            <div id="sn-upwrap" style="display:none;margin-top:8px">
+              <video id="sn-upvid" controls style="width:100%;border-radius:9px;max-height:200px;background:#000"></video>
+              <div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap">
+                <button style="padding:6px 13px;border-radius:8px;background:#0a4d2d;color:#fff;border:none;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer" onclick="analyseVid()">🔍 Analyser</button>
+                <button style="padding:6px 11px;border-radius:8px;background:var(--bg-card2);border:1px solid var(--bdr2);font-family:'Nunito',sans-serif;font-size:.68rem;font-weight:700;cursor:pointer;color:var(--txt)" onclick="resetVid()">🔄 Changer</button>
+              </div>
+            </div>
+            <div class="gest-res" id="sn-up-res"></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('backBtn').addEventListener('click',()=>{renderLevels();buildNav();});
+}
+
+// ════════════════════════════════════════════════════════
+//  PARCOURS THÉMATIQUES — avec phrases courantes
+// ════════════════════════════════════════════════════════
+const PARCOURS=[
+  {id:'sante',ico:'🏥',title:'Santé & Médical',color:'#ef4444',
+   intro:'Vocabulaire essentiel pour les consultations médicales, urgences et pharmacies.',
+   vocab:['Médecin','Hôpital','Pharmacie','Médicament','Douleur','Fièvre','Allergie','Urgence','Opération','Blessure','Infirmier','Dent','Œil','Oreille','Ventre','Dos','Tête','Cœur','Respirer','Avaler'],
+   phrases:[
+     {fr:'J\'ai mal à la tête',lsf:'MOI TÊTE DOULEUR',note:'Pointer la tête + expression de douleur (froncer les sourcils)'},
+     {fr:'Où est la pharmacie ?',lsf:'PHARMACIE OÙ ?',note:'Sourcils levés pour la question'},
+     {fr:'J\'ai de la fièvre depuis deux jours',lsf:'DEUX JOUR MOI FIÈVRE',note:'Poser le temps en premier'},
+     {fr:'Je suis allergique aux arachides',lsf:'MOI ALLERGIE CACAHUÈTE',note:'Mimer le choc allergique avec le visage'},
+     {fr:'Appelez le 15 s\'il vous plaît',lsf:'S-V-P APPELER URGENCE',note:'Dactylologie pour les numéros'},
+     {fr:'Pouvez-vous m\'aider ?',lsf:'VOUS AIDE MOI POSSIBLE ?',note:'Sourcils levés, expression interrogative'},
+   ],
+   tips:['Épeler le nom des médicaments avec la dactylologie','En urgence : AIDE + MÉDECIN + pointer la douleur','DOULEUR se fait avec une expression faciale forte'],
+   elix:['médecin','douleur','allergie','médicament','urgence']},
+  {id:'travail',ico:'💼',title:'Monde du travail',color:'#f59e0b',
+   intro:'Communication professionnelle, réunions, entretiens et vie au bureau.',
+   vocab:['Réunion','Bureau','Contrat','Salaire','Collègue','Patron','Projet','Délai','Objectif','Présentation','Formation','Congé','Télétravail','Client','Facture','Budget','Entreprise','Poste','Candidature','Entretien'],
+   phrases:[
+     {fr:'La réunion est à 14h',lsf:'RÉUNION 14H HEURE',note:'Poser le contexte temporel en premier'},
+     {fr:'Je ne comprends pas ce contrat',lsf:'CE CONTRAT MOI COMPRENDRE PAS',note:'Nier en fin de phrase avec la tête'},
+     {fr:'Quel est votre délai ?',lsf:'VOTRE DÉLAI QUOI ?',note:'Sourcils froncés pour la question ouverte'},
+     {fr:'Je suis en télétravail aujourd\'hui',lsf:'AUJOURD\'HUI MOI TÉLÉTRAVAIL',note:'Mime : ordinateur + maison'},
+     {fr:'Pouvons-nous reporter la réunion ?',lsf:'RÉUNION REPORTER POSSIBLE ?',note:'Mimez le report avec la timeline temporelle'},
+     {fr:'Mon budget est limité',lsf:'MON BUDGET LIMITÉ PETIT',note:'Geste de rétrécissement pour LIMITÉ'},
+   ],
+   tips:['En réunion : établissez d\'abord le contact visuel','Pour des termes techniques : épeler puis créer un signe de contexte','ACCORD / PAS-ACCORD sont cruciaux en réunion'],
+   elix:['travail','réunion','contrat','collègue','salaire']},
+  {id:'voyage',ico:'✈️',title:'Voyages & Transports',color:'#3b82f6',
+   intro:'Gare, aéroport, hôtel, demander son chemin — tous les signes pour voyager.',
+   vocab:['Train','Avion','Bus','Métro','Hôtel','Chambre','Billet','Passeport','Valise','Retard','Annulé','Quai','Terminal','Départ','Arrivée','Direction','À gauche','À droite','Tout droit','Combien'],
+   phrases:[
+     {fr:'À quelle heure part le train ?',lsf:'TRAIN PARTIR QUELLE HEURE ?',note:'Sourcils froncés, geste vers l’avant pour PARTIR'},
+     {fr:'Mon vol est annulé',lsf:'MON VOL ANNULÉ',note:'Mimer l\'avion + croix pour ANNULÉ'},
+     {fr:'C\'est combien pour une chambre ?',lsf:'UNE CHAMBRE COMBIEN ARGENT ?',note:'Sourcils levés, geste argent (frotter pouce-index)'},
+     {fr:'Je suis perdu, où est la gare ?',lsf:'MOI PERDU GARE OÙ ?',note:'Expression perplexe + sourcils levés'},
+     {fr:'Il y a un retard de 30 minutes',lsf:'RETARD 30 MINUTE',note:'Pointer la montre + geste de durée'},
+     {fr:'Tournez à gauche après le feu',lsf:'FEU APRÈS GAUCHE TOURNER',note:'L\'ordre LSF suit la logique visuelle de la scène'},
+   ],
+   tips:['Pointage + direction = clé pour demander son chemin','BILLET + COMBIEN = question de prix naturelle','Mimez les transports (voler / rouler)'],
+   elix:['train','avion','hôtel','billet','retard']},
+  {id:'enfants',ico:'👶',title:'LSF avec les enfants',color:'#8b5cf6',
+   intro:'Signes pour parents et enfants : routine quotidienne, école, émotions et jeux.',
+   vocab:['Faim','Soif','Fatigué','Câlin','Bisou','Jeu','École','Devoirs','Lecture','Dodo','Bain','Manger','Boisson','Jouet','Ami','Maîtresse','Récréation','Pleure','Content','Peur'],
+   phrases:[
+     {fr:'Tu as faim ?',lsf:'TOI FAIM ?',note:'Sourcils levés pour la question fermée'},
+     {fr:'C\'est l\'heure du bain',lsf:'MAINTENANT BAIN HEURE',note:'Mimer le bain'},
+     {fr:'Tu as fait tes devoirs ?',lsf:'TES DEVOIRS FINI ?',note:'Geste FINI + sourcils levés'},
+     {fr:'Je t\'aime fort',lsf:'MOI TOI AIMER BEAUCOUP',note:'Poing sur le cœur + expression affectueuse'},
+     {fr:'Tu peux jouer après le dîner',lsf:'DÎNER APRÈS JEU POSSIBLE',note:'Poser la chronologie : d\'abord APRÈS DÎNER'},
+     {fr:'Calme-toi, tout va bien',lsf:'CALME TOUT BIEN',note:'Geste apaisant des deux mains vers le bas'},
+   ],
+   tips:['Répétition et routine — signer les mêmes mots chaque jour','Associez toujours un signe au mot parlé','Les enfants Sourds acquièrent la LSF comme langue maternelle'],
+   elix:['faim','école','jouet','câlin','fatigué']},
+  {id:'culture',ico:'🎭',title:'Arts & Culture Sourde',color:'#10b981',
+   intro:'Slam LSF, cinéma sourd, poésie visuelle — la richesse culturelle de la communauté.',
+   vocab:['Théâtre','Cinéma','Musique','Danse','Poème','Histoire','Raconter','Personnage','Scène','Public','Applaudir','Créer','Imaginer','Rêve','Beauté','Art','Peinture','Livre','Spectacle','Festival'],
+   phrases:[
+     {fr:'Ce spectacle était magnifique',lsf:'CE SPECTACLE BEAU INCROYABLE',note:'Expressions faciales extatiques indispensables'},
+     {fr:'Tu as vu le film sourd ?',lsf:'FILM SOURD TOI VOIR ?',note:'Pointer vers les yeux pour VOIR'},
+     {fr:'Je veux apprendre le slam LSF',lsf:'MOI SLAM LSF APPRENDRE VOULOIR',note:'Geste poétique + intensité des mains'},
+     {fr:'Le public a applaudi longtemps',lsf:'PUBLIC LONGTEMPS APPLAUDIR',note:'Applaudir en LSF = agiter les mains en l\'air'},
+     {fr:'Raconte-moi une histoire',lsf:'MOI HISTOIRE RACONTER S-V-P',note:'Geste de narration : mains qui déploient'},
+     {fr:'La poésie visuelle est fascinante',lsf:'POÉSIE VISUELLE FASCINANT',note:'Les mains créent la métaphore directement'},
+   ],
+   tips:['Le Slam LSF utilise les transferts personnels et situationnels','Les blagues Sourdes jouent sur la forme visuelle des signes','La poésie LSF exploite la symétrie et le mouvement'],
+   elix:['théâtre','art','poème','histoire','festival']},
+  {id:'quotidien',ico:'🏠',title:'Vie Quotidienne',color:'#06b6d4',
+   intro:'Du matin au soir : cuisine, courses, ménage, loisirs.',
+   vocab:['Café','Pain','Courses','Supermarché','Caisse','Argent','Carte','Ménage','Cuisine','Lessive','Douche','Réveil','Petit-déjeuner','Déjeuner','Dîner','Sport','Promenade','Télévision','Internet','Sommeil'],
+   phrases:[
+     {fr:'Je vais faire les courses',lsf:'MOI COURSES ALLER',note:'Geste de la liste + déplacement'},
+     {fr:'Tu veux du café ?',lsf:'TOI CAFÉ VOULOIR ?',note:'Sourcils levés + mimer la tasse'},
+     {fr:'J\'ai oublié mon téléphone',lsf:'MON TÉLÉPHONE MOI OUBLIER',note:'OUBLIER : main qui s\'éloigne du front'},
+     {fr:'C\'est l\'heure de se lever',lsf:'SE LEVER HEURE MAINTENANT',note:'Geste de se lever + pointer la montre'},
+     {fr:'On mange à quelle heure ce soir ?',lsf:'CE SOIR MANGER QUELLE HEURE ?',note:'Poser CE SOIR en premier'},
+     {fr:'Je suis épuisé, je vais dormir',lsf:'MOI FATIGUÉ DORMIR ALLER',note:'Expression de fatigue très marquée'},
+   ],
+   tips:['Les signes de nourriture sont souvent iconiques','COMBIEN + pointer = question de prix universelle','Les signes domestiques ont souvent un mouvement répété'],
+   elix:['café','courses','cuisine','sport','sommeil']},
+];
+
+let currentParcours=null;
+function showParcours(){
+  S.view='parcours';save();
+  const area=document.getElementById('mainArea');
+  if(currentParcours){renderParcoursDetail(area,PARCOURS.find(p=>p.id===currentParcours));return;}
+  area.innerHTML=`
+    <div class="main-top">
+      <div><div class="main-title">🎯 Parcours thématiques</div><div class="main-sub">6 univers de vocabulaire — phrases courantes incluses</div></div>
+      <button class="bdg-pill" id="backBtn">← Retour</button>
+    </div>
+    <div class="parc-grid">
+      ${PARCOURS.map(p=>`<div class="parc-card" onclick="openParcours('${p.id}')" style="border-top:3px solid ${p.color}">
+        <div style="font-size:2rem;margin-bottom:8px">${p.ico}</div>
+        <div style="font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:900;color:var(--txt);margin-bottom:5px">${p.title}</div>
+        <div style="font-size:.76rem;color:var(--muted);line-height:1.5;margin-bottom:10px">${p.intro}</div>
+        <div style="display:flex;align-items:center;gap:7px">
+          <span style="font-family:'Nunito',sans-serif;font-size:.6rem;font-weight:700;background:var(--bg-card2);border:1px solid var(--bdr);border-radius:99px;padding:2px 8px;color:var(--muted)">${p.vocab.length} signes</span>
+          <span style="font-family:'Nunito',sans-serif;font-size:.6rem;font-weight:700;background:var(--bg-card2);border:1px solid var(--bdr);border-radius:99px;padding:2px 8px;color:var(--muted)">${p.phrases.length} phrases</span>
+          <span style="font-family:'Nunito',sans-serif;font-size:.6rem;color:${p.color};font-weight:700;margin-left:auto">Voir →</span>
+        </div>
+      </div>`).join('')}
+    </div>`;
+  document.getElementById('backBtn').addEventListener('click',()=>{renderLevels();buildNav();});
+}
+function openParcours(id){currentParcours=id;const area=document.getElementById('mainArea');renderParcoursDetail(area,PARCOURS.find(x=>x.id===id));}
+function renderParcoursDetail(area,p){
+  area.innerHTML=`
+    <div class="main-top">
+      <div><div class="main-title">${p.ico} ${p.title}</div><div class="main-sub">${p.intro}</div></div>
+      <button class="bdg-pill" id="backParcBtn">← Parcours</button>
+    </div>
+    <div class="cgrid">
+      <div class="card full">
+        <span class="cico">📖</span>
+        <div class="ctit">${p.vocab.length} signes à maîtriser</div>
+        <div class="cbod" style="margin-bottom:10px;font-size:.8rem">Coche chaque signe appris · <a href="https://dico.elix-lsf.fr" target="_blank" style="color:var(--a2)">Rechercher sur Élix ↗</a></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:5px">
+          ${p.vocab.map((w,i)=>`<div class="ci" onclick="togglePW(this,'${p.id}',${i})"><div class="cb" id="pw_${p.id}_${i}"></div><span class="ctxt" id="pt_${p.id}_${i}">${w}</span></div>`).join('')}
+        </div>
+      </div>
+      <div class="card full">
+        <span class="cico">💬</span>
+        <div class="ctit">${p.phrases.length} phrases courantes</div>
+        <div class="cbod" style="margin-bottom:12px;font-size:.8rem">Structure LSF de chaque phrase — à pratiquer à voix haute et en signes</div>
+        ${p.phrases.map(ph=>`<div class="phrase-item">
+          <div class="phrase-fr">🗣️ "${ph.fr}"</div>
+          <div class="phrase-lsf">🤟 ${ph.lsf}</div>
+          ${ph.note?`<div class="phrase-note">💡 ${ph.note}</div>`:''}
+        </div>`).join('')}
+      </div>
+      <div class="card">
+        <span class="cico">💡</span>
+        <div class="ctit">Conseils pédagogiques</div>
+        <div class="err-list">${p.tips.map(t=>`<div class="err-item"><div class="err-f" style="color:var(--txt)">▸ ${t}</div></div>`).join('')}</div>
+      </div>
+      <div class="card">
+        <span class="cico">📖</span>
+        <div class="ctit">Voir sur Dico Élix</div>
+        <div class="vlist">${p.elix.map(w=>`<a class="vitem" href="https://dico.elix-lsf.fr/dictionnaire/${encodeURIComponent(w)}" target="_blank">${w} <span class="varr">↗</span></a>`).join('')}</div>
+      </div>
+    </div>`;
+  p.vocab.forEach((_,i)=>{const k='parc_'+p.id+'_'+i;if(S.checks[k]){const cb=document.getElementById('pw_'+p.id+'_'+i),ct=document.getElementById('pt_'+p.id+'_'+i);if(cb)cb.className='cb on';if(ct)ct.className='ctxt done';}});
+  document.getElementById('backParcBtn').addEventListener('click',()=>{currentParcours=null;showParcours();});
+}
+function togglePW(el,pid,i){
+  const k='parc_'+pid+'_'+i;S.checks[k]=!S.checks[k];
+  const cb=document.getElementById('pw_'+pid+'_'+i),ct=document.getElementById('pt_'+pid+'_'+i);
+  if(cb)cb.className='cb'+(S.checks[k]?' on':'');if(ct)ct.className='ctxt'+(S.checks[k]?' done':'');
+  if(S.checks[k])showToast('📖 Signe maîtrisé ! ✊');
+  syncBadges();save();
+}
+
+// ════════════════════════════════════════════════════════
+//  FAQ
+// ════════════════════════════════════════════════════════
+const FAQ_D=[
+  {cat:'🚀 Débuter',items:[
+    {ico:'⏱️',q:'Combien de temps pour communiquer en LSF ?',
+     a:`Avec <strong>2–3h/semaine</strong> :<ul><li><strong>1 mois</strong> — Dactylologie + 50 signes</li><li><strong>3 mois</strong> — Conversations simples</li><li><strong>6 mois</strong> — Niveau A2</li><li><strong>2–3 ans</strong> — Niveau B2, aisance générale</li></ul>20 min/jour est plus efficace que 3h le dimanche.`},
+    {ico:'📱',q:'Peut-on apprendre la LSF seul en ligne ?',
+     a:`Oui, <strong>en partie</strong>. Les outils numériques sont parfaits pour le vocabulaire et les bases. Mais la LSF est une <strong>langue vivante</strong> — progresser vraiment nécessite de pratiquer avec des humains. Cherchez un café signes ou une association.`},
+    {ico:'💶',q:'Combien coûte un cours de LSF ?',
+     a:`<ul><li><strong>Associations URAPEDA</strong> — 200–400€/an</li><li><strong>Cours en ligne</strong> — 15–40€/heure</li><li><strong>Cours particuliers</strong> — 30–60€/heure</li></ul>Le <strong>CPF</strong> finance certaines formations LSF certifiantes.`},
+  ]},
+  {cat:'🖐️ La langue',items:[
+    {ico:'🌍',q:'La langue des signes est-elle universelle ?',
+     a:`<strong>Non !</strong> Il existe plus de <strong>300 langues des signes</strong> dans le monde — LSF, ASL, BSL, DGS… Un sourd français et un sourd américain ne se comprennent pas spontanément.`},
+    {ico:'🧠',q:'Quels sont les 5 paramètres d\'un signe ?',
+     a:`🖐️ <strong>Configuration</strong> · 🔄 <strong>Orientation</strong> · 📍 <strong>Emplacement</strong> · ➡️ <strong>Mouvement</strong> · 😊 <strong>Expression faciale</strong><br><br>Changer un seul paramètre peut changer entièrement le sens.`},
+    {ico:'😊',q:'Pourquoi les expressions faciales sont-elles si importantes ?',
+     a:`Le visage est <strong>grammaticalement fonctionnel</strong> : sourcils levés = question fermée, sourcils froncés = question ouverte, tête hochée = affirmation. Signer sans expression, c'est parler sans intonation.`},
+    {ico:'📐',q:'Comment fonctionne la structure de phrase en LSF ?',
+     a:`La LSF utilise une structure <strong>Sujet → Objet → Verbe</strong> (tendancielle) et la <strong>topicalisation</strong> : le thème en premier. Le temps se marque en début de phrase (HIER, DEMAIN…). Pas de verbe "être".`},
+  ]},
+  {cat:'📚 Ressources',items:[
+    {ico:'🎯',q:'Quelle est la meilleure méthode pour apprendre ?',
+     a:`<ol><li>Dactylologie en premier</li><li>Immersion vidéo quotidienne (20 min)</li><li>50 signes de base → 80% des conversations</li><li>Pratiquer avec des Sourds</li><li>S'enregistrer pour corriger</li></ol>`},
+    {ico:'📖',q:'Quels sont les meilleurs dictionnaires LSF ?',
+     a:`🏆 <strong><a href="https://dico.elix-lsf.fr" target="_blank" style="color:var(--a2)">Dico Élix</a></strong> — 20 500+ signes vidéo, la référence absolue<br>📺 <strong>Spread the Sign</strong> — multilingue<br>📱 <strong>Pisourd</strong> — ressources et communauté`},
+  ]},
+  {cat:'👥 Culture Sourde',items:[
+    {ico:'🏛️',q:'Quelle différence entre "sourd" et "Sourd" ?',
+     a:`<ul><li><strong>sourd</strong> (minuscule) — état audiologique</li><li><strong>Sourd</strong> (majuscule) — appartenance culturelle à la communauté</li></ul>`},
+    {ico:'⚠️',q:'Qu\'est-ce que le Congrès de Milan (1880) ?',
+     a:`En 1880, des éducateurs ont voté l'<strong>interdiction de la langue des signes</strong> dans les écoles. Pendant plus d'un siècle, des enfants sourds ont été punis pour avoir signé. La France n'a réhabilité la LSF qu'en <strong>1991</strong>.`},
+    {ico:'🚫',q:'Quelles erreurs éviter avec les Sourds ?',
+     a:`<ul><li>Ne pas parler à l'interprète à la place du Sourd</li><li>Ne pas supposer qu'un Sourd lit sur les lèvres</li><li>Ne pas "jouer" à signer pour amuser</li><li>Ne pas corriger un Sourd sur sa propre langue</li></ul>`},
+  ]},
+];
+function showFAQ(){
+  S.view='faq';save();
+  const area=document.getElementById('mainArea');
+  let html=`<div class="main-top"><div><div class="main-title">❓ Questions fréquentes</div><div class="main-sub">Tout ce que vous avez voulu savoir sur l'apprentissage de la LSF</div></div><button class="bdg-pill" id="backBtn">← Retour</button></div><div style="max-width:680px">`;
+  FAQ_D.forEach(s=>{
+    html+=`<div class="faq-cat">${s.cat}</div>`;
+    s.items.forEach(item=>{
+      const id='fq_'+Math.random().toString(36).slice(2);
+      html+=`<div class="faq-item" id="${id}"><div class="faq-q" onclick="tglFaq('${id}')"><div class="faq-q-ico">${item.ico}</div><div class="faq-q-txt">${item.q}</div><div class="faq-chev">▼</div></div><div class="faq-ans"><div class="faq-ans-in">${item.a}</div></div></div>`;
+    });
+  });
+  html+=`</div><div style="margin-top:24px;background:var(--bg-card2);border:1px solid var(--bdr2);border-radius:13px;padding:18px;text-align:center;max-width:680px"><div style="font-size:1.5rem;margin-bottom:8px">🤟</div><h3 style="font-family:'Nunito',sans-serif;font-weight:900;color:var(--txt);font-size:.9rem;margin-bottom:7px">Autre question ?</h3><p style="font-size:.76rem;color:var(--muted);margin-bottom:12px">Posez-la à Signa, votre assistante pédagogique.</p><button class="focus-sm" onclick="showSignaIA()">💬 Parler à Signa</button></div>`;
+  area.innerHTML=html;
+  document.getElementById('backBtn').addEventListener('click',()=>{renderLevels();buildNav();});
+}
+function tglFaq(id){const el=document.getElementById(id);if(!el)return;const was=el.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(e=>e.classList.remove('open'));if(!was)el.classList.add('open');}
+
+// ════════════════════════════════════════════════════════
+//  À PROPOS
+// ════════════════════════════════════════════════════════
+function showApropos(){
+  S.view='apropos';save();
+  const area=document.getElementById('mainArea');
+  area.innerHTML=`
+    <div class="main-top">
+      <div><div class="main-title">ℹ️ À propos</div><div class="main-sub">LSF — Mon Parcours Visuel</div></div>
+      <button class="bdg-pill" id="backBtn">← Retour</button>
+    </div>
+    <div style="background:linear-gradient(135deg,#1b3d2a,#0a4d2d);border-radius:14px;padding:22px;margin-bottom:18px;position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;opacity:.06;background-image:radial-gradient(circle,#4ade80 1px,transparent 1px);background-size:20px 20px"></div>
+      <div style="position:relative;z-index:1">
+        <h2 style="font-family:'Nunito',sans-serif;font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:10px">Notre mission</h2>
+        <p style="color:rgba(255,255,255,.82);font-size:.86rem;line-height:1.8">LSF — Mon Parcours Visuel est un outil pédagogique conçu pour <strong style="color:#4ade80">rendre la Langue des Signes Française accessible à tous</strong> — débutants, professionnels, familles de personnes sourdes ou simplement curieux. Nous croyons que la communication visuelle est un droit.</p>
+      </div>
+    </div>
+    <div class="cgrid" style="margin-bottom:18px">
+      <div class="card"><span class="cico">🤝</span><div class="ctit">Inclusion</div><div class="cbod">La LSF est une langue à part entière, avec sa propre grammaire visuo-spatiale. Nous la traitons avec le respect qu'elle mérite.</div></div>
+      <div class="card"><span class="cico">🧠</span><div class="ctit">Pédagogie active</div><div class="cbod">Analyse gestuelle en temps réel, phrases courantes, retour immédiat — apprentissage par la pratique, pas par la mémorisation passive.</div></div>
+      <div class="card"><span class="cico">🔒</span><div class="ctit">Vie privée</div><div class="cbod">L'analyse gestuelle tourne dans votre navigateur via MediaPipe. Aucune image n'est envoyée vers un serveur. 100% local.</div></div>
+    </div>
+    <div class="card" style="margin-bottom:18px">
+      <span class="cico">📜</span><div class="ctit" style="margin-bottom:14px">Histoire de la LSF</div>
+      <div>
+        ${[{y:'1760',col:'var(--a2)',txt:'<strong>Abbé de l\'Épée</strong> fonde à Paris la première école publique pour Sourds. Il s\'appuie sur les signes que lui ont enseignés des personnes sourdes.',line:true},
+           {y:'1817',col:'var(--a2)',txt:'<strong>Laurent Clerc</strong>, sourd français, émigre aux États-Unis et co-fonde la première école américaine pour sourds. La LSF influence la naissance de l\'ASL.',line:true},
+           {y:'1880 — Congrès de Milan',col:'#ef4444',txt:'La langue des signes est <strong>interdite dans les écoles</strong> au profit de l\'oralisme. La LSF survit clandestinement pendant plus d\'un siècle.',line:true},
+           {y:'1991',col:'#22c55e',txt:'<strong>Loi Fabius</strong> : la LSF est reconnue comme langue d\'enseignement. Les écoles peuvent de nouveau utiliser la langue des signes.',line:true},
+           {y:'2005',col:'#22c55e',txt:'<strong>Loi du 11 février</strong> : la LSF est reconnue comme langue à part entière. Droit à la scolarisation en LSF.',line:false},
+          ].map(t=>`<div class="tl-row"><div class="tl-dot"><div class="tl-circle" style="background:${t.col}"></div>${t.line?'<div class="tl-line"></div>':''}</div><div><div class="tl-yr" style="color:${t.col}">${t.y}</div><p>${t.txt}</p></div></div>`).join('')}
+      </div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-n">500K</div><div class="stat-lbl">locuteurs LSF en France</div></div>
+      <div class="stat-box"><div class="stat-n">20 500+</div><div class="stat-lbl">signes dans le Dico Élix</div></div>
+      <div class="stat-box"><div class="stat-n">300+</div><div class="stat-lbl">langues des signes dans le monde</div></div>
+      <div class="stat-box"><div class="stat-n">2005</div><div class="stat-lbl">reconnaissance officielle LSF</div></div>
+    </div>
+    <div class="card">
+      <span class="cico">🔗</span><div class="ctit" style="margin-bottom:10px">Ressources & partenaires</div>
+      <div class="vlist">
+        <a class="vitem" href="https://dico.elix-lsf.fr" target="_blank">📖 Le Dico Élix — 20 500+ signes en vidéo <span class="varr">↗</span></a>
+        <a class="vitem" href="https://www.surdi.info" target="_blank">🦻 Surdi.info — portail national surdité <span class="varr">↗</span></a>
+        <a class="vitem" href="https://www.inja.fr" target="_blank">🏫 INJS Paris — Institut National de Jeunes Sourds <span class="varr">↗</span></a>
+        <a class="vitem" href="https://fnsf.org" target="_blank">🤝 FNSF — Fédération Nationale des Sourds de France <span class="varr">↗</span></a>
+      </div>
+    </div>
+    <div style="text-align:center;padding:16px 0;color:var(--muted);font-size:.7rem;margin-top:10px">Fait avec ❤️ pour la communauté Sourde et les apprenants LSF<br><span style="opacity:.5">100% local — aucune donnée collectée</span></div>`;
+  document.getElementById('backBtn').addEventListener('click',()=>{renderLevels();buildNav();});
+}
+
 document.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
